@@ -43,5 +43,6 @@ public class Elev
         return $"Navn: {_navn}, Alder: {_alder}, Status: {_status}";
     }
     
+    "Tully"
     
 }
