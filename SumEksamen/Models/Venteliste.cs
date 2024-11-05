@@ -29,5 +29,10 @@ public class Venteliste
     
     public DateTime OprettelsesDato { get; set; }
     
+    public string opretVenteliste()
+    {
+        return _aargang;
+    }
+    
     
 }
