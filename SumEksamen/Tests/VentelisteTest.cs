@@ -25,7 +25,7 @@ public class VentelisteTest
     }
 
     [Fact]
-    public void tilfojEleverFail()
+    public void tilfojEleverFejl()
     {
         //Arrange
         Venteliste vl = new Venteliste("24/25", DateTime.Now);
