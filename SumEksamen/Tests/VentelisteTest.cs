@@ -23,4 +23,19 @@ public class VentelisteTest
         Assert.True(vl.hentElever().Contains(e2));
         
     }
+
+    [Fact]
+    public void tilfojEleverFail()
+    {
+        //Arrange
+        Venteliste vl = new Venteliste("24/25", DateTime.Now);
+        Elev e1 = new Elev("Rasmus", 24);
+        Elev e2 = new Elev("Abukar", 18);
+        
+        //Act
+        vl.tilfojElev(e1);
+        
+        //Assert
+        Assert.False(vl.hentElever().Contains(e2));
+    }
 }
