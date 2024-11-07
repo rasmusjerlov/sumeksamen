@@ -40,6 +40,12 @@ public class Elev
         set => _status = value;
     }
     
+    public string Køn
+    {
+        get => _køn;
+        set => _køn = value;
+    }
+    
     public override string ToString()
     {
         return $"Navn: {_navn}, Alder: {_alder}, Status: {_status}";
