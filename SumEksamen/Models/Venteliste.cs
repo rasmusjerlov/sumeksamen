@@ -27,7 +27,7 @@ public class Venteliste
         }
         else
         {
-            throw new ArgumentException("Elev skal være under 18 år");
+            throw new ArgumentException("Elev skal være under 18 år.");
         }
     }
 
