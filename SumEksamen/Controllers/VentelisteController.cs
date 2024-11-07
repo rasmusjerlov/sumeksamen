@@ -3,32 +3,28 @@ using SumEksamen.Models;
 
 namespace SumEksamen.Controllers;
 
-public class VentelisteController : Controller
+public class VentelisteController
 {
-    private static List<Venteliste> ventelister = new List<Venteliste>();
-    // GET
-    public IActionResult Index()
+    private List<Venteliste> ventelister = new List<Venteliste>();
+
+    public void Create(string aargang, DateTime dato)
     {
-        return View(ventelister);
-    }
-    [HttpPost]
-    public IActionResult Create(string aargang, DateTime oprettelsesDato)
-    {
-        foreach (var vl in ventelister)
+        if (ventelister.Any(v => v.Aargang == aargang))
         {
-            if (vl.Aargang.Equals(aargang))
-            {
-                throw new ArgumentException("Ventelisten for denne aargang findes allerede");
-            }
+            throw new ArgumentException("Denne venteliste med" + aargang + "eksisterer allerede");
         }
-        var nyVenteListe = new Venteliste(aargang, oprettelsesDato);
-        ventelister.Add(nyVenteListe);
-        
-        return RedirectToAction("Index");
+
+        ventelister.Add(new Venteliste { Aargang = aargang, Dato = dato });
     }
 
     public List<Venteliste> hentVenteLister()
     {
         return ventelister;
     }
+}
+
+public class Venteliste
+{
+    public string Aargang { get; set; }
+    public DateTime Dato { get; set; }
 }
