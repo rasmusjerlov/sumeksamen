@@ -5,20 +5,22 @@ public class Elev
     private string _navn;
     private int _alder;
     private Status _status;
-    private string _køn;
+    private Køn _køn;
     
-    public Elev(string navn, int alder, Status status, string køn)
+    public Elev(string navn, int alder, Status status, Køn køn)
     {
         _navn = navn;
         _alder = alder;
         _status = status;
         _køn = køn;
     }
+    
 
-    public Elev(string navn, int alder)
+    public Elev(string navn, int alder, Køn køn)
     {
         _navn = navn;
         _alder = alder;
+        _køn = køn;
     }
     
     
@@ -40,7 +42,7 @@ public class Elev
         set => _status = value;
     }
     
-    public string Køn
+    public Køn Køn
     {
         get => _køn;
         set => _køn = value;
