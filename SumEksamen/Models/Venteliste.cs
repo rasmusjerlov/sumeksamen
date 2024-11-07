@@ -2,37 +2,25 @@ namespace SumEksamen.Models;
 
 public class Venteliste
 {
-    private List<Elev> elever = new List<Elev>();
-    private string _aargang;
-    private DateTime _oprettelsDato;
+    public string Aargang { get; set; }
+    public DateTime OprettelsesDato { get; set; }
+    private List<Elev> elever;
 
-    public Venteliste(string aargang, DateTime oprettelsDato)
+    public Venteliste(string aargang, DateTime oprettelsesDato)
     {
-        _aargang = aargang;
-        _oprettelsDato = oprettelsDato;
+        Aargang = aargang;
+        OprettelsesDato = oprettelsesDato;
+        elever = new List<Elev>();
     }
 
     public void tilfojElev(Elev elev)
     {
-        if (!elever.Contains(elev))
-        {
-            elever.Add(elev);
-        }
+        elever.Add(elev);
     }
 
     public List<Elev> hentElever()
     {
-        return new List<Elev>(elever);
+        return elever;
     }
-    
-    public string Aargang { get; set; }
-    
-    public DateTime OprettelsesDato { get; set; }
-    
-    public string opretVenteliste()
-    {
-        return _aargang + _oprettelsDato;
-    }
-    
-    
 }
+
