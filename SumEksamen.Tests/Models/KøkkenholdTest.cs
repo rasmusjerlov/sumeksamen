@@ -29,7 +29,7 @@ public class KøkkenholdTest
     {
         //Arrange & Act
         Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
-
+        
         //Assert
         Assert.NotNull(køkkenhold);
         Assert.Equal(4, køkkenhold.GetElevListe().Count);
