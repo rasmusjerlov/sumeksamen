@@ -1,3 +1,4 @@
+using System;
 using SumEksamen.Models;
 using Xunit;
 
