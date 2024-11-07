@@ -15,7 +15,14 @@ public class Venteliste
 
     public void tilfojElev(Elev elev)
     {
-        elever.Add(elev);
+        if (!elever.Contains(elev) && elev.Alder < 18)
+        {
+            elever.Add(elev);
+        }
+        else
+        {
+            throw new ArgumentException();
+        }
     }
 
     public List<Elev> hentElever()

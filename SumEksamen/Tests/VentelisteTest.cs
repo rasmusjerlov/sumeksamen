@@ -41,12 +41,12 @@ public class VentelisteTest
     
 
     [Fact]
-    public void tilfojElever()
+    public void TC1_tilfojElev()
     {
         //Arrange
         Venteliste vl = new Venteliste("24/25", DateTime.Now);
-        Elev e1 = new Elev("Rasmus", 24);
-        Elev e2 = new Elev("Abu", 18);
+        Elev e1 = new Elev("Rasmus", 14);
+        Elev e2 = new Elev("Abu", 12);
         
         //Act
         vl.tilfojElev(e1);
@@ -56,5 +56,22 @@ public class VentelisteTest
         Assert.True(vl.hentElever().Contains(e1));
         Assert.True(vl.hentElever().Contains(e2));
         
+    }
+
+    [Fact]
+    public void TC2_tilfojElevFejl()
+    {
+        //Arrange
+        Venteliste vl = new Venteliste("24/25", DateTime.Now);
+        Elev e1 = new Elev("Rasmus", 14);
+        Elev e2 = new Elev("Abukar", 12);
+        Elev e3 = new Elev("Mikkel", 18);
+        
+        //Act
+        vl.tilfojElev(e1);
+        
+        //Assert
+        Assert.True(vl.hentElever().Contains(e1));
+        Assert.Throws<ArgumentException>(() => vl.tilfojElev(e3));
     }
 }

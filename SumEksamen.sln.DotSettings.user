@@ -23,7 +23,7 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c0bd3f13_002Df709_002D4757_002D86a4_002D1381b0c207e0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="tilfojElever #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteTest.tilfojElever&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ca5753e3_002Dd8c7_002D4413_002D96bd_002D080640bd9838/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="tilfojElever" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
