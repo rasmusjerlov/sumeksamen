@@ -2,9 +2,9 @@ namespace SumEksamen.Models;
 
 public class Køkkenhold
 {
-    private List<Elev> holdListe = new List<Elev>(4);
-    private DateTime startDato;
-    private DateTime slutDato;
+    private List<Elev> _holdListe = new List<Elev>(4);
+    private DateTime _startDato;
+    private DateTime _slutDato;
 
     public Køkkenhold(params Elev[] elever)
     {
@@ -12,13 +12,20 @@ public class Køkkenhold
         {
             throw new ArgumentException("Der skal være 4 elever");
         }
-        holdListe.AddRange(elever);
+        _holdListe.AddRange(elever);
+    }
+
+    public void AddElev(Elev elev)
+    {
+        if (_holdListe.Count >= 4)
+        {
+            throw new InvalidOperationException("Kan ikke tilføje flere end 4 elever");
+        }
+        _holdListe.Add(elev);
     }
 
     public List<Elev> GetElevListe()
     {
-        return holdListe;
+        return _holdListe;
     }
-    
-    
 }

@@ -5,6 +5,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c310fcb6_002D4be4_002D4c6e_002Dbc31_002D105c870c3b91/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MixKøkkenhold" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.KøkkenholdTest.KøkkenholdManueltOpret&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.KøkkenholdTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
