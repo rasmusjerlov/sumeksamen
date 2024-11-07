@@ -18,7 +18,7 @@ public class KøkkenholdTest
         Elev e3 = new Elev("Tully", 13);
         Elev e4 = new Elev("Jens", 13);
         Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
-
+        
         //Assert
         Assert.NotNull(køkkenhold);
         Assert.NotEmpty(køkkenhold.GetElevListe());
