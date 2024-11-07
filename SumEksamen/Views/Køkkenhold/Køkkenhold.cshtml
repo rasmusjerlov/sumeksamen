@@ -1,0 +1,21 @@
+@model List<SumEksamen.Models.Køkkenhold>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Køkkenhold</title>
+</head>
+<body>
+<h2>Køkkenhold</h2>
+@foreach (var køkkenhold in Model)
+{
+    <h3>Køkkenhold @køkkenhold.UgeNr</h3>
+    <ul>
+        @foreach (var elev in køkkenhold.GetElevListe())
+        {
+            <li>@elev.Navn - @elev.Køn</li>
+        }
+    </ul>
+}
+</body>
+</html>

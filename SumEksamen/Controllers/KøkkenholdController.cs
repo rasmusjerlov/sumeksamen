@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SumEksamen.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SumEksamen.Models;
 using System.Collections.Generic;
 using System.IO;
 using OfficeOpenXml;
@@ -11,18 +9,19 @@ namespace SumEksamen.Controllers
 {
     public class KøkkenholdController : Controller
     {
+        private static List<Elev> elevListe = new List<Elev>();
+
         // GET: KøkkenholdController
         public ActionResult Index()
         {
             return View();
         }
-        
-        
+
         [HttpGet]
         [Route("upload")]
         public IActionResult Upload()
         {
-            return View();
+            return View(elevListe);
         }
 
         [HttpPost]
@@ -32,7 +31,7 @@ namespace SumEksamen.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("Upload a valid file.");
 
-            var elevListe = new List<Elev>();
+            elevListe.Clear();
 
             using (var stream = new MemoryStream())
             {
@@ -45,18 +44,38 @@ namespace SumEksamen.Controllers
                     for (int row = 2; row <= rowCount; row++)
                     {
                         string navn = worksheet.Cells[row, 1].Text;
-                        Køn køn = (Køn)Enum.Parse(typeof(Køn), worksheet.Cells[row, 2].Text);
-
-                        var elev = new Elev(navn, køn);
-                        elevListe.Add(elev);
+                        if (Enum.TryParse(worksheet.Cells[row, 2].Text, out Køn køn))
+                        {
+                            var elev = new Elev(navn, køn);
+                            elevListe.Add(elev);
+                        }
+                        else
+                        {
+                            // Handle the case where the enum value is not valid
+                            return BadRequest($"Invalid value for Køn at row {row}");
+                        }
                     }
                 }
             }
 
-            Console.WriteLine(elevListe);
-
-            return Ok(elevListe);
+            return View("Upload", elevListe);
         }
 
+        [HttpPost]
+        [Route("createKøkkenhold")]
+        public IActionResult CreateKøkkenhold()
+        {
+            var køkkenholdListe = new List<Køkkenhold>();
+            for (int i = 0; i < elevListe.Count; i += 4)
+            {
+                if (i + 4 <= elevListe.Count)
+                {
+                    var køkkenhold = new Køkkenhold(elevListe.GetRange(i, 4).ToArray());
+                    køkkenholdListe.Add(køkkenhold);
+                }
+            }
+            // Hej MAZZA
+            return View("Køkkenhold", køkkenholdListe);
+        }
     }
 }
