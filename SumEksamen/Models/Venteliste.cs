@@ -2,7 +2,7 @@ namespace SumEksamen.Models;
 
 public class Venteliste
 {
-    public static List<String> VentelisteAargange = new List<string>();
+    public List<String> VentelisteAargange = new List<string>();
     public string Aargang { get; set; }
     public DateTime OprettelsesDato { get; set; }
     private List<Elev> elever;
@@ -12,7 +12,7 @@ public class Venteliste
         if (VentelisteAargange.Any(a => a == aargang))
         {
             throw new ArgumentException("Venteliste med denne aargang eksisterer allerede");
-        }  
+        }        
         Aargang = aargang;
         OprettelsesDato = oprettelsesDato;
         elever = new List<Elev>();
