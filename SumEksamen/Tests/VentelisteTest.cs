@@ -7,7 +7,7 @@ public class VentelisteTest
 {
     
     [Fact]
-    public void opretVenteliste()
+    public void TC1_opretVenteliste()
     {
         //Arrange
         Venteliste vl = new Venteliste("24/25", new DateTime(2024,10,01));
@@ -23,7 +23,7 @@ public class VentelisteTest
     }
 
     [Fact]
-    public void opretVentelisteFail()
+    public void TC2_opretVentelisteFail()
     {
         //Arrange
         List<Venteliste> ventelister = new List<Venteliste>();
@@ -36,6 +36,7 @@ public class VentelisteTest
         
         //Assert
         Assert.True(ventelister.Count == 1);
+        Assert.Throws<ArgumentException>(() => new Venteliste("24/25", DateTime.Now));
         
     }
     
