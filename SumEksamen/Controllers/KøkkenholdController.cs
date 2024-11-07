@@ -51,7 +51,7 @@ namespace SumEksamen.Controllers
                         }
                         else
                         {
-                            // Handle the case where the enum value is not valid
+                            // Fortæller hvis en enum værdi er ugyldig og hvor man kan finde den i excel arket
                             return BadRequest($"Invalid value for Køn at row {row}");
                         }
                     }
@@ -66,15 +66,29 @@ namespace SumEksamen.Controllers
         public IActionResult CreateKøkkenhold()
         {
             var køkkenholdListe = new List<Køkkenhold>();
-            for (int i = 0; i < elevListe.Count; i += 4)
+            var drenge = elevListe.Where(e => e.Køn == Køn.dreng).ToList();
+            var piger = elevListe.Where(e => e.Køn == Køn.pige).ToList();
+
+            while (drenge.Count >= 2 && piger.Count >= 2) // Laver køkkenhold med 2 drenge og 2 piger
             {
-                if (i + 4 <= elevListe.Count)
+                var køkkenhold = new Køkkenhold(drenge.Take(2).Concat(piger.Take(2)).ToArray());
+                køkkenholdListe.Add(køkkenhold);
+                drenge.RemoveRange(0, 2);
+                piger.RemoveRange(0, 2);
+            }
+
+            // Hvis der er elever tilbage, laves et køkkenhold med de resterende elever
+            // Der er et flertal af drenge -> Så der bliver lavet et køkkenhold med 4 drenge
+            var remaining = drenge.Concat(piger).ToList();
+            for (int i = 0; i < remaining.Count; i += 4)
+            {
+                if (i + 4 <= remaining.Count)
                 {
-                    var køkkenhold = new Køkkenhold(elevListe.GetRange(i, 4).ToArray());
+                    var køkkenhold = new Køkkenhold(remaining.GetRange(i, 4).ToArray());
                     køkkenholdListe.Add(køkkenhold);
                 }
             }
-            // Hej MAZZA
+
             return View("Køkkenhold", køkkenholdListe);
         }
     }

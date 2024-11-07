@@ -9,7 +9,7 @@
 <h2>Køkkenhold</h2>
 @foreach (var køkkenhold in Model)
 {
-    <h3>Køkkenhold @køkkenhold.UgeNr</h3>
+    <h3>Uge: @køkkenhold.UgeNr</h3>
     <ul>
         @foreach (var elev in køkkenhold.GetElevListe())
         {
