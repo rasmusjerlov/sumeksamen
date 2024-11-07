@@ -32,6 +32,7 @@ public class KøkkenholdTest
         
         //Assert
         Assert.NotNull(køkkenhold);
+        Assert.Equal(33, køkkenhold.UgeNr);
         Assert.Equal(4, køkkenhold.GetElevListe().Count);
     }
 

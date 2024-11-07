@@ -12,9 +12,10 @@ public class ElevTest
     public void OpretElev()
     {
         //Arrange & Act
-        Elev elev = new Elev("Mikkel", 20, Status.Aktiv, Køn.dreng);
+        Elev elev = new Elev("Mikkel", 16, Status.Aktiv, Køn.dreng);
         
         //Assert
         Assert.Equal("Mikkel", elev.Navn);
+        Assert.Equal(Køn.dreng, elev.Køn);
     }
 }

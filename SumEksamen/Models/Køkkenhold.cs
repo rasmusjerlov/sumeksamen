@@ -35,4 +35,6 @@ public class Køkkenhold
     {
         return _holdListe;
     }
+
+    public int UgeNr => _ugeNr;
 }
