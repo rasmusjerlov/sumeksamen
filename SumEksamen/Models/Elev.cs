@@ -5,18 +5,27 @@ public class Elev
     private string _navn;
     private int _alder;
     private Status _status;
+    private Køn _køn;
     
-    public Elev(string navn, int alder, Status status)
+    public Elev(string navn, int alder, Status status, Køn køn)
     {
         _navn = navn;
         _alder = alder;
         _status = status;
+        _køn = køn;
     }
 
-    public Elev(string navn, int alder)
+    public Elev(string navn, int alder, Køn køn)
     {
         _navn = navn;
         _alder = alder;
+        _køn = køn;
+    }
+    
+    public Elev(string navn, Køn køn)
+    {
+        _navn = navn;
+        _køn = køn;
     }
     
     
@@ -36,6 +45,12 @@ public class Elev
     {
         get => _status;
         set => _status = value;
+    }
+    
+    public Køn Køn
+    {
+        get => _køn;
+        set => _køn = value;
     }
     
     public override string ToString()
