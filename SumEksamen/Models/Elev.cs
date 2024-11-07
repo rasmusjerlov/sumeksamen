@@ -5,12 +5,14 @@ public class Elev
     private string _navn;
     private int _alder;
     private Status _status;
+    private string _køn;
     
-    public Elev(string navn, int alder, Status status)
+    public Elev(string navn, int alder, Status status, string køn)
     {
         _navn = navn;
         _alder = alder;
         _status = status;
+        _køn = køn;
     }
 
     public Elev(string navn, int alder)
