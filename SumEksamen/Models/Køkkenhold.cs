@@ -23,6 +23,11 @@ public class Køkkenhold
         }
         _holdListe.Add(elev);
     }
+    
+    public void RemoveElev(Elev elev)
+    {
+        _holdListe.Remove(elev);
+    }
 
     public List<Elev> GetElevListe()
     {

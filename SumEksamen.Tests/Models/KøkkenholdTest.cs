@@ -8,63 +8,57 @@ namespace SumEksamen.Tests.Models;
 [TestSubject(typeof(Køkkenhold))]
 public class KøkkenholdTest
 {
+    private Elev e1;
+    private Elev e2;
+    private Elev e3;
+    private Elev e4;
+    private Elev e5;
+
+    // This method is called before each test method.
+    public KøkkenholdTest()
+    {
+        e1 = new Elev("Mikkel", 13, Køn.dreng);
+        e2 = new Elev("Mazza", 16, Køn.dreng);
+        e3 = new Elev("Tully", 13, Køn.dreng);
+        e4 = new Elev("Jens", 13, Køn.dreng);
+        e5 = new Elev("Abukar", 15, Køn.dreng);
+    }
 
     [Fact]
-    public void KøkkenholdConstructorMedFireElever()
+    public void TC1_KøkkenholdConstructorMedFireElever()
     {
         //Arrange & Act
-        Elev e1 = new Elev("Mikkel", 13);
-        Elev e2 = new Elev("Mazza", 16);
-        Elev e3 = new Elev("Tully", 13);
-        Elev e4 = new Elev("Jens", 13);
         Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
 
         //Assert
         Assert.NotNull(køkkenhold);
-        Assert.NotEmpty(køkkenhold.GetElevListe());
+        Assert.Equal(4, køkkenhold.GetElevListe().Count);
     }
 
     [Fact]
-    public void TilføjElevTilFuldtKøkkenhold()
+    public void TC2_KøkkenholdConstructorMedOverFireElever()
     {
-        //Arrange
-        Elev e1 = new Elev("Mikkel", 13);
-        Elev e2 = new Elev("Mazza", 16);
-        Elev e3 = new Elev("Tully", 13);
-        Elev e4 = new Elev("Jens", 13);
-        Elev e5 = new Elev("Abukar", 15);
-        Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
-        
-        //Act & Assert
-        //Kaster fejl, hvis hold bliver over 4 elever
-        Assert.Throws<InvalidOperationException>(() => køkkenhold.AddElev(e5)); 
-    }
-
-    [Fact]
-    public void KøkkenholdConstructorMedOverFireElever()
-    {
-        //Arrange
-        Elev e1 = new Elev("Mikkel", 13);
-        Elev e2 = new Elev("Mazza", 16);
-        Elev e3 = new Elev("Tully", 13);
-        Elev e4 = new Elev("Jens", 13);
-        Elev e5 = new Elev("Abukar", 15);
-        
         //Act & Assert
         //Kaster fejl, hvis hold bliver lavet med mere end 4 elever
-        Assert.Throws<ArgumentException>(() => new Køkkenhold(e1, e2, e3, e4, e5)); 
+        Assert.Throws<ArgumentException>(() => new Køkkenhold(e1, e2, e3, e4, e5));
     }
 
     [Fact]
-    public void KøkkenholdConstructorMedFærreEndFireElever()
+    public void TC3_KøkkenholdConstructorMedFærreEndFireElever()
     {
-        Elev e1 = new Elev("Mikkel", 13);
-        Elev e2 = new Elev("Mazza", 16);
-        Elev e3 = new Elev("Tully", 13);
-        
         //Act & Assert
         //Kaster fejl, hvis hold bliver lavet med mindre end 4 elever
         Assert.Throws<ArgumentException>(() => new Køkkenhold(e1, e2, e3));
     }
-    
+
+    [Fact]
+    public void TC1_TilføjElevTilFuldtKøkkenhold()
+    {
+        //Arrange
+        Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
+
+        //Act & Assert
+        //Kaster fejl, hvis hold bliver over 4 elever
+        Assert.Throws<InvalidOperationException>(() => køkkenhold.AddElev(e5));
+    }
 }
