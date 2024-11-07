@@ -31,7 +31,7 @@ public class Venteliste
     
     public string opretVenteliste()
     {
-        return _aargang;
+        return _aargang + _oprettelsDato;
     }
     
     
