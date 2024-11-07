@@ -69,10 +69,9 @@ public class VentelisteTest
         
         //Act
         vl.tilfojElev(e1);
-        vl.tilfojElev(e3);
         
         //Assert
         Assert.True(vl.hentElever().Contains(e1));
-        Assert.False(vl.hentElever().Contains(e3));
+        Assert.Throws<ArgumentException>(() => vl.tilfojElev(e3));
     }
 }
