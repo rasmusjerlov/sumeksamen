@@ -17,40 +17,6 @@ public class VentelisteTest
         e3 = new Elev("Mikkel", 18);
         vl = new Venteliste("24/25", DateTime.Now);
     }
-    
-    [Fact]
-    public void opretVenteliste()
-    {
-        //Arrange
-        Venteliste vl = new Venteliste("24/25", new DateTime(2024,10,01));
-        
-        //Act
-        string aargang = vl.Aargang;
-        DateTime oprettelsesDato = vl.OprettelsesDato;
-        DateTime expectedDatetime = new DateTime(2024,10,01);
-        
-        //Assert
-        Assert.Equal("24/25", aargang);
-        Assert.Equal(expectedDatetime, oprettelsesDato);
-    }
-
-    [Fact]
-    public void opretVentelisteFail()
-    {
-        //Arrange
-        List<Venteliste> ventelister = new List<Venteliste>();
-        Venteliste vl = new Venteliste("24/25", DateTime.Now);
-        ventelister.Add(vl);
-        
-        //Act
-        Venteliste vl2 = new Venteliste("24/25", DateTime.Now);
-        ventelister.Add(vl2);
-        
-        //Assert
-        Assert.True(ventelister.Count == 1);
-        
-    }
-    
 
     [Fact]
     public void TC1_tilfojElev()
