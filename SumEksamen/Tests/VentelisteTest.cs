@@ -5,6 +5,18 @@ namespace SumEksamen.Tests;
 
 public class VentelisteTest
 {
+    private Elev e1;
+    private Elev e2;
+    private Elev e3;
+    private Venteliste vl;
+
+    public VentelisteTest()
+    {
+        e1 = new Elev("Rasmus", 14);
+        e2 = new Elev("Abukar", 12);
+        e3 = new Elev("Mikkel", 18);
+        vl = new Venteliste("24/25", DateTime.Now);
+    }
     
     [Fact]
     public void opretVenteliste()
@@ -43,11 +55,6 @@ public class VentelisteTest
     [Fact]
     public void TC1_tilfojElev()
     {
-        //Arrange
-        Venteliste vl = new Venteliste("24/25", DateTime.Now);
-        Elev e1 = new Elev("Rasmus", 14);
-        Elev e2 = new Elev("Abu", 12);
-        
         //Act
         vl.tilfojElev(e1);
         vl.tilfojElev(e2);
@@ -61,12 +68,6 @@ public class VentelisteTest
     [Fact]
     public void TC2_tilfojElevFejl()
     {
-        //Arrange
-        Venteliste vl = new Venteliste("24/25", DateTime.Now);
-        Elev e1 = new Elev("Rasmus", 14);
-        Elev e2 = new Elev("Abukar", 12);
-        Elev e3 = new Elev("Mikkel", 18);
-        
         //Act
         vl.tilfojElev(e1);
         
