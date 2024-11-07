@@ -10,13 +10,16 @@ public class VentelisteTest
     public void opretVenteliste()
     {
         //Arrange
-        Venteliste vl = new Venteliste("24/25", DateTime.Now);
+        Venteliste vl = new Venteliste("24/25", new DateTime(2024,10,01));
         
         //Act
-        string aargang = vl.opretVenteliste();
+        string aargang = vl.Aargang;
+        DateTime oprettelsesDato = vl.OprettelsesDato;
+        DateTime expectedDatetime = new DateTime(2024,10,01);
         
         //Assert
         Assert.Equal("24/25", aargang);
+        Assert.Equal(expectedDatetime, oprettelsesDato);
     }
 
     [Fact]
