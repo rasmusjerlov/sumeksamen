@@ -14,12 +14,17 @@ public class Elev
         _status = status;
         _køn = køn;
     }
-    
 
     public Elev(string navn, int alder, Køn køn)
     {
         _navn = navn;
         _alder = alder;
+        _køn = køn;
+    }
+    
+    public Elev(string navn, Køn køn)
+    {
+        _navn = navn;
         _køn = køn;
     }
     
