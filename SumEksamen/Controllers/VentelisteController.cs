@@ -1,30 +1,70 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SumEksamen.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace SumEksamen.Controllers;
-
-public class VentelisteController
+namespace SumEksamen.Controllers
 {
-    private List<Venteliste> ventelister = new List<Venteliste>();
-
-    public void Create(string aargang, DateTime dato)
+    public class VentelisteController : Controller
     {
-        if (ventelister.Any(v => v.Aargang == aargang))
+        // Fælles liste til at gemme ventelister
+        private static List<Venteliste> ventelister = new List<Venteliste>();
+
+        // GET: VentelisteController/Opretventeliste
+        [HttpGet]
+        public IActionResult Opretventeliste()
         {
-            throw new ArgumentException("Denne venteliste med" + aargang + "eksisterer allerede");
+            return View();
         }
 
-        ventelister.Add(new Venteliste { Aargang = aargang, Dato = dato });
-    }
+        // POST: VentelisteController/Opretventeliste
+        [HttpPost]
+        public IActionResult Opretventeliste(string aargang)
+        {
+            if (string.IsNullOrWhiteSpace(aargang))
+            {
+                ModelState.AddModelError("Aargang", "Årgang er påkrævet.");
+                return View();
+            }
 
-    public List<Venteliste> hentVenteLister()
-    {
-        return ventelister;
-    }
-}
+            try
+            {
+                // Kald til metoden, der tilføjer en ny venteliste
+                CreateVenteliste(aargang);
+            }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError("Aargang", ex.Message);
+                return View();
+            }
 
-public class Venteliste
-{
-    public string Aargang { get; set; }
-    public DateTime Dato { get; set; }
+            return RedirectToAction("Index");
+        }
+
+        // Opretter en ny venteliste
+        public void CreateVenteliste(string aargang)
+        {
+            // Tjek for dubletter
+            if (ventelister.Any(v => v.Aargang == aargang))
+            {
+                throw new ArgumentException("En venteliste med denne årgang eksisterer allerede.");
+            }
+
+            // Tilføj nyt ventelisteelement
+            ventelister.Add(new Venteliste(aargang, DateTime.Now));
+            
+        }
+
+        // GET: VentelisteController/Index
+        public IActionResult Index()
+        {
+            return View(ventelister);
+        }
+        // Henter alle ventelister
+        public List<Venteliste> HentVentelister()
+        {
+            return ventelister;
+        }
+    }
 }

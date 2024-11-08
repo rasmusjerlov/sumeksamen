@@ -1,0 +1,21 @@
+@model List<SumEksamen.Models.Venteliste>
+
+<h1>Venteliste</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Årgang</th>
+        <th>Oprettelsesdato</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Aargang</td>
+            <td>@item.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
+        </tr>
+    }
+    </tbody>
+</table>
