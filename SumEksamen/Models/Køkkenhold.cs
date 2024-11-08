@@ -13,6 +13,10 @@ public class Køkkenhold
             throw new ArgumentException("Der skal være 4 elever");
         }
 
+        if (_currentUgeNr == 53)
+        {
+            _currentUgeNr = 1;
+        }
         _ugeNr = _currentUgeNr++;
         _holdListe.AddRange(elever);
     }
