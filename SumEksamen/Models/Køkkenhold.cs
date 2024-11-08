@@ -40,5 +40,11 @@ public class Køkkenhold
         return _holdListe;
     }
 
+    public List<Elev> HoldListe
+    {
+        get => _holdListe;
+        set => _holdListe = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
     public int UgeNr => _ugeNr;
 }
