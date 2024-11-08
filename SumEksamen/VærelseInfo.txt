@@ -1,4 +1,3 @@
-
 Pige Værelser
     2. mands værelser
        -Antal: 0
