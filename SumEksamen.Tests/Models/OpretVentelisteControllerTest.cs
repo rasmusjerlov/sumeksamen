@@ -24,5 +24,6 @@ public class OpretVentelisteControllerTest
         vc.CreateVenteliste("25/26");
         
         Assert.Throws<ArgumentException>(() => vc.CreateVenteliste("25/26"));
+        //
     }
 }
