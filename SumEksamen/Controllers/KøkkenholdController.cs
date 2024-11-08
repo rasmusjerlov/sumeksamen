@@ -10,7 +10,8 @@ namespace SumEksamen.Controllers
     public class KøkkenholdController : Controller
     {
         private static List<Elev> elevListe = new List<Elev>();
-
+        private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
+        
         // GET: KøkkenholdController
         public ActionResult Index()
         {
@@ -65,7 +66,7 @@ namespace SumEksamen.Controllers
         [Route("createKøkkenhold")]
         public IActionResult CreateKøkkenhold()
         {
-            var køkkenholdListe = new List<Køkkenhold>();
+            køkkenholdListe.Clear();
             var drenge = elevListe.Where(e => e.Køn == Køn.dreng).ToList();
             var piger = elevListe.Where(e => e.Køn == Køn.pige).ToList();
 
@@ -91,5 +92,43 @@ namespace SumEksamen.Controllers
 
             return View("Køkkenhold", køkkenholdListe);
         }
+
+
+        [HttpPost]
+        [Route("exportToExcel")]
+        public IActionResult ExportToExcel()
+        {
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Køkkenhold");
+
+                // Add headers
+                worksheet.Cells[1, 1].Value = "Køkkenhold";
+                worksheet.Cells[1, 2].Value = "Navn";
+                worksheet.Cells[1, 3].Value = "Køn";
+
+                int row = 2;
+                foreach (var køkkenhold in køkkenholdListe)
+                {
+                    foreach (var elev in køkkenhold.GetElevListe())
+                    {
+                        worksheet.Cells[row, 1].Value = køkkenhold.UgeNr;
+                        worksheet.Cells[row, 2].Value = elev.Navn;
+                        worksheet.Cells[row, 3].Value = elev.Køn.ToString();
+                        row++;
+                    }
+                    row++;
+                }
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+
+                string excelName = $"Køkkenhold-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+            }
+        }
+        
+        
     }
 }
