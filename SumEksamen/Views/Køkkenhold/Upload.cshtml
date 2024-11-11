@@ -1,13 +1,31 @@
-@{
-    ViewData["Title"] = "Home Page";
-}
+@model List<SumEksamen.Models.Elev>
 
-@model SumEksamen.Models.FileUploadViewModel
-
-<form asp-action="UploadExcel" asp-controller="Køkkenhold" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="file">Upload Excel File</label>
-        <input type="file" name="file" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Upload</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Excel</title>
+</head>
+<body>
+<h2>Upload Excel File</h2>
+<form asp-action="UploadExcel" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
 </form>
+
+@if (Model != null && Model.Count > 0)
+{
+    <h2>List of Elever</h2>
+    <ul>
+        @foreach (var elev in Model)
+        {
+            <li>@elev.Navn - @elev.Køn</li>
+        }
+    </ul>
+
+    <h2>Create Køkkenhold</h2>
+    <form asp-action="CreateKøkkenhold" method="post">
+        <button type="submit">Create Køkkenhold</button>
+    </form>
+}
+</body>
+</html>

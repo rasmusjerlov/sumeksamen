@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Tilføj Elev";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tilføj Elev</title>
+</head>
+<body>
+<h2>Tilføj en elev til årgang</h2>
+
+<form asp-action="TilfoejElev" method="post">
+    <label for="navn">Navn:</label>
+    <input type="text" id="navn" name="navn" required />
+    <br>
+
+    <label for="køn">Køn:</label>
+    <select id="køn" name="køn" required>
+        <option value="dreng">Dreng</option>
+        <option value="pige">Pige</option>
+    </select>
+    <br>
+    <label for="aargang">Angiv årgang:</label>
+    <input type="text" name="aargang" id="aargang" value="@TempData["Aargang"]"/>
+    <br>
+
+    <input type="submit" value="Tilføj Elev" />
+</form>
+
+@if (TempData["Message"] != null)
+{
+    <p>@TempData["Message"]</p>
+}
+
+<h3><a href="@Url.Action("Ventelister", "Venteliste")">Tilbage til Ventelister</a></h3>
+</body>
+</html>

@@ -12,10 +12,12 @@
     <tbody>
     @foreach (var item in Model)
     {
-        <tr>
-            <td>@item.Aargang</td>
-            <td>@item.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
-        </tr>
+    <tr>
+        <td>@item.Aargang</td>
+        <td>@item.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
+    </tr>
     }
+    <h3><a href="@Url.Action("ValgForTilfoejelse", "Venteliste")">Tilføj elever til ventelisten</a></h3>
     </tbody>
 </table>
+
