@@ -124,7 +124,7 @@ namespace SumEksamen.Controllers
                 package.SaveAs(stream);
                 stream.Position = 0;
 
-                string excelName = $"Køkkenhold-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+                string excelName = $"Køkkenhold-{DateTime.Now.ToString("yyyyMM")}.xlsx";
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
         }
