@@ -1,0 +1,31 @@
+@{
+ViewData["Title"] = "Upload Elever til Venteliste";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Excel Fil</title>
+</head>
+<body>
+<h2>Upload Excel Fil</h2>
+<form asp-action="UploadExcel" method="post" enctype="multipart/form-data">
+    <label for="file">Vælg Excel-fil:</label>
+    <input type="file" name="file" id="file" required />
+    <br>
+    <label for="aargang">Angiv årgang:</label>
+    <input type="text" name="aargang" id="aargang" value="@TempData["Aargang"]"/>
+    <br>
+    <input type="submit" value="Upload" />
+</form>
+
+<h3><a href="@Url.Action("Ventelister", "Venteliste")">Tilbage til Ventelister</a></h3>
+
+@if (TempData["Message"] != null)
+{
+<p>@TempData["Message"]</p>
+}
+</body>
+</html>
+
+

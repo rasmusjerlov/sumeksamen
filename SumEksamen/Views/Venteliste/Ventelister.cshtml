@@ -1,0 +1,36 @@
+
+@{
+    ViewData["Title"] = "Venteliste";
+}
+
+@model List<SumEksamen.Models.Venteliste>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ventelister</title>
+</head>
+<body>
+<h2>Ventelister</h2>
+
+@foreach(var venteliste in Model)
+{
+<h3>Årgang: @venteliste.Aargang (Oprettet: @venteliste.OprettelsesDato)</h3>
+<ul>
+    @foreach(var elev in venteliste.hentElever())
+    {
+        <li>@elev.Navn - @elev.Køn</li>
+    }
+</ul>
+<p>
+    <a href="@Url.Action("TilfoejElev", "Venteliste", new { aargang = venteliste.Aargang })">Tilføj elev til denne venteliste</a>
+</p>
+<p>
+    <a href="@Url.Action("UploadElever", "Venteliste", new { aargang = venteliste.Aargang })">Upload elever til denne venteliste</a>
+</p>
+}
+
+<h3><a href="@Url.Action("OpretVenteliste", "Venteliste")">Opret en ny venteliste</a></h3>
+</body>
+</html>
+

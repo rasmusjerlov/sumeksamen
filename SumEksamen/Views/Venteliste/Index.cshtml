@@ -1,0 +1,23 @@
+@model List<SumEksamen.Models.Venteliste>
+
+<h1>Venteliste</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Årgang</th>
+        <th>Oprettelsesdato</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Aargang</td>
+        <td>@item.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
+    </tr>
+    }
+    <h3><a href="@Url.Action("ValgForTilfoejelse", "Venteliste")">Tilføj elever til ventelisten</a></h3>
+    </tbody>
+</table>
+
