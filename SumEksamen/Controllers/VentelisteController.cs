@@ -199,6 +199,5 @@ namespace SumEksamen.Controllers
             return RedirectToAction("Ventelister", new { aargang = aargang });
         }
         
-
     }
 }
