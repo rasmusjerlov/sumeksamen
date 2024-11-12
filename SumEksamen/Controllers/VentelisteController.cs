@@ -40,53 +40,46 @@ namespace SumEksamen.Controllers
                 return View();
             }
 
-            try
+            if (ventelister.Any(v => v.Aargang == aargang))
             {
-                // Kald til metoden, der tilføjer en ny venteliste
-                CreateVenteliste(aargang);
-            }
-            catch (ArgumentException ex)
-            {
-                ModelState.AddModelError("Aargang", ex.Message);
+                ModelState.AddModelError("Aargang", "En venteliste med denne årgang eksisterer allerede.");
                 return View();
             }
 
-            return RedirectToAction("Index");
-        }
-
-        // Opretter en ny venteliste
-        public void CreateVenteliste(string aargang)
-        {
-            // Tjek for dubletter
-            if (ventelister.Any(v => v.Aargang == aargang))
+            
+            var venteliste = new Venteliste(aargang, DateTime.Now)
             {
-                throw new ArgumentException("En venteliste med denne årgang eksisterer allerede.");
-            }
+                Aargang = aargang,
+                OprettelsesDato = DateTime.Now
+            };
 
-            // Tilføj nyt ventelisteelement
-            ventelister.Add(new Venteliste(aargang, DateTime.Now));
+            ventelister.Add(venteliste);
 
+            
+            return RedirectToAction("Ventelister");
         }
+
         
-        // GET: VentelisteController/Index
-        public IActionResult Index()
-        {
-            return View(ventelister);
-        }
-        // Henter alle ventelister
+       
         public List<Venteliste> HentVentelister()
         {
             return ventelister;
         }
     
         
-        [HttpGet]
-        [Route("venteliste/valg")]
-        public IActionResult ValgForTilfoejelse()
+        
+        public IActionResult VentelisteDetaljer(string aargang)
         {
             
-            return View();
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            if (venteliste == null)
+            {
+                return NotFound($"Venteliste for årgang {aargang} ikke fundet.");
+            }
+
+            return View(venteliste);  
         }
+
 
 
         
@@ -95,7 +88,7 @@ namespace SumEksamen.Controllers
         public IActionResult TilfoejElev(string aargang)
         {
             
-            ViewData["Aargang"] = aargang;
+            ViewBag.Ventelister = ventelister;
             return View();
         }
 
@@ -109,16 +102,22 @@ namespace SumEksamen.Controllers
                 return BadRequest("Alle felter skal udfyldes.");
             }
 
+            
             var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
             if (venteliste == null)
             {
+                
                 return NotFound($"Venteliste for årgang {aargang} ikke fundet.");
             }
 
             try
             {
                 var elevKøn = (Køn)Enum.Parse(typeof(Køn), køn, true);
-                var elev = new Elev(navn, elevKøn);
+                var elev = new Elev(navn, elevKøn)
+                {
+                    Navn = navn,
+                    Køn = elevKøn
+                };
 
                 venteliste.tilfojElev(elev); 
         
@@ -130,6 +129,7 @@ namespace SumEksamen.Controllers
             }
         }
 
+
         
         
 
@@ -137,6 +137,7 @@ namespace SumEksamen.Controllers
         [Route("venteliste/upload")]
         public IActionResult UploadElever()
         {
+            ViewBag.Ventelister = ventelister;
             return View();
         }
         
