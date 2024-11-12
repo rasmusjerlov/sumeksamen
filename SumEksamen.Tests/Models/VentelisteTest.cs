@@ -16,7 +16,7 @@ public class VentelisteTest
         e1 = new Elev("Rasmus", 14, Køn.dreng);
         e2 = new Elev("Abukar", 12, Køn.dreng);
         e3 = new Elev("Mikkel", 18, Køn.dreng);
-        vl = new Venteliste("24/25", DateTime.Now);
+        vl = new Venteliste("24/25");
     }
 
     [Fact]

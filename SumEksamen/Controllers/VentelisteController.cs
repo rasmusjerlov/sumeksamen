@@ -64,7 +64,7 @@ namespace SumEksamen.Controllers
             }
 
             // Tilføj nyt ventelisteelement
-            ventelister.Add(new Venteliste(aargang, DateTime.Now));
+            ventelister.Add(new Venteliste(aargang));
 
         }
         

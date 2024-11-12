@@ -11,9 +11,9 @@
     &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteTest.tilfojElever&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5ce53b89_002D176d_002D4df0_002D99bf_002D2b1f46e3497b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="tilfojElever #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5ce53b89_002D176d_002D4df0_002D99bf_002D2b1f46e3497b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="tilfojElever #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.KøkkenholdTest.TC1_KøkkenholdConstructorMedFireElever&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6531c5d6_002D66b4_002D4ba4_002D857f_002D9f5c11819f12/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="VentelisteTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
@@ -26,7 +26,19 @@
     &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ca5753e3_002Dd8c7_002D4413_002D96bd_002D080640bd9838/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="tilfojElever" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c310fcb6_002D4be4_002D4c6e_002Dbc31_002D105c870c3b91/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MixKøkkenhold" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.KøkkenholdTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.ElevTest.OpretElev&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.VentelisteTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.KøkkenholdControllerTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.KøkkenholdControllerTests.UploadExcel_ValidFile_ReturnsViewWithElevList&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.KøkkenholdControllerTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.VentelisteControllerTest.TC1_HentVenteliste&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.VentelisteControllerTest&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ca5753e3_002Dd8c7_002D4413_002D96bd_002D080640bd9838/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="tilfojElever" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F18B4A64-C469-44B8-BC84-774B237F868F::net8.0::SumEksamen.Tests.VentelisteControllerTest&lt;/TestId&gt;
