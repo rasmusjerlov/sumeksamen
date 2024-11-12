@@ -1,0 +1,34 @@
+@model SumEksamen.Models.Venteliste
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detaljer om Venteliste @Model.Aargang</title>
+</head>
+<body>
+
+<h2>Venteliste - Årgang: @Model.Aargang</h2>
+<p>Oprettelsesdato: @Model.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</p>
+
+<h3>Elever på ventelisten:</h3>
+<ul>
+    @foreach(var elev in Model.hentElever())
+    {
+    <li>@elev.Navn - @elev.Køn</li>
+    }
+</ul>
+
+<!-- Links til at tilføje elev eller uploade elever -->
+<p>
+    <a href="@Url.Action("TilfoejElev", "Venteliste", new { aargang = Model.Aargang })">Tilføj elev til denne venteliste</a>
+</p>
+<p>
+    <a href="@Url.Action("UploadElever", "Venteliste", new { aargang = Model.Aargang })">Upload elever til denne venteliste</a>
+</p>
+
+<h3><a href="@Url.Action("Ventelister", "Venteliste")">Tilbage til Ventelister</a></h3>
+
+</body>
+</html>
+
+

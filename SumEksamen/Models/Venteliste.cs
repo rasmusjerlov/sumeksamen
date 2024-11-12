@@ -25,6 +25,31 @@ public class Venteliste
         }
     }
 
+    public void sletElev(int elevNr)
+    {
+        if (findElev(elevNr) != 0)
+        {
+            elever.RemoveAt(findElev(elevNr));
+        }
+        else
+        {
+            throw new ArgumentException("Elev findes ikke.");
+        };
+    }
+
+    public int findElev(int elevNr)
+    {
+        foreach (var elev in elever)
+        {
+            if (elev.ElevNr == elevNr)
+            {
+                return elever.IndexOf(elev);
+            }
+        }
+
+        return 0;
+    }
+
     public List<Elev> hentElever()
     {
         return elever;
