@@ -5,7 +5,7 @@ using SumEksamen.Models;
 
 public class BordController : Controller
 {
-    private static List<Bord> borde = new List<Bord>();
+    public static List<Bord> borde = new List<Bord>();
     
     
     //henter bordene

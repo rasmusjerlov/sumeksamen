@@ -15,6 +15,7 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.OpretVentelisteControllerTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Models.BordTest.TC1_OpretBordTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Models.BordTest.TC2_AendreAntalPladserTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6531c5d6_002D66b4_002D4ba4_002D857f_002D9f5c11819f12/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="VentelisteTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
