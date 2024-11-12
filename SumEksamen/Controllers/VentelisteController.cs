@@ -14,9 +14,6 @@ namespace SumEksamen.Controllers
     {
         private static List<Venteliste> ventelister = new List<Venteliste>();
         
-        
-        
-
         // GET: Venteliste
         public ActionResult Ventelister()
         {
@@ -64,7 +61,7 @@ namespace SumEksamen.Controllers
             }
 
             // Tilføj nyt ventelisteelement
-            ventelister.Add(new Venteliste(aargang, DateTime.Now));
+            ventelister.Add(new Venteliste(aargang));
 
         }
         
@@ -200,8 +197,19 @@ namespace SumEksamen.Controllers
         
         public Venteliste HentVenteliste(string aargang)
         {
+            if (!ventelister.Any(v => v.Aargang == aargang))
+            {
+                throw new ArgumentException("Venteliste findes ikke.");
+            }
+            
+            
             return ventelister.FirstOrDefault(v => v.Aargang == aargang);
-        } 
+        }
+
+        public static void ResetVenteliste()
+        {
+            ventelister.Clear();
+        }
 
     }
 }

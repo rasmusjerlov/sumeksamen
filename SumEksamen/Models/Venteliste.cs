@@ -4,13 +4,12 @@ public class Venteliste
 {
    
     public string Aargang { get; set; }
-    public DateTime OprettelsesDato { get; set; }
+ 
     private List<Elev> elever;
 
-    public Venteliste(string aargang, DateTime oprettelsesDato)
+    public Venteliste(string aargang)
     {
         Aargang = aargang;
-        OprettelsesDato = oprettelsesDato;
         elever = new List<Elev>();
     }
 

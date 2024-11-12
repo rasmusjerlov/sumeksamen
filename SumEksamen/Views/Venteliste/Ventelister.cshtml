@@ -15,7 +15,7 @@
 
 @foreach(var venteliste in Model)
 {
-<h3>Årgang: @venteliste.Aargang (Oprettet: @venteliste.OprettelsesDato)</h3>
+<h3>Årgang: @venteliste.Aargang</h3>
 <ul>
     @foreach(var elev in venteliste.hentElever())
     {
