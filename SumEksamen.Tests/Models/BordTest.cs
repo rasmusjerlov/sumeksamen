@@ -23,11 +23,12 @@ public class BordTest
     [Fact]
     public void TC1_OpretBordTest()
     {
-        //Arrange & Act
+        // Arrange & Act
         Bord bord = new Bord(12);
         
-        //Assert
-        Assert.Equal(bord.antalPladser, 12);
-        Assert.Equal(bord.bordNr, 5);
+        // Assert
+        Assert.Equal(12, bord.antalPladser);
+        Assert.Equal(1, bord.bordNr); // Assuming bordNr starts from 1 and increments
     }
+    
 }

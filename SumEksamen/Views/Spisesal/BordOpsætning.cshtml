@@ -1,0 +1,99 @@
+@{
+ViewData["Title"] = "Spisesal";
+}
+
+<h1>Bordopsætning</h1>
+
+@model List<SumEksamen.Models.Bord>
+
+<div class="layout" id="layout">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+    var bord = Model[i];
+    <div class="bord" id="bord-@bord.bordNr" onclick="editBord(@bord.bordNr, @bord.antalPladser)">
+        <div class="bord-nummer">Bord @bord.bordNr</div>
+
+        @{
+        int pladserPerSide = bord.antalPladser / 2;
+        int extraSeat = bord.antalPladser % 2;
+
+        for (int j = 0; j < pladserPerSide + extraSeat; j++)
+        {
+        double venstre = (j + 1) * (100 / (pladserPerSide + extraSeat + 1));
+        <div class="plads" style="top: -15px; left: @($"{venstre}%");"></div>
+        }
+
+        for (int j = 0; j < pladserPerSide; j++)
+        {
+        double venstre = (j + 1) * (100 / (pladserPerSide + 1));
+        <div class="plads" style="bottom: -15px; left: @($"{venstre}%");"></div>
+        }
+        }
+    </div>
+    }
+</div>
+
+<div id="editForm" style="display:none;">
+    <h2>Edit Bord</h2>
+    <form id="editBordForm" method="post" action="/Bord/UpdateBord">
+        <input type="hidden" id="bordNr" name="bordNr">
+        <label for="antalPladser">Antal Pladser:</label>
+        <input type="number" id="antalPladser" name="antalPladser" required><br>
+        <button type="submit">Save</button>
+        <button type="button" onclick="cancelEdit()">Cancel</button>
+    </form>
+</div>
+
+<style>
+    .layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    .bord {
+        position: relative;
+        width: 150px;
+        height: 80px;
+        background-color: #8B4513;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .plads {
+        width: 20px;
+        height: 20px;
+        background-color: #FFD700;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .plads:hover {
+        background-color: #FFA500;
+        cursor: pointer;
+    }
+
+    .bord-nummer {
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        position: absolute;
+    }
+</style>
+
+<script>
+    function editBord(bordNr, antalPladser) {
+        document.getElementById('editForm').style.display = 'block';
+        document.getElementById('bordNr').value = bordNr;
+        document.getElementById('antalPladser').value = antalPladser;
+    }
+
+    function cancelEdit() {
+        document.getElementById('editForm').style.display = 'none';
+    }
+</script>

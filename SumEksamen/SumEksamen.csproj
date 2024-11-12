@@ -14,11 +14,9 @@
 
     <ItemGroup>
       <Folder Include="Views\Køkkenhold\" />
+      <Folder Include="Views\Spisesal\" />
       <Folder Include="Views\Venteliste\" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="SumEksamen.csproj" />
-    </ItemGroup>
+    
 
 </Project>
