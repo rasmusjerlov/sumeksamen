@@ -87,14 +87,12 @@ namespace SumEksamen.Controllers
             
             return View();
         }
-
-
+        
         
         [HttpGet]
         [Route("venteliste/tilfojElev")]
         public IActionResult TilfoejElev(string aargang)
         {
-            
             ViewData["Aargang"] = aargang;
             return View();
         }
