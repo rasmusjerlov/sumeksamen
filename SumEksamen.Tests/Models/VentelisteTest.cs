@@ -18,6 +18,8 @@ public class VentelisteTest
         e3 = new Elev("Mikkel", 18, Køn.dreng);
         vl = new Venteliste("24/25");
     }
+    
+    
 
     [Fact]
     public void TC1_tilfojElev()
