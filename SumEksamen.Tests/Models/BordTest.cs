@@ -27,7 +27,7 @@ public class BordTest
         Bord bord = new Bord(12);
         
         //Assert
-        Assert.Equal(bord.antalPladser, 12);
-        Assert.Equal(bord.bordNr, 5);
+        Assert.Equal(12, bord.antalPladser);
+        Assert.Equal(5, bord.bordNr);
     }
 }
