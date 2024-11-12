@@ -3,8 +3,8 @@
 public class Bord
 {
     private static int currentBordNr { get; set; } = 1;
-    private int bordNr { get; set; }
-    private int antalPladser { get; set; }
+    public int bordNr { get; set; }
+    public int antalPladser { get; set; }
     private List<Elev> elever { get; set; }
     
     public Bord()

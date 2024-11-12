@@ -14,16 +14,20 @@ public class BordTest
     
     public BordTest()
     {
-        b1 = new Bord();
-        b2 = new Bord();
-        b3 = new Bord();
-        b4 = new Bord();
+        b1 = new Bord(12);
+        b2 = new Bord(12);
+        b3 = new Bord(8);
+        b4 = new Bord(8);
     }
     
     [Fact]
     public void TC1_OpretBordTest()
     {
+        //Arrange & Act
+        Bord bord = new Bord(12);
         
-        
+        //Assert
+        Assert.Equal(bord.antalPladser, 12);
+        Assert.Equal(bord.bordNr, 5);
     }
 }
