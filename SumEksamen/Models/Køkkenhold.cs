@@ -13,6 +13,10 @@ public class Køkkenhold
             throw new ArgumentException("Der skal være 4 elever");
         }
 
+        if (_currentUgeNr == 53)
+        {
+            _currentUgeNr = 1;
+        }
         _ugeNr = _currentUgeNr++;
         _holdListe.AddRange(elever);
     }
@@ -34,6 +38,12 @@ public class Køkkenhold
     public List<Elev> GetElevListe()
     {
         return _holdListe;
+    }
+
+    public List<Elev> HoldListe
+    {
+        get => _holdListe;
+        set => _holdListe = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public int UgeNr => _ugeNr;
