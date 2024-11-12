@@ -9,10 +9,9 @@ public class Elev
     private int _elevNr;
     
     
-    public Elev(string navn, int alder, Status status, Køn køn, int elevNr)
+    public Elev(int elevNr, string navn, Køn køn, Status status)
     {
         _navn = navn;
-        _alder = alder;
         _status = status;
         _køn = køn;
         _elevNr = elevNr;

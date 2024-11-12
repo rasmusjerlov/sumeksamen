@@ -79,10 +79,32 @@ namespace SumEksamen.Controllers
 
             return View(venteliste);  
         }
-
-
-
         
+
+        [HttpGet]
+        [Route("venteliste/AktiveElever")]
+        public IActionResult AktiveElever()
+        {
+            var year = DateTime.Now.Year;
+            var year2 = year + 1;
+            String s = year.ToString() + "/" + year2.ToString();
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == s);
+            if (venteliste == null)
+            {
+            
+                return NotFound($"Elevliste for årgang {s} ikke fundet.");
+            }
+
+            var elevKøn = venteliste.hentElever()
+                .Where(e => e.Køn == Køn.dreng)
+                .ToList();
+
+            ViewBag.Aargang = s;
+
+            return View(elevKøn);
+        }
+
+
         [HttpGet]
         [Route("venteliste/tilfojElev")]
         public IActionResult TilfoejElev(string aargang)
