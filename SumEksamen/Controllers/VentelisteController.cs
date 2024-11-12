@@ -197,6 +197,11 @@ namespace SumEksamen.Controllers
             return RedirectToAction("Ventelister", new { aargang = aargang });
         }
         
+        
+        public Venteliste HentVenteliste(string aargang)
+        {
+            return ventelister.FirstOrDefault(v => v.Aargang == aargang);
+        } 
 
     }
 }
