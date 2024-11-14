@@ -13,11 +13,10 @@ namespace SumEksamen.Controllers
     public class VentelisteController : Controller
     {
         private static List<Venteliste> ventelister = new List<Venteliste>();
-        
-        
+        //private static List<Elev> elevListe = new List<Elev>(135);
         
 
-        // GET: Venteliste
+    // GET: Venteliste
         public ActionResult Ventelister()
         {
             return View(ventelister);  // Ændret til 'Ventelister'
@@ -244,6 +243,27 @@ namespace SumEksamen.Controllers
             ventelister.Clear();
         }
         
+        
+        public List<Elev> VentelisteTilElevliste(string aargang)
+        {
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            if (venteliste == null)
+            {
+                throw new ArgumentException($"VenteListe for årgang {aargang} ikke fundet.");
+            }
+
+            List<Elev> elevListe = new List<Elev>(136);
+            elevListe = venteliste.hentElever()
+                .Take(136).ToList();    
+           
+            foreach (var elev in elevListe)
+            {
+                elev.Status = Status.Aktiv;
+            }
+
+            return elevListe;
+            
+        }
 
     }
 }
