@@ -33,9 +33,9 @@ public class Venteliste
 
     public void sletElev(int elevNr)
     {
-        if (findElev(elevNr) != 0)
+        if (findElev(elevNr) != null)
         {
-            elever.RemoveAt(findElev(elevNr));
+            elever.Remove(findElev(elevNr));
         }
         else
         {
@@ -43,17 +43,21 @@ public class Venteliste
         };
     }
 
-    public int findElev(int elevNr)
+    public Elev findElev(int elevNr)
     {
         foreach (var elev in elever)
         {
             if (elev.ElevNr == elevNr)
             {
-                return elever.IndexOf(elev);
+                return elev;
+            }
+            else
+            {
+                throw new ArgumentException("Elev findes ikke.");
             }
         }
 
-        return 0;
+        return null;
     }
 
     public List<Elev> hentElever()
