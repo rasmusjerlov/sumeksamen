@@ -254,7 +254,8 @@ namespace SumEksamen.Controllers
 
             List<Elev> elevListe = new List<Elev>(136);
             elevListe = venteliste.hentElever()
-                .Take(136).ToList();    
+                                  .Take(136)
+                                  .ToList();    
            
             foreach (var elev in elevListe)
             {

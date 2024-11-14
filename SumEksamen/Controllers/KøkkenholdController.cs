@@ -9,6 +9,7 @@ namespace SumEksamen.Controllers
 {
     public class KøkkenholdController : Controller
     {
+        VentelisteController ventelisteController = new VentelisteController();
         private static List<Elev> elevListe = new List<Elev>();
         private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
         
@@ -127,6 +128,11 @@ namespace SumEksamen.Controllers
                 string excelName = $"Køkkenhold-{DateTime.Now.ToString("yyyyMM")}.xlsx";
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
+        }
+
+        public void ElevlisteFraVenteliste(string aargang)
+        {
+            elevListe = ventelisteController.VentelisteTilElevliste(aargang);
         }
         
         
