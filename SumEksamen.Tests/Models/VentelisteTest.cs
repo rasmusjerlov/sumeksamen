@@ -56,6 +56,7 @@ public class VentelisteTest
     [Fact]
     public void TC1_sletElev()
     {
+        
         //Act
         el.tilfojElev(e4);
         el.tilfojElev(e5);
@@ -66,11 +67,12 @@ public class VentelisteTest
         //Assert
         Assert.True(el.hentElever().Contains(e4));
         Assert.False(el.hentElever().Contains(e5));
+        Assert.True(el.hentElever().Contains(e6));
         
     }
     
     [Fact]
-    public void TC1_sletElevFejl()
+    public void TC2_sletElevFejl()
     {
         //Act
         el.tilfojElev(e4);
@@ -81,6 +83,40 @@ public class VentelisteTest
         
         //Assert
         Assert.Throws<ArgumentException>(() => el.sletElev(e6.ElevNr));
+        Assert.True(el.hentElever().Contains(e4));
+        Assert.True(el.hentElever().Contains(e5));
+        Assert.False(el.hentElever().Contains(e6));
+        
 
     }
+
+    [Fact]
+    public void TC1_findElev()
+    {
+        //Act
+        el.tilfojElev(e4);
+        el.tilfojElev(e5);
+        el.tilfojElev(e6);
+
+        //Assert
+        Assert.Equal(e4, el.findElev(e4.ElevNr));
+        Assert.Equal(e5, el.findElev(e5.ElevNr));
+        Assert.Equal(e6, el.findElev(e6.ElevNr));
+    }
+    
+    [Fact]
+    public void TC2_findElevFejl()
+    {
+        //Act
+        el.tilfojElev(e4);
+        el.tilfojElev(e5);
+        el.tilfojElev(e6);
+
+        //Assert
+        Assert.Equal(e4, el.findElev(e4.ElevNr));
+        Assert.Equal(e5, el.findElev(e5.ElevNr));
+        Assert.Equal(e6, el.findElev(e6.ElevNr));
+        Assert.Throws<ArgumentException>(() => el.findElev(10));
+    }
+    
 }
