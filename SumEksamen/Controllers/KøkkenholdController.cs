@@ -10,9 +10,14 @@ namespace SumEksamen.Controllers
 {
     public class KøkkenholdController : Controller
     {
-        VentelisteController ventelisteController = new VentelisteController();
+        private readonly VentelisteController _ventelisteController;
         private static List<Elev> elevListe = new List<Elev>();
         private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
+        
+        public KøkkenholdController(VentelisteController ventelisteController)
+        {
+            _ventelisteController = ventelisteController;
+        }
         
         // GET: KøkkenholdController
         public ActionResult Index()
@@ -24,8 +29,8 @@ namespace SumEksamen.Controllers
         [Route("upload")]
         public IActionResult Upload()
         {
-            var aargangList = ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
-            ViewBag.AargangList = new SelectList(aargangList);
+            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            ViewBag.AargangList = aargangList;
             return View(elevListe);
         }
 
@@ -135,18 +140,18 @@ namespace SumEksamen.Controllers
 
         public void ElevlisteFraVenteliste(string aargang)
         {
-            elevListe = ventelisteController.VentelisteTilElevliste(aargang);
+            elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
         }
         
         public IActionResult OpretKøkkenhold(string aargang)
         {
-            var aargangList = ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
             ViewBag.AargangList = new SelectList(aargangList);
             return View();
         }
         
         [HttpPost]
-        [Route("upload")]
+        [Route("opretKøkkenholdFraVenteliste")]
         public IActionResult OpretKøkkenholdFraVenteliste(string aargang)
         {
             ElevlisteFraVenteliste(aargang);

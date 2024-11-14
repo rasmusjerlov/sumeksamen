@@ -12,11 +12,11 @@
     <button type="submit">Upload</button>
 </form>
 
-<h2>Opret KøkkenHold fra ventelistel</h2>
+<h2>Opret KøkkenHold fra venteliste</h2>
 <form asp-action="OpretKøkkenholdFraVenteliste" method="post">
     <div class="form-group">
-        <label for="selectedAargang">Vælg Årgang</label>
-        <select id="selectedAargang" name="selectedAargang" class="form-control">
+        <label for="aargang">Vælg Årgang</label>
+        <select id="aargang" name="aargang" class="form-control">
             @foreach (var aargang in ViewBag.AargangList)
             {
                 <option value="@aargang">@aargang</option>
