@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Opret Venteliste";
+ViewData["Title"] = "Opret Venteliste";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -11,14 +11,16 @@
         <label for="aargang">Årgang</label>
         <select class="form-control" id="aargang" name="aargang" required>
             <option value="" disabled selected>Vælg årgang</option>
-            <option value="2025/2026">2025/2026</option>
-            <option value="2026/2027">2026/2027</option>
-            <option value="2027/2028">2027/2028</option>
-            <option value="2028/2029">2028/2029</option>
-            <option value="2029/2030">2029/2030</option>
+            <option value="2020/2021">2020/2021</option>
+            <option value="2021/2022">2021/2022</option>
+            <option value="2022/2023">2022/2023</option>
+            <option value="2023/2024">2023/2024</option>
+            <option value="2024/2025">2024/2025</option>
         </select>
     </div>
     <div class="form-group">
+        <label for="oprettelsesDato">Oprettelses Dato</label>
+        <input type="text" class="form-control" id="oprettelsesDato" name="oprettelsesDato" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
     </div>
     <button type="submit" class="btn btn-primary">Opret Venteliste</button>
 </form>
@@ -26,22 +28,25 @@
 <a href="@Url.Action("Index", "Venteliste")" class="btn btn-secondary">Venteliste Oversigt</a>
 
 @section Scripts {
-    <script>
-        document.getElementById('ventelisteForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var selectedAargang = document.getElementById('aargang').value;
+<script>
+    document.getElementById('ventelisteForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var selectedAargang = document.getElementById('aargang').value;
 
-            fetch('/Venteliste/HentVentelister')
-                .then(response => response.json())
-                .then(data => {
-                    var duplicate = data.some(venteliste => venteliste.aargang === selectedAargang);
-                    if (duplicate) {
-                        alert('En venteliste med denne årgang eksisterer allerede.');
-                    } else {
-                        event.target.submit();
-                    }
-                })
-                .catch(error => console.error('Error fetching ventelister:', error));
-        });
-    </script>
+        fetch('/Venteliste/HentVentelister')
+            .then(response => response.json())
+            .then(data => {
+                var duplicate = data.some(venteliste => venteliste.aargang === selectedAargang);
+                if (duplicate) {
+                    alert('En venteliste med denne årgang eksisterer allerede.');
+                } else {
+                    event.target.submit();
+                }
+            })
+            .catch(error => console.error('Error fetching ventelister:', error));
+    });
+</script>
 }
+
+
+
