@@ -2,10 +2,10 @@
 
 public class Bord
 {
-    private static int currentBordNr { get; set; } = 1;
+    public static int currentBordNr { get; set; } = 1;
     public int bordNr { get; set; }
     public int antalPladser { get; set; }
-    private List<Elev> elever { get; set; }
+    public List<Elev> elever { get; set; }
     
     public Bord()
     {

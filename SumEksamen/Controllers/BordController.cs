@@ -16,6 +16,7 @@ public class BordController : Controller
             {
                 borde.Add(new Bord(12));
             }
+
             for (int i = 0; i <= 7; i++)
             {
                 borde.Add(new Bord(8));
@@ -34,6 +35,46 @@ public class BordController : Controller
         {
             bord.antalPladser = antalPladser;
         }
+
+        return RedirectToAction("Bordopsætning");
+    }
+
+    [HttpPost]
+    public IActionResult OpretBord(int bordNr, int antalPladser)
+    {
+        foreach (var bord in borde)
+        {
+            if (bord.bordNr == bordNr)
+            {
+                throw new ArgumentException("Et bord med dette ID eksisterer allerede.");
+            }
+        }
+
+        // Find the smallest available bordNr if the provided one already exists
+        int newBordNr = bordNr;
+        while (borde.Any(b => b.bordNr == newBordNr))
+        {
+            newBordNr++;
+        }
+
+        borde.Add(new Bord { bordNr = newBordNr, antalPladser = antalPladser });
+
+        return RedirectToAction("Bordopsætning");
+    }
+    
+    [HttpPost]
+    public IActionResult SletBord(int bordNr)
+    {
+        var bord = borde.FirstOrDefault(b => b.bordNr == bordNr);
+        if (bord != null)
+        {
+            borde.Remove(bord);
+        }
+        else
+        {
+            throw new ArgumentException("Et bord med dette ID findes ikke.");
+        }
+
         return RedirectToAction("Bordopsætning");
     }
 }
