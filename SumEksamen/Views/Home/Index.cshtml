@@ -4,5 +4,10 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button onclick="location.href='@Url.Action("upload", "Køkkenhold")'" style="border: none; background: none; padding: 0;">
+        <img src="~/kitchen.png" class="img-fluid" width="200" height="200" style="margin-right: 10px;"/>
+    </button>
+    <button onclick="location.href='@Url.Action("OpretVenteliste", "Venteliste")'" style="border: none; background: none; padding: 0;">
+        <img src="~/waiting-list (1).png" class="img-fluid" width="200" height="200" style="margin-left: 10px;"/>
+    </button>
 </div>

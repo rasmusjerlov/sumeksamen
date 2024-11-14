@@ -1,28 +1,60 @@
 using System;
-using Microsoft.AspNetCore.Http.HttpResults;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using SumEksamen.Controllers;
+using SumEksamen.Models;
 using Xunit;
 
-namespace SumEksamen.Tests;
+namespace SumEksamen.Tests.Controllers;
 
-public class OpretVentelisteControllerTest
+[TestSubject(typeof(VentelisteController))]
+public class VentelisteControllerTest
 {
-
+    
+    private VentelisteController vlController;
+    
+    public VentelisteControllerTest()
+    {
+        VentelisteController.ResetVenteliste();
+        vlController = new VentelisteController();
+        vlController.Opretventeliste("2025/2026");
+        vlController.TilfoejElev("2025/2026", "mikkel", "dreng");
+    }
+    
     [Fact]
     public void TC1_opretVenteliste()
     {
-        VentelisteController vc = new VentelisteController();
-        vc.OpretVenteliste("24/25");
-        
-        Assert.Contains(vc.HentVentelister(), v => v.Aargang == "24/25");
+        vlController.Opretventeliste("24/25");
+        Assert.Contains(vlController.HentVentelister(), v => v.Aargang == "24/25");
     }
 
     [Fact]
     public void TC2_opretVentelisteFejl()
     {
         VentelisteController vc = new VentelisteController();
-        vc.OpretVenteliste("25/26");
+        vlController.Opretventeliste("25/26");
         
-        Assert.Throws<ArgumentException>(() => vc.OpretVenteliste("25/26"));
+        Assert.Throws<ArgumentException>(() => vc.Opretventeliste("25/26"));
     }
+
+    
+    [Fact]
+    public void TC1_HentVenteliste()
+    {
+        //act
+        var result = vlController.HentVenteliste("2025/2026");
+        
+        //Assert
+        Assert.Equal("2025/2026", result.Aargang);
+        Assert.Equal(1, result.hentElever().Count);
+        Assert.Equal("mikkel", result.hentElever()[0].Navn);
+            
+    }
+
+    [Fact]
+    public void TC2_HentVentelisteKasterFejl()
+    {
+        Assert.Throws<ArgumentException>(() => vlController.HentVenteliste("2027/2028"));
+    }
+    
 }

@@ -118,7 +118,5 @@ namespace SumEksamen.Tests
             // Return a FormFile that uses this new, non-disposed stream
             return new FormFile(fileStream, 0, fileStream.Length, "file", "test.xlsx");
         }
-
-        
     }
 }
