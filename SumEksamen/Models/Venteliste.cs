@@ -45,19 +45,21 @@ public class Venteliste
 
     public Elev findElev(int elevNr)
     {
-        foreach (var elev in elever)
+        var elev = elever.Find(e => e.ElevNr == elevNr);
+        if (elev != null)
         {
-            if (elev.ElevNr == elevNr)
-            {
-                return elev;
-            }
-            else
-            {
-                throw new ArgumentException("Elev findes ikke.");
-            }
+            return elev;
         }
+        else
+        {
+            throw new ArgumentException("Elev findes ikke.");
+        }
+    }
 
-        return null;
+    public void updateElev(int elevNr)
+    {
+        Elev elev = findElev(elevNr);
+        
     }
 
     public List<Elev> hentElever()
