@@ -27,6 +27,7 @@
     &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.VentelisteControllerTest.TC2_opretVentelisteFejl&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.KøkkenholdControllerTests.UploadExcel_InvalidGender_ReturnsBadRequest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.VentelisteControllerTest.TC1_HentVenteliste&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.VentelisteControllerTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ca5753e3_002Dd8c7_002D4413_002D96bd_002D080640bd9838/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="tilfojElever" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
