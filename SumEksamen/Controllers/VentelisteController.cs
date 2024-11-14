@@ -47,10 +47,10 @@ namespace SumEksamen.Controllers
             }
 
             
-            var venteliste = new Venteliste(aargang, DateTime.Now)
+            var venteliste = new Venteliste(aargang)
             {
                 Aargang = aargang,
-                OprettelsesDato = DateTime.Now
+                
             };
 
             ventelister.Add(venteliste);
@@ -220,6 +220,22 @@ namespace SumEksamen.Controllers
             } 
             
             return RedirectToAction("Ventelister", new { aargang = aargang });
+        }
+        
+        public Venteliste HentVenteliste(string aargang)
+        {
+            if (!ventelister.Any(v => v.Aargang == aargang))
+            {
+                throw new ArgumentException("Venteliste findes ikke.");
+            }
+            
+            
+            return ventelister.FirstOrDefault(v => v.Aargang == aargang);
+        }
+
+        public static void ResetVenteliste()
+        {
+            ventelister.Clear();
         }
         
 

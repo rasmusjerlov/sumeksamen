@@ -17,14 +17,14 @@ public class VentelisteControllerTest
     {
         VentelisteController.ResetVenteliste();
         vlController = new VentelisteController();
-        vlController.CreateVenteliste("2025/2026");
+        vlController.Opretventeliste("2025/2026");
         vlController.TilfoejElev("2025/2026", "mikkel", "dreng");
     }
     
     [Fact]
     public void TC1_opretVenteliste()
     {
-        vlController.CreateVenteliste("24/25");
+        vlController.Opretventeliste("24/25");
         Assert.Contains(vlController.HentVentelister(), v => v.Aargang == "24/25");
     }
 
@@ -32,9 +32,9 @@ public class VentelisteControllerTest
     public void TC2_opretVentelisteFejl()
     {
         VentelisteController vc = new VentelisteController();
-        vc.CreateVenteliste("25/26");
+        vlController.Opretventeliste("25/26");
         
-        Assert.Throws<ArgumentException>(() => vc.CreateVenteliste("25/26"));
+        Assert.Throws<ArgumentException>(() => vc.Opretventeliste("25/26"));
     }
 
     
