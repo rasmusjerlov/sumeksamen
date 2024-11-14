@@ -1,36 +1,28 @@
-
-@{
-    ViewData["Title"] = "Venteliste";
-}
-
 @model List<SumEksamen.Models.Venteliste>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ventelister</title>
-</head>
-<body>
-<h2>Ventelister</h2>
+<h1>Venteliste</h1>
 
-@foreach(var venteliste in Model)
-{
-<h3>Årgang: @venteliste.Aargang (Oprettet: @venteliste.OprettelsesDato)</h3>
-<ul>
-    @foreach(var elev in venteliste.hentElever())
+<table class="table">
+    <thead>
+    <tr>
+        <th>Årgang</th>
+        <th>Oprettelsesdato</th>
+        <th>Handlinger</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
     {
-        <li>@elev.Navn - @elev.Køn</li>
+    <tr>
+        <td>@item.Aargang</td>
+        <td>@item.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
+        <td>
+            <a href="@Url.Action("VentelisteDetaljer", "Venteliste", new { aargang = item.Aargang })">Se detaljer</a>
+        </td>
+    </tr>
     }
-</ul>
-<p>
-    <a href="@Url.Action("TilfoejElev", "Venteliste", new { aargang = venteliste.Aargang })">Tilføj elev til denne venteliste</a>
-</p>
-<p>
-    <a href="@Url.Action("UploadElever", "Venteliste", new { aargang = venteliste.Aargang })">Upload elever til denne venteliste</a>
-</p>
-}
+    </tbody>
+</table>
 
 <h3><a href="@Url.Action("OpretVenteliste", "Venteliste")">Opret en ny venteliste</a></h3>
-</body>
-</html>
 

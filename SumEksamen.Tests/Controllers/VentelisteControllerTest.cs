@@ -12,7 +12,7 @@ public class OpretVentelisteControllerTest
     public void TC1_opretVenteliste()
     {
         VentelisteController vc = new VentelisteController();
-        vc.CreateVenteliste("24/25");
+        vc.OpretVenteliste("24/25");
         
         Assert.Contains(vc.HentVentelister(), v => v.Aargang == "24/25");
     }
@@ -21,8 +21,8 @@ public class OpretVentelisteControllerTest
     public void TC2_opretVentelisteFejl()
     {
         VentelisteController vc = new VentelisteController();
-        vc.CreateVenteliste("25/26");
+        vc.OpretVenteliste("25/26");
         
-        Assert.Throws<ArgumentException>(() => vc.CreateVenteliste("25/26"));
+        Assert.Throws<ArgumentException>(() => vc.OpretVenteliste("25/26"));
     }
 }
