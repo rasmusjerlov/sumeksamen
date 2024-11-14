@@ -1,7 +1,4 @@
-@{
-ViewData["Title"] = "Upload Elever til Venteliste";
-}
-
+@model SumEksamen.Models.Venteliste
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,19 +10,25 @@ ViewData["Title"] = "Upload Elever til Venteliste";
     <label for="file">Vælg Excel-fil:</label>
     <input type="file" name="file" id="file" required />
     <br>
-    <label for="aargang">Angiv årgang:</label>
-    <input type="text" name="aargang" id="aargang" value="@TempData["Aargang"]"/>
+
+    <label for="aargang">Vælg venteliste (årgang):</label>
+    <select id="aargang" name="aargang" required>
+        <option value="" disabled selected>Vælg årgang</option>
+
+        @foreach (var venteliste in ViewBag.Ventelister)
+        {
+        <option value="@venteliste.Aargang">@venteliste.Aargang</option>
+        }
+    </select>
     <br>
+
     <input type="submit" value="Upload" />
 </form>
 
 <h3><a href="@Url.Action("Ventelister", "Venteliste")">Tilbage til Ventelister</a></h3>
 
-@if (TempData["Message"] != null)
-{
-<p>@TempData["Message"]</p>
-}
 </body>
 </html>
+
 
 

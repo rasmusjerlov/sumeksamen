@@ -6,7 +6,16 @@ public class Elev
     private int _alder;
     private Status _status;
     private Køn _køn;
+    private int _elevNr;
     
+    
+    public Elev(int elevNr, string navn, Køn køn, Status status)
+    {
+        _navn = navn;
+        _status = status;
+        _køn = køn;
+        _elevNr = elevNr;
+    }
     public Elev(string navn, int alder, Status status, Køn køn)
     {
         _navn = navn;
@@ -53,9 +62,15 @@ public class Elev
         set => _køn = value;
     }
     
+    public int ElevNr
+    {
+        get => _elevNr;
+        set => _elevNr = value;
+    }
+    
     public override string ToString()
     {
-        return $"Navn: {_navn}, Alder: {_alder}, Status: {_status}";
+        return $"ElevNr: {_elevNr}, Navn: {_navn}, Alder: {_alder}, Køn: {_køn}, Status: {_status}";
     }
     
 }

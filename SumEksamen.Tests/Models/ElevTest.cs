@@ -18,4 +18,5 @@ public class ElevTest
         Assert.Equal("Mikkel", elev.Navn);
         Assert.Equal(Køn.dreng, elev.Køn);
     }
+    
 }

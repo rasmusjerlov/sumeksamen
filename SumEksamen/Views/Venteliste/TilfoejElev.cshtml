@@ -1,16 +1,8 @@
-@{
-    ViewData["Title"] = "Tilføj Elev";
-}
+@model SumEksamen.Models.Venteliste
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tilføj Elev</title>
-</head>
-<body>
-<h2>Tilføj en elev til årgang</h2>
+<h2>Tilføj Elev</h2>
 
-<form asp-action="TilfoejElev" method="post">
+<form method="post" action="/venteliste/tilfojElev">
     <label for="navn">Navn:</label>
     <input type="text" id="navn" name="navn" required />
     <br>
@@ -21,19 +13,19 @@
         <option value="pige">Pige</option>
     </select>
     <br>
-    <label for="aargang">Angiv årgang:</label>
-    <input type="text" name="aargang" id="aargang" value="@TempData["Aargang"]"/>
-    
+
+    <label for="aargang">Vælg venteliste (årgang):</label>
+    <select id="aargang" name="aargang" required>
+        <option value="" disabled selected>Vælg årgang</option>
+
+        @foreach (var venteliste in ViewBag.Ventelister)
+        {
+            <option value="@venteliste.Aargang">@venteliste.Aargang</option>
+        }
+    </select>
     <br>
 
     <input type="submit" value="Tilføj Elev" />
 </form>
 
-@if (TempData["Message"] != null)
-{
-    <p>@TempData["Message"]</p>
-}
-
 <h3><a href="@Url.Action("Ventelister", "Venteliste")">Tilbage til Ventelister</a></h3>
-</body>
-</html>
