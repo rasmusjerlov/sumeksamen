@@ -31,12 +31,17 @@ public class VentelisteControllerTest
     [Fact]
     public void TC2_opretVentelisteFejl()
     {
-        VentelisteController vc = new VentelisteController();
-        vlController.Opretventeliste("25/26");
-        
-        Assert.Throws<ArgumentException>(() => vc.Opretventeliste("25/26"));
-    }
+        // Arrange
+        var controller = new VentelisteController();
+        controller.Opretventeliste("25/26");
 
+        // Act
+        controller.Opretventeliste("25/26");
+
+        // Assert
+        Assert.True(controller.ModelState.ContainsKey("Aargang"));
+        Assert.Equal("En venteliste med denne årgang eksisterer allerede.", controller.ModelState["Aargang"].Errors[0].ErrorMessage);
+    }
     
     [Fact]
     public void TC1_HentVenteliste()

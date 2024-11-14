@@ -34,9 +34,15 @@ namespace SumEksamen.Controllers
         [Route("venteliste/opret")]
         public IActionResult Opretventeliste(string aargang)
         {
-            if (string.IsNullOrWhiteSpace(aargang))
+
+            if (ventelister.Any(v => v.Aargang == aargang))
             {
-                ModelState.AddModelError("Aargang", "Årgang er påkrævet.");
+                
+            }
+            
+            if (string.IsNullOrWhiteSpace(aargang)) 
+            {
+                ModelState.AddModelError("Aargang", "Årgang er påkrævet."); // Abu forklar hvad dette gør
                 return View();
             }
 
