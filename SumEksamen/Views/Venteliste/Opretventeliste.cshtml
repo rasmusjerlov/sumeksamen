@@ -11,16 +11,14 @@
         <label for="aargang">Årgang</label>
         <select class="form-control" id="aargang" name="aargang" required>
             <option value="" disabled selected>Vælg årgang</option>
-            <option value="2020/2021">2025/2026</option>
-            <option value="2021/2022">2026/2027</option>
-            <option value="2022/2023">2027/2028</option>
-            <option value="2023/2024">2028/2029</option>
-            <option value="2024/2025">2029/2030</option>
+            <option value="2025/2026">2025/2026</option>
+            <option value="2026/2027">2026/2027</option>
+            <option value="2027/2028">2027/2028</option>
+            <option value="2028/2029">2028/2029</option>
+            <option value="2029/2030">2029/2030</option>
         </select>
     </div>
     <div class="form-group">
-        <label for="oprettelsesDato">Oprettelses Dato</label>
-        <input type="text" class="form-control" id="oprettelsesDato" name="oprettelsesDato" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
     </div>
     <button type="submit" class="btn btn-primary">Opret Venteliste</button>
 </form>
