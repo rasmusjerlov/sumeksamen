@@ -12,6 +12,20 @@
     <button type="submit">Upload</button>
 </form>
 
+<h2>Opret KøkkenHold fra ventelistel</h2>
+<form asp-action="OpretKøkkenholdFraVenteliste" method="post">
+    <div class="form-group">
+        <label for="selectedAargang">Vælg Årgang</label>
+        <select id="selectedAargang" name="selectedAargang" class="form-control">
+            @foreach (var aargang in ViewBag.AargangList)
+            {
+                <option value="@aargang">@aargang</option>
+            }
+        </select>
+    </div>
+    <button type="submit">Opret Køkkenhold fra venteliste</button>
+</form>
+
 @if (Model != null && Model.Count > 0)
 {
     <h2>List of Elever</h2>
@@ -21,6 +35,10 @@
             <li>@elev.Navn - @elev.Køn</li>
         }
     </ul>
+        
+    
+        
+        
 
     <h2>Create Køkkenhold</h2>
     <form asp-action="CreateKøkkenhold" method="post">

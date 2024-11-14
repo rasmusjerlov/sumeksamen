@@ -3,6 +3,7 @@ using SumEksamen.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
 
 namespace SumEksamen.Controllers
@@ -23,6 +24,8 @@ namespace SumEksamen.Controllers
         [Route("upload")]
         public IActionResult Upload()
         {
+            var aargangList = ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            ViewBag.AargangList = new SelectList(aargangList);
             return View(elevListe);
         }
 
@@ -133,6 +136,21 @@ namespace SumEksamen.Controllers
         public void ElevlisteFraVenteliste(string aargang)
         {
             elevListe = ventelisteController.VentelisteTilElevliste(aargang);
+        }
+        
+        public IActionResult OpretKøkkenhold(string aargang)
+        {
+            var aargangList = ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            ViewBag.AargangList = new SelectList(aargangList);
+            return View();
+        }
+        
+        [HttpPost]
+        [Route("upload")]
+        public IActionResult OpretKøkkenholdFraVenteliste(string aargang)
+        {
+            ElevlisteFraVenteliste(aargang);
+            return CreateKøkkenhold();
         }
         
         
