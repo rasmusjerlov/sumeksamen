@@ -13,11 +13,10 @@ namespace SumEksamen.Controllers
     public class VentelisteController : Controller
     {
         private static List<Venteliste> ventelister = new List<Venteliste>();
-        
-        
+        //private static List<Elev> elevListe = new List<Elev>(135);
         
 
-        // GET: Venteliste
+    // GET: Venteliste
         public ActionResult Ventelister()
         {
             return View(ventelister);  // Ændret til 'Ventelister'
@@ -34,9 +33,15 @@ namespace SumEksamen.Controllers
         [Route("venteliste/opret")]
         public IActionResult Opretventeliste(string aargang)
         {
-            if (string.IsNullOrWhiteSpace(aargang))
+
+            if (ventelister.Any(v => v.Aargang == aargang))
             {
-                ModelState.AddModelError("Aargang", "Årgang er påkrævet.");
+                
+            }
+            
+            if (string.IsNullOrWhiteSpace(aargang)) 
+            {
+                ModelState.AddModelError("Aargang", "Årgang er påkrævet."); // Abu forklar hvad dette gør
                 return View();
             }
 
@@ -47,10 +52,10 @@ namespace SumEksamen.Controllers
             }
 
             
-            var venteliste = new Venteliste(aargang, DateTime.Now)
+            var venteliste = new Venteliste(aargang)
             {
                 Aargang = aargang,
-                OprettelsesDato = DateTime.Now
+                
             };
 
             ventelister.Add(venteliste);
@@ -295,6 +300,44 @@ namespace SumEksamen.Controllers
             return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
         }
         
+        public Venteliste HentVenteliste(string aargang)
+        {
+            if (!ventelister.Any(v => v.Aargang == aargang))
+            {
+                throw new ArgumentException("Venteliste findes ikke.");
+            }
+            
+            
+            return ventelister.FirstOrDefault(v => v.Aargang == aargang);
+        }
+
+        public static void ResetVenteliste()
+        {
+            ventelister.Clear();
+        }
+        
+        
+        public List<Elev> VentelisteTilElevliste(string aargang)
+        {
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            if (venteliste == null)
+            {
+                throw new ArgumentException($"VenteListe for årgang {aargang} ikke fundet.");
+            }
+
+            List<Elev> elevListe = new List<Elev>(136);
+            elevListe = venteliste.hentElever()
+                                  .Take(136)
+                                  .ToList();    
+           
+            foreach (var elev in elevListe)
+            {
+                elev.Status = Status.Aktiv;
+            }
+
+            return elevListe;
+            
+        }
 
     }
 }

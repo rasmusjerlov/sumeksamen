@@ -3,14 +3,21 @@ using SumEksamen.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
 
 namespace SumEksamen.Controllers
 {
     public class KøkkenholdController : Controller
     {
+        private readonly VentelisteController _ventelisteController;
         private static List<Elev> elevListe = new List<Elev>();
         private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
+        
+        public KøkkenholdController(VentelisteController ventelisteController)
+        {
+            _ventelisteController = ventelisteController;
+        }
         
         // GET: KøkkenholdController
         public ActionResult Index()
@@ -22,6 +29,8 @@ namespace SumEksamen.Controllers
         [Route("upload")]
         public IActionResult Upload()
         {
+            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            ViewBag.AargangList = aargangList;
             return View(elevListe);
         }
 
@@ -127,6 +136,26 @@ namespace SumEksamen.Controllers
                 string excelName = $"Køkkenhold-{DateTime.Now.ToString("yyyyMM")}.xlsx";
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
+        }
+
+        public void ElevlisteFraVenteliste(string aargang)
+        {
+            elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
+        }
+        
+        public IActionResult OpretKøkkenhold(string aargang)
+        {
+            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            ViewBag.AargangList = new SelectList(aargangList);
+            return View();
+        }
+        
+        [HttpPost]
+        [Route("opretKøkkenholdFraVenteliste")]
+        public IActionResult OpretKøkkenholdFraVenteliste(string aargang)
+        {
+            ElevlisteFraVenteliste(aargang);
+            return CreateKøkkenhold();
         }
         
         

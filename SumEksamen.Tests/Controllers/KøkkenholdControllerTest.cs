@@ -10,13 +10,11 @@ using System.Linq;
 
 namespace SumEksamen.Tests
 {
-    public class KøkkenholdControllerTests
-    {
-        private readonly KøkkenholdController _controller;
+    public class KøkkenholdControlleprivate readonly KøkkenholdController _controller;
 
         public KøkkenholdControllerTests()
         {
-            _controller = new KøkkenholdController();
+            _controller = new KøkkenholdController(new VentelisteController());
         }
 
         [Fact]
@@ -118,7 +116,28 @@ namespace SumEksamen.Tests
             // Return a FormFile that uses this new, non-disposed stream
             return new FormFile(fileStream, 0, fileStream.Length, "file", "test.xlsx");
         }
-
         
+        [Fact]
+        public void TC1_OpretterKøkkenhold()
+        {
+            // Arrange
+            VentelisteController ventelisteController = new VentelisteController();
+            var controller = new KøkkenholdController(ventelisteController);
+            ventelisteController.Opretventeliste("2025/2026");
+            ventelisteController.TilfoejElev("2025/2026", "mikkel", "dreng");
+            ventelisteController.TilfoejElev("2025/2026", "mikkel2", "dreng");
+            ventelisteController.TilfoejElev("2025/2026", "mikkel3", "dreng");
+            ventelisteController.TilfoejElev("2025/2026", "mikkel4", "dreng");
+
+            // Act
+            controller.ElevlisteFraVenteliste("2025/2026");
+            var result = controller.CreateKøkkenhold() as ViewResult;
+
+            // Assert
+            Assert.NotNull(result);
+            var køkkenholdListe = result.Model as List<Køkkenhold>;
+            Assert.NotNull(køkkenholdListe);
+            Assert.Equal(4, køkkenholdListe[0].GetElevListe().Count());
+        }
     }
 }
