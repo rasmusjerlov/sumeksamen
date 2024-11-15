@@ -16,7 +16,7 @@ namespace SumEksamen.Tests
 
         public KøkkenholdControllerTests()
         {
-            _controller = new KøkkenholdController();
+            _controller = new KøkkenholdController(new VentelisteController());
         }
 
         [Fact]
