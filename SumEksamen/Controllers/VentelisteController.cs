@@ -66,12 +66,27 @@ namespace SumEksamen.Controllers
             return ventelister;
         }
 
-        public Elev findElev()
+        [HttpGet]
+        [Route("findElev")]
+        public IActionResult FindElev(string elevNavn)
         {
-            foreach (var id in ventelister)
+            if (string.IsNullOrEmpty(elevNavn))
             {
-                
+                return BadRequest("Elevens navn er påkrævet.");
             }
+
+            // Find ventelister, hvor eleven findes
+            var ventelisterMedElev = ventelister
+                .Where(v => v.hentElever().Any(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            if (!ventelisterMedElev.Any())
+            {
+                return NotFound($"Ingen ventelister fundet for elev med navn: {elevNavn}");
+            }
+
+            ViewBag.ElevNavn = elevNavn;
+            return View("VisElevVentelister", ventelisterMedElev); // Returner en view med ventelister
         }
     
         
