@@ -14,11 +14,26 @@
 <ul>
     @foreach(var elev in Model.hentElever())
     {
-    <li>@elev.Navn - @elev.Køn</li>
+        <li>
+            @elev.Navn - @elev.Køn - <strong>Bemærkninger:</strong><br />
+            @if (elev.Bemærkninger.Any())
+            {
+                @foreach (var bemærkning in elev.Bemærkninger)
+                {
+                    <div style="margin-left: 20px;">
+                        @bemærkning.Dato.ToString("yyyy-MM-dd HH:mm:ss"): @bemærkning.Tekst
+                    </div>
+                }
+            }
+            else
+            {
+                <span>Ingen bemærkninger</span>
+            }
+        </li>
     }
 </ul>
 
-<!-- Links til at tilføje elev eller uploade elever -->
+
 <p>
     <a href="@Url.Action("TilfoejElev", "Venteliste", new { aargang = Model.Aargang })">Tilføj elev til denne venteliste</a>
 </p>
@@ -30,5 +45,7 @@
 
 </body>
 </html>
+
+
 
 
