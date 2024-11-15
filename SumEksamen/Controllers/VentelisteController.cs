@@ -13,11 +13,10 @@ namespace SumEksamen.Controllers
     public class VentelisteController : Controller
     {
         private static List<Venteliste> ventelister = new List<Venteliste>();
-        
-        
+        //private static List<Elev> elevListe = new List<Elev>(135);
         
 
-        // GET: Venteliste
+    // GET: Venteliste
         public ActionResult Ventelister()
         {
             return View(ventelister);  // Ændret til 'Ventelister'
@@ -71,6 +70,79 @@ namespace SumEksamen.Controllers
         {
             return ventelister;
         }
+
+        
+        
+        [HttpPost]
+        [Route("venteliste/findElev")]
+        public IActionResult FindElev(string elevNavn)
+        {
+            if (string.IsNullOrEmpty(elevNavn))
+            {
+                return BadRequest("Elevens navn er påkrævet.");
+            }
+
+            // Find ventelister, hvor eleven findes
+            var ventelisterMedElev = ventelister
+                .Where(v => v.hentElever().Any(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            if (!ventelisterMedElev.Any())
+            {
+                return NotFound($"Ingen ventelister fundet for elev med navn: {elevNavn}");
+            }
+
+            ViewBag.ElevNavn = elevNavn;
+            return View("Ventelister", ventelisterMedElev); // Returner en view med ventelister
+            
+        }
+        
+        [HttpPost]
+        [Route("venteliste/sletElev")]
+        public IActionResult SletElev(string elevNavn, string aargang)
+        {
+            
+            
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            if (venteliste == null)
+            {
+                return NotFound($"Venteliste for årgang {aargang} ikke fundet.");
+            }
+
+            
+            var elev = venteliste.hentElever().FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
+            if (elev == null)
+            {
+                return NotFound($"Elev med navn {elevNavn} ikke fundet på ventelisten for årgang {aargang}.");
+            }
+
+            venteliste.hentElever().Remove(elev);
+
+            return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
+        }
+        
+        [HttpPost]
+        [Route("venteliste/tilfoejBemærkning")]
+        public IActionResult TilfojBemaerkning(string elevNavn, string bemærkning)
+        {
+            
+            
+            var elev = ventelister
+                .SelectMany(v => v.hentElever())
+                .FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
+
+            if (elev == null)
+            {
+                return NotFound($"Elev med navn {elevNavn} blev ikke fundet.");
+            }
+            
+            var nyBemærkning = new Bemærkning(DateTime.Now, bemærkning);
+            elev.tilfojBemærkning(nyBemærkning);
+            
+
+            return RedirectToAction("Ventelister");
+        }
+
     
         
         
@@ -149,7 +221,7 @@ namespace SumEksamen.Controllers
 
                 venteliste.tilfojElev(elev); 
         
-                return RedirectToAction("Ventelister");
+                return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
             }
             catch (Exception ex)
             {
@@ -225,7 +297,7 @@ namespace SumEksamen.Controllers
                 } 
             } 
             
-            return RedirectToAction("Ventelister", new { aargang = aargang });
+            return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
         }
         
         public Venteliste HentVenteliste(string aargang)
@@ -244,6 +316,28 @@ namespace SumEksamen.Controllers
             ventelister.Clear();
         }
         
+        
+        public List<Elev> VentelisteTilElevliste(string aargang)
+        {
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            if (venteliste == null)
+            {
+                throw new ArgumentException($"VenteListe for årgang {aargang} ikke fundet.");
+            }
+
+            List<Elev> elevListe = new List<Elev>(136);
+            elevListe = venteliste.hentElever()
+                                  .Take(136)
+                                  .ToList();    
+           
+            foreach (var elev in elevListe)
+            {
+                elev.Status = Status.Aktiv;
+            }
+
+            return elevListe;
+            
+        }
 
     }
 }

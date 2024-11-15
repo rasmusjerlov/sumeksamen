@@ -6,7 +6,8 @@ public class Elev
     private int _alder;
     private Status _status;
     private Køn _køn;
-    private int _elevNr;
+    private int _elevNr; 
+    private List<Bemærkning> bemærkninger = new List<Bemærkning>();
     
     
     public Elev(int elevNr, string navn, Køn køn, Status status)
@@ -67,10 +68,29 @@ public class Elev
         get => _elevNr;
         set => _elevNr = value;
     }
+
+    public void tilfojBemærkning(Bemærkning bemærkning)
+    {
+        bemærkninger.Add(bemærkning);
+    }
+    public List<Bemærkning> Bemærkninger
+    {
+        get => bemærkninger;
+        set => bemærkninger = value;
+    }
     
+    
+    public string hentBemærkninger()
+    {
+        return bemærkninger.Any() 
+            ? string.Join(", ", bemærkninger.Select(b => b.ToString())) 
+            : "Ingen bemærkninger.";
+    }
+
+
     public override string ToString()
     {
-        return $"ElevNr: {_elevNr}, Navn: {_navn}, Alder: {_alder}, Køn: {_køn}, Status: {_status}";
+        return $"ElevNr: {_elevNr}, Navn: {_navn}, Alder: {_alder}, Køn: {_køn}, Status: {_status}, Bemærkninger: {bemærkninger}";
     }
     
 }
