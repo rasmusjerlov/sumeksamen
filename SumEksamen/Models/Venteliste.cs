@@ -31,11 +31,11 @@ public class Venteliste
         }
     }
 
-    public void sletElev(int elevNr)
+    public void sletElev(Elev elev)
     {
-        if (findElev(elevNr) != null)
+        if (findElev(elev) != null)
         {
-            elever.Remove(findElev(elevNr));
+            elever.Remove(findElev(elev));
         }
         else
         {
@@ -43,12 +43,12 @@ public class Venteliste
         };
     }
 
-    public Elev findElev(int elevNr)
+    public Elev findElev(Elev elev)
     {
-        var elev = elever.Find(e => e.ElevNr == elevNr);
-        if (elev != null)
+        Elev returElev = elever.Find(e => e == elev);
+        if (returElev != null)
         {
-            return elev;
+            return returElev;
         }
         else
         {
@@ -56,10 +56,10 @@ public class Venteliste
         }
     }
 
-    public void updateElev(int elevNr, string str)
+    public void updateElev(Elev elev, string str)
     {
-        Elev elev = findElev(elevNr);
-        if (elev != null)
+        Elev returElev = findElev(elev);
+        if (returElev != null)
         {
             Bemærkning bemærkning = new Bemærkning(DateTime.Now, str);
             elev.tilfojBemærkning(bemærkning);
