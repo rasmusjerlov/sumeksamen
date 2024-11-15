@@ -65,6 +65,14 @@ namespace SumEksamen.Controllers
         {
             return ventelister;
         }
+
+        public Elev findElev()
+        {
+            foreach (var id in ventelister)
+            {
+                
+            }
+        }
     
         
         
