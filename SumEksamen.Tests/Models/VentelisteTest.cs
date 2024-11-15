@@ -15,6 +15,8 @@ public class VentelisteTest
     private Venteliste el1;
     private Venteliste el2;
     private Venteliste el3;
+    private Venteliste el4;
+    private Venteliste el5;
 
     public VentelisteTest()
     {
@@ -29,6 +31,8 @@ public class VentelisteTest
         el1 = new Venteliste("24/25", DateTime.Now);
         el2 = new Venteliste("25/26", DateTime.Now);
         el3 = new Venteliste("26/27", DateTime.Now);
+        el4 = new Venteliste("26/27", DateTime.Now);
+        el5 = new Venteliste("27/28", DateTime.Now);
     }
 
     [Fact]
@@ -119,6 +123,24 @@ public class VentelisteTest
         Assert.Equal(e5, el3.findElev(e5.ElevNr));
         Assert.Equal(e6, el3.findElev(e6.ElevNr));
         Assert.Throws<ArgumentException>(() => el3.findElev(10));
+        
+    }
+
+    [Fact]
+    public void TC1_updateElev()
+    {
+        //Act
+        el4.tilfojElev(e4);
+        el4.tilfojElev(e5);
+        el4.tilfojElev(e6);
+        
+        el4.updateElev(e4.ElevNr, "Rasmus er en god elev");
+        el4.updateElev(e4.ElevNr, "Rasmus er en dårlig elev");
+        el4.updateElev(e5.ElevNr, "Abukar er en god elev");
+
+        //Assert
+        Assert.Equal("Rasmus er en god elev", e4.Bemærkninger[0].Tekst);
+        Assert.Equal("Rasmus er en dårlig elev", e4.Bemærkninger[1].Tekst);
     }
     
 }

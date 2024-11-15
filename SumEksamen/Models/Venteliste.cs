@@ -56,10 +56,19 @@ public class Venteliste
         }
     }
 
-    public void updateElev(int elevNr)
+    public void updateElev(int elevNr, string str)
     {
         Elev elev = findElev(elevNr);
-        
+        if (elev != null)
+        {
+            Bemærkning bemærkning = new Bemærkning(DateTime.Now, str);
+            elev.tilfojBemærkning(bemærkning);
+        }
+        else
+        {
+            throw new ArgumentException("Elev findes ikke.");
+        }
+
     }
 
     public List<Elev> hentElever()
