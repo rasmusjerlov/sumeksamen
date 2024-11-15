@@ -34,7 +34,7 @@
                     <td>@venteliste.Aargang</td>
                     <td>@venteliste.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
                     <td>
-                        <form method="post" asp-action="TilfoejBemaerkning" style="display: inline;">
+                        <form method="post" asp-action="TilfojBemaerkning" style="display: inline;">
                             <input type="hidden" name="elevNavn" value="@ViewBag.ElevNavn" />
                             <input type="text" name="bemærkning" placeholder="Tilføj bemærkning" required />
                             <button type="submit" class="btn btn-success btn-sm">Tilføj</button>
@@ -43,6 +43,7 @@
                     <td>
                         <form method="post" asp-action="SletElev" style="display: inline;">
                             <input type="hidden" name="elevNavn" value="@ViewBag.ElevNavn" />
+                            <input type="hidden" name="aargang" value="@venteliste.Aargang" />
                             <button type="submit" class="btn btn-danger btn-sm">Slet</button>
                         </form>
                     </td>

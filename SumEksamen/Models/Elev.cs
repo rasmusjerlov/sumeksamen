@@ -78,6 +78,14 @@ public class Elev
         get => bemærkninger;
         set => bemærkninger = value;
     }
+    
+    
+    public string hentBemærkninger()
+    {
+        return bemærkninger.Any() 
+            ? string.Join(", ", bemærkninger.Select(b => b.ToString())) 
+            : "Ingen bemærkninger.";
+    }
 
 
     public override string ToString()

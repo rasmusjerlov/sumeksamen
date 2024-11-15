@@ -67,12 +67,6 @@ namespace SumEksamen.Controllers
         }
 
         
-        [HttpGet]
-        [Route("venteliste/findElev")]
-        public IActionResult FindElev()
-        {
-            return View();
-        }
         
         [HttpPost]
         [Route("venteliste/findElev")]
@@ -95,30 +89,55 @@ namespace SumEksamen.Controllers
 
             ViewBag.ElevNavn = elevNavn;
             return View("Ventelister", ventelisterMedElev); // Returner en view med ventelister
+            
         }
         
         [HttpPost]
         [Route("venteliste/sletElev")]
-        public IActionResult SletElev(string elevNavn)
+        public IActionResult SletElev(string elevNavn, string aargang)
         {
             
-            // Find ventelister, hvor eleven findes
-            var ventelisterMedElev = ventelister
-                .Where(v => v.hentElever().Any(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase)))
-                .ToList();
             
-
-            foreach (var venteliste in ventelisterMedElev)
+            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            if (venteliste == null)
             {
-                var elev = venteliste.hentElever().FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
-                if (elev != null)
-                {
-                    venteliste.sletElev(elev);
-                }
+                return NotFound($"Venteliste for årgang {aargang} ikke fundet.");
             }
+
+            
+            var elev = venteliste.hentElever().FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
+            if (elev == null)
+            {
+                return NotFound($"Elev med navn {elevNavn} ikke fundet på ventelisten for årgang {aargang}.");
+            }
+
+            venteliste.hentElever().Remove(elev);
+
+            return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
+        }
+        
+        [HttpPost]
+        [Route("venteliste/tilfoejBemærkning")]
+        public IActionResult TilfojBemaerkning(string elevNavn, string bemærkning)
+        {
+            
+            
+            var elev = ventelister
+                .SelectMany(v => v.hentElever())
+                .FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
+
+            if (elev == null)
+            {
+                return NotFound($"Elev med navn {elevNavn} blev ikke fundet.");
+            }
+            
+            var nyBemærkning = new Bemærkning(DateTime.Now, bemærkning);
+            elev.tilfojBemærkning(nyBemærkning);
+            
 
             return RedirectToAction("Ventelister");
         }
+
     
         
         
@@ -197,7 +216,7 @@ namespace SumEksamen.Controllers
 
                 venteliste.tilfojElev(elev); 
         
-                return RedirectToAction("Ventelister");
+                return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
             }
             catch (Exception ex)
             {
@@ -273,7 +292,7 @@ namespace SumEksamen.Controllers
                 } 
             } 
             
-            return RedirectToAction("Ventelister", new { aargang = aargang });
+            return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
         }
         
 
