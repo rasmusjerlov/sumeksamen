@@ -32,7 +32,6 @@
             {
                 <tr>
                     <td>@venteliste.Aargang</td>
-                    <td>@venteliste.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
                     <td>
                         <form method="post" asp-action="TilfojBemaerkning" style="display: inline;">
                             <input type="hidden" name="elevNavn" value="@ViewBag.ElevNavn" />
@@ -75,7 +74,6 @@ else
         {
             <tr>
                 <td>@venteliste.Aargang</td>
-                <td>@venteliste.OprettelsesDato.ToString("yyyy-MM-dd HH:mm:ss")</td>
                 <td>
                     <a href="@Url.Action("VentelisteDetaljer", "Venteliste", new { aargang = venteliste.Aargang })">Se detaljer</a>
                 </td>
