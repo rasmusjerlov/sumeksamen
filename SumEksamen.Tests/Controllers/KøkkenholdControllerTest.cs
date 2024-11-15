@@ -10,13 +10,11 @@ using System.Linq;
 
 namespace SumEksamen.Tests
 {
-    public class KøkkenholdControllerTests
-    {
-        private readonly KøkkenholdController _controller;
+    public class KøkkenholdControlleprivate readonly KøkkenholdController _controller;
 
         public KøkkenholdControllerTests()
         {
-            _controller = new KøkkenholdController();
+            _controller = new KøkkenholdController(new VentelisteController());
         }
 
         [Fact]
