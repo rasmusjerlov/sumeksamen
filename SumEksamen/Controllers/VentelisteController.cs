@@ -66,8 +66,16 @@ namespace SumEksamen.Controllers
             return ventelister;
         }
 
+        
         [HttpGet]
-        [Route("findElev")]
+        [Route("venteliste/findElev")]
+        public IActionResult FindElev()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [Route("venteliste/findElev")]
         public IActionResult FindElev(string elevNavn)
         {
             if (string.IsNullOrEmpty(elevNavn))
@@ -86,7 +94,30 @@ namespace SumEksamen.Controllers
             }
 
             ViewBag.ElevNavn = elevNavn;
-            return View("VisElevVentelister", ventelisterMedElev); // Returner en view med ventelister
+            return View("Ventelister", ventelisterMedElev); // Returner en view med ventelister
+        }
+        
+        [HttpPost]
+        [Route("venteliste/sletElev")]
+        public IActionResult SletElev(string elevNavn)
+        {
+            
+            // Find ventelister, hvor eleven findes
+            var ventelisterMedElev = ventelister
+                .Where(v => v.hentElever().Any(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+            
+
+            foreach (var venteliste in ventelisterMedElev)
+            {
+                var elev = venteliste.hentElever().FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
+                if (elev != null)
+                {
+                    venteliste.sletElev(elev);
+                }
+            }
+
+            return RedirectToAction("Ventelister");
         }
     
         
