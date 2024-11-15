@@ -18,8 +18,4 @@ public class Bord
         this.bordNr = currentBordNr++;
         this.antalPladser = antalPladser;
     }
-    
-    
-
-
 }
