@@ -1,5 +1,5 @@
 @{
-ViewData["Title"] = "Spisesal";
+    ViewData["Title"] = "Spisesal";
 }
 
 <h1>Bordopsætning</h1>
@@ -9,33 +9,33 @@ ViewData["Title"] = "Spisesal";
 <div class="layout" id="layout">
     @for (int i = 0; i < Model.Count; i++)
     {
-    var bord = Model[i];
-    <div class="bord-container">
-        <div class="bord" id="bord-@bord.bordNr" onclick="editBord(@bord.bordNr, @bord.antalPladser)">
-            <div class="bord-nummer">Bord @bord.bordNr</div>
+        var bord = Model[i];
+        <div class="bord-container">
+            <div class="bord" id="bord-@bord.bordNr" onclick="editBord(@bord.bordNr, @bord.antalPladser)">
+                <div class="bord-nummer">Bord @bord.bordNr</div>
 
-            @{
-            int pladserPerSide = bord.antalPladser / 2;
-            int extraSeat = bord.antalPladser % 2;
+                @{
+                    int pladserPerSide = bord.antalPladser / 2;
+                    int extraSeat = bord.antalPladser % 2;
 
-            for (int j = 0; j < pladserPerSide + extraSeat; j++)
-            {
-            double venstre = (j + 1) * (100 / (pladserPerSide + extraSeat + 1));
-            <div class="plads" style="top: -15px; left: @($"{venstre}%");"></div>
-            }
+                    for (int j = 0; j < pladserPerSide + extraSeat; j++)
+                    {
+                        double venstre = (j + 1) * (100 / (pladserPerSide + extraSeat + 1));
+                        <div class="plads" style="top: -15px; left: @($"{venstre}%");"></div>
+                    }
 
-            for (int j = 0; j < pladserPerSide; j++)
-            {
-            double venstre = (j + 1) * (100 / (pladserPerSide + 1));
-            <div class="plads" style="bottom: -15px; left: @($"{venstre}%");"></div>
-            }
-            }
+                    for (int j = 0; j < pladserPerSide; j++)
+                    {
+                        double venstre = (j + 1) * (100 / (pladserPerSide + 1));
+                        <div class="plads" style="bottom: -15px; left: @($"{venstre}%");"></div>
+                    }
+                }
+            </div>
+            <form method="post" action="/Bord/SletBord" style="display:inline;">
+                <input type="hidden" name="bordNr" value="@bord.bordNr">
+                <button type="submit">Slet</button>
+            </form>
         </div>
-        <form method="post" action="/Bord/SletBord" style="display:inline;">
-            <input type="hidden" name="bordNr" value="@bord.bordNr">
-            <button type="submit">Slet</button>
-        </form>
-    </div>
     }
 </div>
 
@@ -130,4 +130,23 @@ ViewData["Title"] = "Spisesal";
     function cancelEdit() {
         document.getElementById('editForm').style.display = 'none';
     }
+
+    document.getElementById('createBordForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var formData = new FormData(event.target);
+
+        fetch('/Bord/OpretBord', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error creating bord:', error));
+    });
 </script>

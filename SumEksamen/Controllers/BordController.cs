@@ -42,24 +42,31 @@ public class BordController : Controller
     [HttpPost]
     public IActionResult OpretBord(int bordNr, int antalPladser)
     {
-        foreach (var bord in borde)
+        try
         {
-            if (bord.bordNr == bordNr)
+            foreach (var bord in borde)
             {
-                throw new ArgumentException("Et bord med dette ID eksisterer allerede.");
+                if (bord.bordNr == bordNr)
+                {
+                    throw new ArgumentException("Et bord med dette ID eksisterer allerede.");
+                }
             }
-        }
 
-        // Find the smallest available bordNr if the provided one already exists
-        int newBordNr = bordNr;
-        while (borde.Any(b => b.bordNr == newBordNr))
+            // Find the smallest available bordNr if the provided one already exists
+            int newBordNr = bordNr;
+            while (borde.Any(b => b.bordNr == newBordNr))
+            {
+                newBordNr++;
+            }
+
+            borde.Add(new Bord { bordNr = newBordNr, antalPladser = antalPladser });
+
+            return Json(new { success = true });
+        }
+        catch (ArgumentException ex)
         {
-            newBordNr++;
+            return Json(new { success = false, message = ex.Message });
         }
-
-        borde.Add(new Bord { bordNr = newBordNr, antalPladser = antalPladser });
-
-        return RedirectToAction("Bordopsætning");
     }
     
     [HttpPost]
