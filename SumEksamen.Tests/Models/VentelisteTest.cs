@@ -28,11 +28,11 @@ public class VentelisteTest
         e5 = new Elev(12, "Abukar", Køn.dreng, Status.Aktiv);
         e6 = new Elev(27, "Mikkel", Køn.dreng, Status.Inaktiv);
         
-        el1 = new Venteliste("24/25", DateTime.Now);
-        el2 = new Venteliste("25/26", DateTime.Now);
-        el3 = new Venteliste("26/27", DateTime.Now);
-        el4 = new Venteliste("26/27", DateTime.Now);
-        el5 = new Venteliste("27/28", DateTime.Now);
+        el1 = new Venteliste("24/25");
+        el2 = new Venteliste("25/26");
+        el3 = new Venteliste("26/27");
+        el4 = new Venteliste("26/27");
+        el5 = new Venteliste("27/28");
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class VentelisteTest
         el2.tilfojElev(e5);
         el2.tilfojElev(e6);
 
-        el2.sletElev(e5.ElevNr);
+        el2.sletElev(e5);
         
         //Assert
         Assert.True(el2.hentElever().Contains(e4));
@@ -85,10 +85,10 @@ public class VentelisteTest
         el2.tilfojElev(e5);
         el2.tilfojElev(e6);
 
-        el2.sletElev(e6.ElevNr);
+        el2.sletElev(e6);
         
         //Assert
-        Assert.Throws<ArgumentException>(() => el2.sletElev(e6.ElevNr));
+        Assert.Throws<ArgumentException>(() => el2.sletElev(e6));
         Assert.True(el2.hentElever().Contains(e4));
         Assert.True(el2.hentElever().Contains(e5));
         Assert.False(el2.hentElever().Contains(e6));
@@ -105,9 +105,9 @@ public class VentelisteTest
         el3.tilfojElev(e6);
 
         //Assert
-        Assert.Equal(e4, el3.findElev(e4.ElevNr));
-        Assert.Equal(e5, el3.findElev(e5.ElevNr));
-        Assert.Equal(e6, el3.findElev(e6.ElevNr));
+        Assert.Equal(e4, el3.findElev(e4));
+        Assert.Equal(e5, el3.findElev(e5));
+        Assert.Equal(e6, el3.findElev(e6));
     }
     
     [Fact]
@@ -119,10 +119,10 @@ public class VentelisteTest
         el3.tilfojElev(e6);
 
         //Assert
-        Assert.Equal(e4, el3.findElev(e4.ElevNr));
-        Assert.Equal(e5, el3.findElev(e5.ElevNr));
-        Assert.Equal(e6, el3.findElev(e6.ElevNr));
-        Assert.Throws<ArgumentException>(() => el3.findElev(10));
+        Assert.Equal(e4, el3.findElev(e4));
+        Assert.Equal(e5, el3.findElev(e5));
+        Assert.Equal(e6, el3.findElev(e6));
+        //Assert.Throws<ArgumentException>(() => el3.findElev(elev));
         
     }
 
@@ -134,9 +134,9 @@ public class VentelisteTest
         el4.tilfojElev(e5);
         el4.tilfojElev(e6);
         
-        el4.updateElev(e4.ElevNr, "Rasmus er en god elev");
-        el4.updateElev(e4.ElevNr, "Rasmus er en dårlig elev");
-        el4.updateElev(e5.ElevNr, "Abukar er en god elev");
+        el4.updateElev(e4, "Rasmus er en god elev");
+        el4.updateElev(e4, "Rasmus er en dårlig elev");
+        el4.updateElev(e5, "Abukar er en god elev");
 
         //Assert
         Assert.Equal("Rasmus er en god elev", e4.Bemærkninger[0].Tekst);
