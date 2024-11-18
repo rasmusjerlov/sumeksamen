@@ -1,4 +1,5 @@
 ﻿namespace SumEksamen.Controllers;
+
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SumEksamen.Models;
@@ -44,6 +45,11 @@ public class BordController : Controller
     {
         try
         {
+            if (antalPladser > 12)
+            {
+                throw new ArgumentException("Et bord kan maksimalt have 12 pladser.");
+            }
+
             foreach (var bord in borde)
             {
                 if (bord.bordNr == bordNr)
@@ -68,7 +74,7 @@ public class BordController : Controller
             return Json(new { success = false, message = ex.Message });
         }
     }
-    
+
     [HttpPost]
     public IActionResult SletBord(int bordNr)
     {
