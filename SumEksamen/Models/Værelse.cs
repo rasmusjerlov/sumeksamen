@@ -6,8 +6,11 @@ public class Værelse
     public List<Elev> ElevListe {get; set;}
     public int AntalPladser {get; set;}
     
-    public Værelse()
+    public Værelse(int antalPladser)
     {
+        ElevListe = new List<Elev>(antalPladser);
+        AntalPladser = antalPladser;
+        
     }
     
     
