@@ -10,7 +10,21 @@ public class Værelse
     {
         ElevListe = new List<Elev>(antalPladser);
         AntalPladser = antalPladser;
-        
+    }
+    
+    public void AddElev(Elev elev)
+    {
+        ElevListe.Add(elev);
+    }
+    
+    public void RemoveElev(Elev elev)
+    {
+        ElevListe.Remove(elev);
+    }
+
+    public List<Elev> HentVærelse()
+    {
+        return ElevListe;
     }
     
     
