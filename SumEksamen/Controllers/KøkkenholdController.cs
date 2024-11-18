@@ -154,6 +154,7 @@ namespace SumEksamen.Controllers
         [Route("opretKøkkenholdFraVenteliste")]
         public IActionResult OpretKøkkenholdFraVenteliste(string aargang)
         {
+            
             ElevlisteFraVenteliste(aargang);
             return CreateKøkkenhold();
         }

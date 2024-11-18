@@ -34,11 +34,6 @@ namespace SumEksamen.Controllers
         public IActionResult Opretventeliste(string aargang)
         {
 
-            if (ventelister.Any(v => v.Aargang == aargang))
-            {
-                
-            }
-            
             if (string.IsNullOrWhiteSpace(aargang)) 
             {
                 ModelState.AddModelError("Aargang", "Årgang er påkrævet."); // Abu forklar hvad dette gør
