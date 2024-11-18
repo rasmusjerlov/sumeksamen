@@ -1,5 +1,5 @@
 @{
-ViewData["Title"] = "Opret Venteliste";
+    ViewData["Title"] = "Opret Venteliste";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -28,7 +28,7 @@ ViewData["Title"] = "Opret Venteliste";
 <a href="@Url.Action("Ventelister", "Venteliste")" class="btn btn-secondary">Venteliste Oversigt</a>
 
 @section Scripts {
-<script>
+    <script>
     document.getElementById('ventelisteForm').addEventListener('submit', function (event) {
         event.preventDefault();
         var selectedAargang = document.getElementById('aargang').value;
@@ -47,6 +47,3 @@ ViewData["Title"] = "Opret Venteliste";
     });
 </script>
 }
-
-
-
