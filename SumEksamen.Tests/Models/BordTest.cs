@@ -42,4 +42,18 @@ public class BordTest
         //Assert
         Assert.Equal(10, b1.antalPladser);
     }
+
+    [Fact]
+    public void TC3_TilfojElevTilBordPlads()
+    {
+        //Arrange
+        Elev elev = new Elev("Mikkel", 16, Status.Aktiv, Køn.dreng);
+        
+        //Act
+        b1.TilføjElev(elev);
+        
+        //Assert
+        Assert.Equal(1, b1.elever.Count);
+        
+    }
 }
