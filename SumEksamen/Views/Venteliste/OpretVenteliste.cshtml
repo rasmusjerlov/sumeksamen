@@ -1,5 +1,5 @@
 @{
-ViewData["Title"] = "Opret Venteliste";
+    ViewData["Title"] = "Opret Venteliste";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -18,17 +18,13 @@ ViewData["Title"] = "Opret Venteliste";
             <option value="2024/2025">2024/2025</option>
         </select>
     </div>
-    <div class="form-group">
-        <label for="oprettelsesDato">Oprettelses Dato</label>
-        <input type="text" class="form-control" id="oprettelsesDato" name="oprettelsesDato" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
-    </div>
-    <button type="submit" class="btn btn-primary">Opret Venteliste</button>
+    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Opret Venteliste</button>
 </form>
 
-<a href="@Url.Action("Ventelister", "Venteliste")" class="btn btn-secondary">Venteliste Oversigt</a>
+<a href="@Url.Action("Ventelister", "Venteliste")" class="btn btn-secondary" style="margin-top: 10px;">Venteliste Oversigt</a>
 
 @section Scripts {
-<script>
+    <script>
     document.getElementById('ventelisteForm').addEventListener('submit', function (event) {
         event.preventDefault();
         var selectedAargang = document.getElementById('aargang').value;
@@ -47,6 +43,3 @@ ViewData["Title"] = "Opret Venteliste";
     });
 </script>
 }
-
-
-
