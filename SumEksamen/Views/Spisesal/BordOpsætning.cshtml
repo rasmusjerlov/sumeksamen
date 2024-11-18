@@ -6,6 +6,19 @@
 
 @model List<SumEksamen.Models.Bord>
 
+<div>
+    <form id="distributeStudentsForm" method="post" action="/Bord/TilfojElevTilBordFraVenteliste">
+        <label for="aargang">Vælg årgang:</label>
+        <select id="aargang" name="aargang" required>
+            @foreach (var aargang in ViewBag.AargangList)
+            {
+                <option value="@aargang">@aargang</option>
+            }
+        </select>
+        <button type="submit">Fordel Elever</button>
+    </form>
+</div>
+
 <div class="layout" id="layout">
     @for (int i = 0; i < Model.Count; i++)
     {
@@ -35,6 +48,15 @@
                 <input type="hidden" name="bordNr" value="@bord.bordNr">
                 <button type="submit">Slet</button>
             </form>
+            <div class="elev-liste">
+                <h3>Elever ved bordet:</h3>
+                <ul>
+                    @foreach (var elev in bord.elever)
+                    {
+                        <li>@elev.Navn (@elev.Køn)</li>
+                    }
+                </ul>
+            </div>
         </div>
     }
 </div>

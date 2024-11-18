@@ -7,6 +7,13 @@ using SumEksamen.Models;
 public class BordController : Controller
 {
     private static List<Bord> borde = new List<Bord>();
+    private readonly VentelisteController _ventelisteController;
+    private static List<Elev> elevListe = new List<Elev>();
+
+    public BordController(VentelisteController ventelisteController)
+    {
+        _ventelisteController = ventelisteController;
+    }
 
     public IActionResult Bordopsætning()
     {
@@ -23,6 +30,10 @@ public class BordController : Controller
                 borde.Add(new Bord(8));
             }
         }
+
+        // Fetch the list of years from VentelisteController
+        var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+        ViewBag.AargangList = aargangList;
 
         // Pass the list of tables to the view
         return View("/Views/Spisesal/Bordopsætning.cshtml", borde);
@@ -86,6 +97,53 @@ public class BordController : Controller
         else
         {
             throw new ArgumentException("Et bord med dette ID findes ikke.");
+        }
+
+        return RedirectToAction("Bordopsætning");
+    }
+
+    public void ElevListeFraVenteliste(string aargang)
+    {
+        elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
+    }
+
+    [HttpPost]
+    public IActionResult TilfojElevTilBordFraVenteliste(string aargang)
+    {
+        // Retrieve students from the waiting list for the specified year
+        ElevListeFraVenteliste(aargang);
+
+        var piger = elevListe.Where(e => e.Køn == Køn.pige).ToList();
+        var drenge = elevListe.Where(e => e.Køn == Køn.dreng).ToList();
+
+        foreach (var bord in borde)
+        {
+            if (bord.elever == null)
+            {
+                bord.elever = new List<Elev>();
+            }
+
+            // Add at least 2 girls to each table
+            for (int i = 0; i < 2 && piger.Count > 0; i++)
+            {
+                bord.elever.Add(piger[0]);
+                piger.RemoveAt(0);
+            }
+
+            // Fill the remaining seats with boys and any remaining girls
+            while (bord.elever.Count < bord.antalPladser && (piger.Count > 0 || drenge.Count > 0))
+            {
+                if (drenge.Count > 0)
+                {
+                    bord.elever.Add(drenge[0]);
+                    drenge.RemoveAt(0);
+                }
+                else if (piger.Count > 0)
+                {
+                    bord.elever.Add(piger[0]);
+                    piger.RemoveAt(0);
+                }
+            }
         }
 
         return RedirectToAction("Bordopsætning");

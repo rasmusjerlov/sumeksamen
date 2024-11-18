@@ -50,7 +50,7 @@ public class BordTest
         Elev elev = new Elev("Mikkel", 16, Status.Aktiv, Køn.dreng);
         
         //Act
-        b1.TilføjElev(elev);
+        b1.TilføjElevTilBord(elev);
         
         //Assert
         Assert.Equal(1, b1.elever.Count);
