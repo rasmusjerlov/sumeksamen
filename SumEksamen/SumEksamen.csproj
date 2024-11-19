@@ -16,6 +16,7 @@
       <Folder Include="Views\Køkkenhold\" />
       <Folder Include="Views\Spisesal\" />
       <Folder Include="Views\Venteliste\" />
+      <Folder Include="Views\Værelse\" />
     </ItemGroup>
     
 
