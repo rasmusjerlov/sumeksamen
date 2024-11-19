@@ -88,6 +88,7 @@ public class VærelseController : Controller
 
                 Værelse værelse = new Værelse(antalPladser);
                 værelseListe.Add(værelse);
+                
 
                 for (int j = 0; j < antalPladser && elever.Count > 0; j++)
                 {
