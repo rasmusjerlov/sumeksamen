@@ -20,10 +20,15 @@ public class LinjeholdTest
     
     public LinjeholdTest()
     {
+        //TC1 og TC2
         e1 = new Elev("Rasmus", Køn.dreng);
         e2 = new Elev("Mikkel", Køn.dreng);
         e3 = new Elev("Hanne", Køn.pige);
+        
+        //TC3
         e4 = new Elev("Oliver", Køn.dreng);
+        
+        //TC4
         e5 = new Elev("Rasmus", 15, Status.Aktiv, Køn.dreng);
         e6 = new Elev("Jens", 16, Status.Inaktiv, Køn.dreng);
 
