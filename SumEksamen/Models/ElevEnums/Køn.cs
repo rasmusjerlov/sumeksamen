@@ -3,6 +3,7 @@ namespace SumEksamen.Models;
 public enum Køn
 {
     pige,
-    dreng
+    dreng,
+    blandet
     
 }
