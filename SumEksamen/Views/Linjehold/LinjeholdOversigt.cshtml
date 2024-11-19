@@ -25,10 +25,10 @@
             <td>@linjehold.kapacitet</td>
             <td>@linjehold.køn</td>
             <td>
-                @if (linjehold.hentEleverLinjehold().Any())
+                @if (linjehold.hentElever().Any())
                 {
                     <ul>
-                        @foreach (var elev in linjehold.hentEleverLinjehold())
+                        @foreach (var elev in linjehold.hentElever())
                         {
                             <li>@elev.Navn (@elev.Køn)</li>
                         }

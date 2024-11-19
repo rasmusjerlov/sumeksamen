@@ -79,7 +79,7 @@ namespace SumEksamen.Controllers
                 return NotFound("Linjehold ikke fundet.");
 
             
-            if (linjehold.hentEleverLinjehold().Count >= linjehold.kapacitet)
+            if (linjehold.hentElever().Count >= linjehold.kapacitet)
                 return BadRequest("Linjeholdets kapacitet er nået.");
 
             
@@ -88,7 +88,7 @@ namespace SumEksamen.Controllers
             
             try
             {
-                linjehold.tilfojElevTilLinjehold(elev);
+                linjehold.tilfojElev(elev);
             }
             catch (ArgumentException ex)
             {
