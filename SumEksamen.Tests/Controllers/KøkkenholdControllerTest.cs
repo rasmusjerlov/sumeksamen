@@ -13,10 +13,7 @@ namespace SumEksamen.Tests
     public class KøkkenholdControllerTest {
         private readonly KøkkenholdController _controller;
 
-        public KøkkenholdControllerTest()
-        {
-            _controller = new KøkkenholdController(new VentelisteController());
-        }
+        
 
         [Fact]
         public void Index_ReturnsViewResult()
