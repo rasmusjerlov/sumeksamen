@@ -7,37 +7,52 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/SumEksamen.styles.css" asp-append-version="true"/>
+    <style>
+        .vertical-nav {
+            width: 200px; /* Adjusted width */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #ffffff; /* Set background color to white */
+            border-right: 1px solid #000000; /* Add black edge */
+            padding-top: 20px;
+            text-align: center; /* Center text */
+        }
+        .vertical-nav .nav-link {
+            text-align: center; /* Center text */
+        }
+        .main-content {
+            margin-left: 200px; /* Adjusted margin to match the nav width */
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Plads Portalen</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">   
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Køkkenhold" asp-action="upload">Køkkenhold</a>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Venteliste" asp-action="Opretventeliste">Venteliste</a>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Bord" asp-action="BordOpsætning">Spisesal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Værelse" asp-action="FordelEleverDropDown">Værelser</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav class="vertical-nav">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Plads Portalen</a>
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Køkkenhold" asp-action="upload">Køkkenhold</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Venteliste" asp-action="Opretventeliste">Venteliste</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Bord" asp-action="BordOpsætning">Spisesal</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Værelse" asp-action="FordelEleverDropDown">Værelser</a>
+            </li>
+        </ul>
+        <div id="MyClockDisplay" class="clock" onload="showTime()"></div>
     </nav>
 </header>
-<div class="container">
+<div class="main-content">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>

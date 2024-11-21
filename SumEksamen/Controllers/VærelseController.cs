@@ -121,7 +121,6 @@ public class VærelseController : Controller
 
         // Hent elevlisten for den valgte årgang
         ElevlisteFraVenteliste(valgtAargang);
-
         // Fordel eleverne på værelser
         FordelEleverPåVærelser();
 
