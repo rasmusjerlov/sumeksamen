@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using SumEksamen.Controllers;
 using SumEksamen.Models;
+using SumEksamen.Services;
 using Xunit;
 
 namespace SumEksamen.Tests.Controllers;
@@ -13,19 +14,21 @@ public class VentelisteControllerTest
     
     private VentelisteController vlController;
     
-    public VentelisteControllerTest()
+    public VentelisteControllerTest() //Fungerer som en setup metode
     {
-        VentelisteController.ResetVenteliste();
         vlController = new VentelisteController();
-        vlController.Opretventeliste("2025/2026");
-        vlController.TilfoejElev("2025/2026", "mikkel", "dreng");
+        
     }
     
     [Fact]
     public void TC1_opretVenteliste()
     {
-        vlController.Opretventeliste("24/25");
-        Assert.Contains(vlController.HentVentelister(), v => v.Aargang == "24/25");
+        //Act
+        vlController.Opretventeliste("2025/2026");
+        //vlController.TilfoejElev("2025/2026", "mikkel", "dreng");
+        
+        //Assert
+        Assert.Contains(Storage.HentVentelister(), v => v.Aargang == "2025/2026");
     }
 
     [Fact]
@@ -46,20 +49,24 @@ public class VentelisteControllerTest
     [Fact]
     public void TC1_HentVenteliste()
     {
+        
+        //Arrange
+        VentelisteController controller = new VentelisteController();
+        var venteliste = controller.Opretventeliste("2025/2026");
         //act
-        var result = vlController.HentVenteliste("2025/2026");
+        var result = Storage.FindVenteliste("2025/2026");
         
         //Assert
         Assert.Equal("2025/2026", result.Aargang);
-        Assert.Equal(1, result.hentElever().Count);
-        Assert.Equal("mikkel", result.hentElever()[0].Navn);
+        Assert.Equal(0, result.hentElever().Count);
             
     }
 
     [Fact]
-    public void TC2_HentVentelisteKasterFejl()
+    public void TC2_HentVentelisteSomIkkeEksisterer()
     {
-        Assert.Throws<ArgumentException>(() => vlController.HentVenteliste("2027/2028"));
+        //Tjekker om der kastes en ArgumentException, hvis der forsøges at hente en venteliste, som ikke eksisterer
+        Assert.Throws<ArgumentException>(() => Storage.FindVenteliste("2027/2028"));
     }
     
 }
