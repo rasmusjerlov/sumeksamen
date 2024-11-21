@@ -8,11 +8,20 @@ public class VærelseController : Controller
 {
     private List<Værelse> værelseListe = new List<Værelse>();
     private List<Elev> elevListe = new List<Elev>();
+    private VentelisteController _ventelisteController;
 
+
+    public VærelseController(VentelisteController ventelisteController)
+    {
+        _ventelisteController = ventelisteController;
+    }
+    
     public void TilføjVærelse(Værelse værelse)
     {
         Storage.TilføjVærelse(værelse);
     }
+    
+
 
     public void OpretVærelse(int antalPladser)
     {
@@ -25,7 +34,6 @@ public class VærelseController : Controller
         {
             throw new Exception("Elev er allerede tilføjet");
         }
-
         værelse.AddElev(elev);
     }
 
@@ -35,17 +43,17 @@ public class VærelseController : Controller
         {
             throw new Exception("Elev er ikke på værelset");
         }
-
         værelse.RemoveElev(elev);
     }
 
-    public void FordelEleverPåVærelser()
+    public void FordelEleverPåVærelser(string aargang)
     {
-        var drenge = elevListe.Where(e => e.Køn == Køn.dreng).ToList();
-        var piger = elevListe.Where(e => e.Køn == Køn.pige).ToList();
+        Storage.VentelisteTilElevliste(aargang);
+        var drenge = Storage.HentElevListe().Where(e => e.Køn == Køn.dreng).ToList();
+        var piger = Storage.HentElevListe().Where(e => e.Køn == Køn.pige).ToList();
 
         // Fordel drenge på værelser
-        FordelElever(drenge, new Dictionary<int, int>
+        FordelElever(drenge, new Dictionary<int , int>
         {
             { 2, 2 },
             { 3, 0 },
@@ -75,7 +83,7 @@ public class VærelseController : Controller
 
                 Værelse værelse = new Værelse(antalPladser);
                 Storage.TilføjVærelse(værelse);
-
+                
                 for (int j = 0; j < antalPladser && elever.Count > 0; j++)
                 {
                     værelse.AddElev(elever[0]);
@@ -84,7 +92,7 @@ public class VærelseController : Controller
             }
         }
     }
-
+    
     [HttpGet]
     public IActionResult FordelEleverDropDown()
     {
@@ -95,7 +103,7 @@ public class VærelseController : Controller
         ViewBag.AargangList = aargangList;
         return View();
     }
-
+    
     [HttpPost]
     public IActionResult FordelEleverFraVenteliste(string valgtAargang)
     {
@@ -108,10 +116,16 @@ public class VærelseController : Controller
         // Hent elevlisten for den valgte årgang
         Storage.FindVenteliste(valgtAargang);
         // Fordel eleverne på værelser
-        FordelEleverPåVærelser();
+        FordelEleverPåVærelser(valgtAargang);
 
         // Vis værelserne
         var værelser = Storage.HentVærelser();
         return View("FordelElever", værelser);
     }
+    
+    
+    
+    
+    
+    
 }
