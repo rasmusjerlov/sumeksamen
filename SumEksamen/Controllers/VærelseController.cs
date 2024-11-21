@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SumEksamen.Models;
+using SumEksamen.Services;
 
 namespace SumEksamen.Controllers;
 
@@ -14,24 +15,22 @@ public class VærelseController : Controller
     {
         _ventelisteController = ventelisteController;
     }
-
-    public void ElevlisteFraVenteliste(string aargang)
-    {
-        elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
-    }
     
+    public void TilføjVærelse(Værelse værelse)
+    {
+        Storage.TilføjVærelse(værelse);
+    }
     
 
 
     public void OpretVærelse(int antalPladser)
     {
-        Værelse værelse = new Værelse(antalPladser);
-        værelseListe.Add(værelse);
+        Storage.TilføjVærelse(new Værelse(antalPladser));
     }
 
     public void TilføjElev(Værelse værelse, Elev elev)
     {
-        if (værelse.HentVærelse().Contains(elev))
+        if (Storage.FindVærelse(værelse.VærelelsesId).ElevListe.Contains(elev))
         {
             throw new Exception("Elev er allerede tilføjet");
         }
@@ -40,16 +39,16 @@ public class VærelseController : Controller
 
     public void FjernElev(Værelse værelse, Elev elev)
     {
-        if (!værelse.HentVærelse().Contains(elev))
+        if (!Storage.FindVærelse(værelse.VærelelsesId).HentVærelse().Contains(elev))
         {
-            throw new Exception("Elev er ikke tilføjet");
+            throw new Exception("Elev er ikke på værelset");
         }
         værelse.RemoveElev(elev);
     }
     
     public List<Værelse> HentVærelser()
     {
-        return værelseListe;
+        return Storage.HentVærelser();
     }
 
     public void FordelEleverPåVærelser()
