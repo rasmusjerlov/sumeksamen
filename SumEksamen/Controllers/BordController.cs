@@ -3,6 +3,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SumEksamen.Models;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 
 public class BordController : Controller
 {
@@ -113,8 +116,8 @@ public class BordController : Controller
         // Retrieve students from the waiting list for the specified year
         ElevListeFraVenteliste(aargang);
 
-        var piger = elevListe.Where(e => e.Køn == Køn.pige).ToList();
-        var drenge = elevListe.Where(e => e.Køn == Køn.dreng).ToList();
+        var piger = elevListe.Where(e => e.Køn == Køn.pige).OrderBy(e => Guid.NewGuid()).ToList();
+        var drenge = elevListe.Where(e => e.Køn == Køn.dreng).OrderBy(e => Guid.NewGuid()).ToList();
 
         foreach (var bord in borde)
         {
@@ -123,26 +126,19 @@ public class BordController : Controller
                 bord.elever = new List<Elev>();
             }
 
-            // Add at least 2 girls to each table
+            // Ensure at least 2 girls at each table
             for (int i = 0; i < 2 && piger.Count > 0; i++)
             {
                 bord.elever.Add(piger[0]);
                 piger.RemoveAt(0);
             }
 
-            // Fill the remaining seats with boys and any remaining girls
-            while (bord.elever.Count < bord.antalPladser && (piger.Count > 0 || drenge.Count > 0))
+            // Distribute remaining seats randomly between boys and girls
+            var remainingStudents = piger.Concat(drenge).OrderBy(e => Guid.NewGuid()).ToList();
+            while (bord.elever.Count < bord.antalPladser && remainingStudents.Count > 0)
             {
-                if (drenge.Count > 0)
-                {
-                    bord.elever.Add(drenge[0]);
-                    drenge.RemoveAt(0);
-                }
-                else if (piger.Count > 0)
-                {
-                    bord.elever.Add(piger[0]);
-                    piger.RemoveAt(0);
-                }
+                bord.elever.Add(remainingStudents[0]);
+                remainingStudents.RemoveAt(0);
             }
         }
 
