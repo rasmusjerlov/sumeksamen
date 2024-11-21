@@ -38,7 +38,7 @@
                         var elev = bord.elever.ElementAtOrDefault(elevIndex++);
                         string elevStyle = elev != null ? (elev.Køn == Køn.pige ? "background-color: pink;" : "background-color: darkblue;") : "";
                         string elevName = elev != null ? elev.Navn : "";
-                        <div class="plads" style="top: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName"></div>
+                        <div class="plads" style="top: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName" draggable="true" ondragstart="drag(event)" id="elev-@elev?.Navn"></div>
                     }
 
                     for (int j = 0; j < pladserPerSide; j++)
@@ -47,7 +47,7 @@
                         var elev = bord.elever.ElementAtOrDefault(elevIndex++);
                         string elevStyle = elev != null ? (elev.Køn == Køn.pige ? "background-color: pink;" : "background-color: darkblue;") : "";
                         string elevName = elev != null ? elev.Navn : "";
-                        <div class="plads" style="bottom: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName"></div>
+                        <div class="plads" style="bottom: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName" draggable="true" ondragstart="drag(event)" id="elev-@elev?.Navn"></div>
                     }
                 }
             </div>
@@ -177,5 +177,39 @@
             }
         })
         .catch(error => console.error('Error creating bord:', error));
+    });
+
+    function drag(event) {
+        event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+        var targetElement = event.target;
+
+        if (targetElement.classList.contains("plads")) {
+            var tempId = targetElement.id;
+            targetElement.id = draggedElement.id;
+            draggedElement.id = tempId;
+
+            var tempTitle = targetElement.title;
+            targetElement.title = draggedElement.title;
+            draggedElement.title = tempTitle;
+
+            var tempStyle = targetElement.style.backgroundColor;
+            targetElement.style.backgroundColor = draggedElement.style.backgroundColor;
+            draggedElement.style.backgroundColor = tempStyle;
+        }
+    }
+
+    document.querySelectorAll('.plads').forEach(function (plads) {
+        plads.addEventListener('dragover', allowDrop);
+        plads.addEventListener('drop', drop);
     });
 </script>

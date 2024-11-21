@@ -61,7 +61,7 @@ namespace SumEksamen.Controllers
             ventelister.Add(venteliste);
 
             
-            return RedirectToAction("Ventelister");
+            return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
         }
 
         
