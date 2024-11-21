@@ -5,19 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
+using SumEksamen.Services;
 
 namespace SumEksamen.Controllers
 {
     public class KøkkenholdController : Controller
     {
-        private readonly VentelisteController _ventelisteController;
-        private static List<Elev> elevListe = new List<Elev>();
-        private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
-        
-        public KøkkenholdController(VentelisteController ventelisteController)
-        {
-            _ventelisteController = ventelisteController;
-        }
         
         // GET: KøkkenholdController
         public ActionResult Index()
@@ -29,9 +22,9 @@ namespace SumEksamen.Controllers
         [Route("upload")]
         public IActionResult Upload()
         {
-            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            var aargangList = Storage.HentVentelister().Select(v => v.Aargang).ToList();
             ViewBag.AargangList = aargangList;
-            return View(elevListe);
+            return View(Storage.HentElevListe());
         }
 
         [HttpPost]
@@ -41,7 +34,7 @@ namespace SumEksamen.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("Upload a valid file.");
 
-            elevListe.Clear();
+            Storage.HentElevListe().Clear();
 
             using (var stream = new MemoryStream())
             {
@@ -57,7 +50,7 @@ namespace SumEksamen.Controllers
                         if (Enum.TryParse(worksheet.Cells[row, 2].Text, out Køn køn))
                         {
                             var elev = new Elev(navn, køn);
-                            elevListe.Add(elev);
+                            Storage.TilføjElev(elev);
                         }
                         else
                         {
@@ -68,21 +61,21 @@ namespace SumEksamen.Controllers
                 }
             }
 
-            return View("Upload", elevListe);
+            return View("Upload", Storage.HentElevListe());
         }
 
         [HttpPost]
         [Route("createKøkkenhold")]
         public IActionResult CreateKøkkenhold()
         {
-            køkkenholdListe.Clear();
-            var drenge = elevListe.Where(e => e.Køn == Køn.dreng).ToList();
-            var piger = elevListe.Where(e => e.Køn == Køn.pige).ToList();
+            Storage.HentKøkkenhold().Clear();
+            var drenge = Storage.HentElevListe().Where(e => e.Køn == Køn.dreng).ToList();
+            var piger = Storage.HentElevListe().Where(e => e.Køn == Køn.pige).ToList();
 
             while (drenge.Count >= 2 && piger.Count >= 2) // Laver køkkenhold med 2 drenge og 2 piger
             {
                 var køkkenhold = new Køkkenhold(drenge.Take(2).Concat(piger.Take(2)).ToArray());
-                køkkenholdListe.Add(køkkenhold);
+                Storage.TilføjKøkkenhold(køkkenhold);
                 drenge.RemoveRange(0, 2);
                 piger.RemoveRange(0, 2);
             }
@@ -95,11 +88,11 @@ namespace SumEksamen.Controllers
                 if (i + 4 <= remaining.Count)
                 {
                     var køkkenhold = new Køkkenhold(remaining.GetRange(i, 4).ToArray());
-                    køkkenholdListe.Add(køkkenhold);
+                    Storage.TilføjKøkkenhold(køkkenhold);
                 }
             }
 
-            return View("Køkkenhold", køkkenholdListe);
+            return View("Køkkenhold", Storage.HentKøkkenhold());
         }
 
 
@@ -117,7 +110,7 @@ namespace SumEksamen.Controllers
                 worksheet.Cells[1, 3].Value = "Køn";
 
                 int row = 2;
-                foreach (var køkkenhold in køkkenholdListe)
+                foreach (var køkkenhold in Storage.HentKøkkenhold())
                 {
                     foreach (var elev in køkkenhold.GetElevListe())
                     {
@@ -138,14 +131,10 @@ namespace SumEksamen.Controllers
             }
         }
 
-        public void ElevlisteFraVenteliste(string aargang)
-        {
-            elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
-        }
-        
+       
         public IActionResult OpretKøkkenhold(string aargang)
         {
-            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            var aargangList = Storage.HentVentelister().Select(v => v.Aargang).ToList();
             ViewBag.AargangList = new SelectList(aargangList);
             return View();
         }
@@ -154,8 +143,8 @@ namespace SumEksamen.Controllers
         [Route("opretKøkkenholdFraVenteliste")]
         public IActionResult OpretKøkkenholdFraVenteliste(string aargang)
         {
-            
-            ElevlisteFraVenteliste(aargang);
+            Storage.VentelisteTilElevliste(aargang);
+            //elevListe = Storage.HentElevListe();
             return CreateKøkkenhold();
         }
         

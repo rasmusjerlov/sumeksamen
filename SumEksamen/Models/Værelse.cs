@@ -2,7 +2,7 @@ namespace SumEksamen.Models;
 
 public class Værelse
 {
-    public static int væresesId = 1;
+    public static int VærelsesId = 1;
     public List<Elev> ElevListe {get; set;}
     public int AntalPladser {get; set;}
     
@@ -10,6 +10,7 @@ public class Værelse
     {
         ElevListe = new List<Elev>(antalPladser);
         AntalPladser = antalPladser;
+        VærelsesId++;
     }
     
     public void AddElev(Elev elev)
@@ -25,6 +26,12 @@ public class Værelse
     public List<Elev> HentVærelse()
     {
         return ElevListe;
+    }
+    
+    public int VærelelsesId
+    {
+        get => VærelsesId;
+        set => VærelsesId = value;
     }
     
     

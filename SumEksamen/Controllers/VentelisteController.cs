@@ -6,20 +6,21 @@ using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SumEksamen.Models;
+using SumEksamen.Services;
 
 
 namespace SumEksamen.Controllers
 {
     public class VentelisteController : Controller
     {
-        private static List<Venteliste> ventelister = new List<Venteliste>();
+       
         //private static List<Elev> elevListe = new List<Elev>(135);
         
 
     // GET: Venteliste
         public ActionResult Ventelister()
         {
-            return View(ventelister);  // Ændret til 'Ventelister'
+            return View(Storage.HentVentelister());  // Ændret til 'Ventelister'
         }
 
         [HttpGet]
@@ -28,6 +29,8 @@ namespace SumEksamen.Controllers
         {
             return View();
         }
+        
+        
 
         [HttpPost]
         [Route("venteliste/opret")]
@@ -40,7 +43,7 @@ namespace SumEksamen.Controllers
                 return View();
             }
 
-            if (ventelister.Any(v => v.Aargang == aargang))
+            if (Storage.HentVentelister().Any(v => v.Aargang == aargang))
             {
                 ModelState.AddModelError("Aargang", "En venteliste med denne årgang eksisterer allerede.");
                 return View();
@@ -50,23 +53,13 @@ namespace SumEksamen.Controllers
             var venteliste = new Venteliste(aargang)
             {
                 Aargang = aargang,
-                
             };
 
-            ventelister.Add(venteliste);
+            Storage.TilføjVenteliste(venteliste);
 
             
             return RedirectToAction("Ventelister");
         }
-
-        
-       
-        public List<Venteliste> HentVentelister()
-        {
-            return ventelister;
-        }
-
-        
         
         [HttpPost]
         [Route("venteliste/findElev")]
@@ -78,7 +71,7 @@ namespace SumEksamen.Controllers
             }
 
             // Find ventelister, hvor eleven findes
-            var ventelisterMedElev = ventelister
+            var ventelisterMedElev = Storage.HentVentelister()
                 .Where(v => v.hentElever().Any(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase)))
                 .ToList();
 
@@ -98,7 +91,7 @@ namespace SumEksamen.Controllers
         {
             
             
-            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            var venteliste = Storage.HentVentelister().FirstOrDefault(v => v.Aargang == aargang);
             if (venteliste == null)
             {
                 return NotFound($"Venteliste for årgang {aargang} ikke fundet.");
@@ -122,7 +115,7 @@ namespace SumEksamen.Controllers
         {
             
             
-            var elev = ventelister
+            var elev = Storage.HentVentelister()
                 .SelectMany(v => v.hentElever())
                 .FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
 
@@ -137,14 +130,12 @@ namespace SumEksamen.Controllers
 
             return RedirectToAction("Ventelister");
         }
-
-    
         
         
         public IActionResult VentelisteDetaljer(string aargang)
         {
             
-            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            var venteliste = Storage.FindVenteliste(aargang);
             if (venteliste == null)
             {
                 return NotFound($"Venteliste for årgang {aargang} ikke fundet.");
@@ -161,7 +152,7 @@ namespace SumEksamen.Controllers
             var year = DateTime.Now.Year;
             var year2 = year + 1;
             String s = year.ToString() + "/" + year2.ToString();
-            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == s);
+            var venteliste = Storage.HentVentelister().FirstOrDefault(v => v.Aargang == s);
             if (venteliste == null)
             {
             
@@ -183,7 +174,7 @@ namespace SumEksamen.Controllers
         public IActionResult TilfoejElev(string aargang)
         {
             
-            ViewBag.Ventelister = ventelister;
+            ViewBag.Ventelister = Storage.HentVentelister();
             return View();
         }
 
@@ -197,8 +188,8 @@ namespace SumEksamen.Controllers
                 return BadRequest("Alle felter skal udfyldes.");
             }
 
-            
-            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
+
+            var venteliste = Storage.FindVenteliste(aargang);
             if (venteliste == null)
             {
                 
@@ -223,16 +214,13 @@ namespace SumEksamen.Controllers
                 return BadRequest($"Fejl ved tilføjelse af elev: {ex.Message}");
             }
         }
-
-
-        
         
 
         [HttpGet]
         [Route("venteliste/upload")]
         public IActionResult UploadElever()
         {
-            ViewBag.Ventelister = ventelister;
+            ViewBag.Ventelister = Storage.HentVentelister();
             return View();
         }
         
@@ -244,17 +232,16 @@ namespace SumEksamen.Controllers
             if (file == null || file.Length == 0) 
             {
                 return BadRequest("Upload a valid file.");
-                
             } 
             
             if (string.IsNullOrEmpty(aargang)) 
             { 
                 return BadRequest("Årgang skal angives."); 
             } 
+            
             var elevListe = new List<Elev>();
             using (var stream = new MemoryStream()) 
             {
-                
                 file.CopyTo(stream); 
                 using (var package = new ExcelPackage(stream))
                 { 
@@ -271,9 +258,9 @@ namespace SumEksamen.Controllers
                     elevListe.Add(elev); 
                 }
                 } 
-            } 
-            
-            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang); 
+            }
+
+            var venteliste = Storage.FindVenteliste(aargang);
             if (venteliste == null) 
             { 
                 return NotFound($"Venteliste for årgang {aargang} ikke fundet."); 
@@ -295,44 +282,21 @@ namespace SumEksamen.Controllers
             return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
         }
         
-        public Venteliste HentVenteliste(string aargang)
+        //Skal måske fjernes?
+        public Venteliste HentVenteliste(string aargang) 
         {
-            if (!ventelister.Any(v => v.Aargang == aargang))
+            if (!Storage.HentVentelister().Any(v => v.Aargang == aargang))
             {
                 throw new ArgumentException("Venteliste findes ikke.");
             }
             
-            
-            return ventelister.FirstOrDefault(v => v.Aargang == aargang);
+            return Storage.FindVenteliste(aargang);
         }
 
         public static void ResetVenteliste()
         {
-            ventelister.Clear();
+            Storage.HentVentelister().Clear();
         }
         
-        
-        public List<Elev> VentelisteTilElevliste(string aargang)
-        {
-            var venteliste = ventelister.FirstOrDefault(v => v.Aargang == aargang);
-            if (venteliste == null)
-            {
-                throw new ArgumentException($"VenteListe for årgang {aargang} ikke fundet.");
-            }
-
-            List<Elev> elevListe = new List<Elev>(136);
-            elevListe = venteliste.hentElever()
-                                  .Take(136)
-                                  .ToList();    
-           
-            foreach (var elev in elevListe)
-            {
-                elev.Status = Status.Aktiv;
-            }
-
-            return elevListe;
-            
-        }
-
     }
 }
