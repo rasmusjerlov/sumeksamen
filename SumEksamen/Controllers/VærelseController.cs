@@ -6,22 +6,10 @@ namespace SumEksamen.Controllers;
 
 public class VærelseController : Controller
 {
-    private List<Værelse> værelseListe = new List<Værelse>();
-    private List<Elev> elevListe = new List<Elev>();
-    private VentelisteController _ventelisteController;
-
-
-    public VærelseController(VentelisteController ventelisteController)
-    {
-        _ventelisteController = ventelisteController;
-    }
-    
     public void TilføjVærelse(Værelse værelse)
     {
         Storage.TilføjVærelse(værelse);
     }
-    
-
 
     public void OpretVærelse(int antalPladser)
     {
@@ -122,10 +110,4 @@ public class VærelseController : Controller
         var værelser = Storage.HentVærelser();
         return View("FordelElever", værelser);
     }
-    
-    
-    
-    
-    
-    
 }
