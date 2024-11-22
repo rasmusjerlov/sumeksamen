@@ -1,3 +1,5 @@
+using SumEksamen.Services;
+
 namespace SumEksamen.Controllers;
 
 using System.Diagnostics;
@@ -21,31 +23,31 @@ public class BordController : Controller
     public IActionResult Bordopsætning()
     {
         // Check if the list of tables is already populated
-        if (borde.Count == 0)
+        if (Storage.HentBorde().Count == 0)
         {
             for (int i = 0; i <= 5; i++)
             {
-                borde.Add(new Bord(12));
+                Storage.TilføjBord(new Bord(12));
             }
 
             for (int i = 0; i <= 7; i++)
             {
-                borde.Add(new Bord(8));
+                Storage.TilføjBord(new Bord(8));
             }
         }
 
         // Fetch the list of years from VentelisteController
-        var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+        var aargangList = Storage.HentVentelister().Select(v => v.Aargang).ToList();
         ViewBag.AargangList = aargangList;
 
         // Pass the list of tables to the view
-        return View("/Views/Spisesal/Bordopsætning.cshtml", borde);
+        return View("/Views/Spisesal/Bordopsætning.cshtml", Storage.HentBorde());
     }
 
     [HttpPost]
     public IActionResult UpdateBord(int bordNr, int antalPladser)
     {
-        var bord = borde.FirstOrDefault(b => b.bordNr == bordNr);
+        var bord = Storage.FindBord(bordNr);
         if (bord != null)
         {
             bord.antalPladser = antalPladser;
@@ -64,7 +66,7 @@ public class BordController : Controller
                 throw new ArgumentException("Et bord kan maksimalt have 12 pladser.");
             }
 
-            foreach (var bord in borde)
+            foreach (var bord in Storage.HentBorde())
             {
                 if (bord.bordNr == bordNr)
                 {
@@ -74,12 +76,12 @@ public class BordController : Controller
 
             // Find the smallest available bordNr if the provided one already exists
             int newBordNr = bordNr;
-            while (borde.Any(b => b.bordNr == newBordNr))
+            while (Storage.HentBorde().Any(b => b.bordNr == newBordNr))
             {
                 newBordNr++;
             }
 
-            borde.Add(new Bord { bordNr = newBordNr, antalPladser = antalPladser });
+            Storage.TilføjBord(new Bord { bordNr = newBordNr, antalPladser = antalPladser });
 
             return Json(new { success = true });
         }
@@ -92,10 +94,10 @@ public class BordController : Controller
     [HttpPost]
     public IActionResult SletBord(int bordNr)
     {
-        var bord = borde.FirstOrDefault(b => b.bordNr == bordNr);
+        var bord = Storage.FindBord(bordNr);
         if (bord != null)
         {
-            borde.Remove(bord);
+            Storage.SletBord(bord);
         }
         else
         {
@@ -105,21 +107,16 @@ public class BordController : Controller
         return RedirectToAction("Bordopsætning");
     }
 
-    public void ElevListeFraVenteliste(string aargang)
-    {
-        elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
-    }
-
     [HttpPost]
     public IActionResult TilfojElevTilBordFraVenteliste(string aargang)
     {
         // Retrieve students from the waiting list for the specified year
-        ElevListeFraVenteliste(aargang);
+        Storage.VentelisteTilElevliste(aargang);
 
-        var piger = elevListe.Where(e => e.Køn == Køn.pige).OrderBy(e => Guid.NewGuid()).ToList();
-        var drenge = elevListe.Where(e => e.Køn == Køn.dreng).OrderBy(e => Guid.NewGuid()).ToList();
+        var piger = Storage.HentElevListe().Where(e => e.Køn == Køn.pige).OrderBy(e => Guid.NewGuid()).ToList();
+        var drenge = Storage.HentElevListe().Where(e => e.Køn == Køn.dreng).OrderBy(e => Guid.NewGuid()).ToList();
 
-        foreach (var bord in borde)
+        foreach (var bord in Storage.HentBorde())
         {
             if (bord.elever == null)
             {
