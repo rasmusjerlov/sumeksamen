@@ -22,7 +22,6 @@
             <thead>
             <tr>
                 <th>Årgang</th>
-                <th>Oprettelsesdato</th>
                 <th>Tilføj bemærkning</th>
                 <th>Slet elev</th>
             </tr>
@@ -55,7 +54,9 @@
     {
         <p>Ingen ventelister fundet for denne elev.</p>
     }
-    <a href="@Url.Action("Ventelister", "Venteliste")">Vis alle ventelister</a>
+    <form method="get" action="@Url.Action("Ventelister", "Venteliste")">
+        <button type="submit" class="btn btn-secondary" style="margin-top: 10px;">Tilbage til Ventelister</button>
+    </form>
 }
 
 else
@@ -65,7 +66,6 @@ else
         <thead>
         <tr>
             <th>Årgang</th>
-            <th>Oprettelsesdato</th>
             <th>Handlinger</th>
         </tr>
         </thead>
@@ -83,5 +83,7 @@ else
         }
         </tbody>
     </table>
-    <a href="@Url.Action("OpretVenteliste", "Venteliste")">Opret en ny venteliste</a>
+    <form method="get" action="@Url.Action("OpretVenteliste", "Venteliste")">
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Opret ventelise</button>
+    </form>
 }

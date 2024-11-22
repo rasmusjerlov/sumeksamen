@@ -61,7 +61,7 @@ namespace SumEksamen.Controllers
             ventelister.Add(venteliste);
 
             
-            return RedirectToAction("Ventelister");
+            return RedirectToAction("VentelisteDetaljer", new { aargang = aargang });
         }
 
         
@@ -262,7 +262,8 @@ namespace SumEksamen.Controllers
                 
                 file.CopyTo(stream); 
                 using (var package = new ExcelPackage(stream))
-                { 
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                     var worksheet = package.Workbook.Worksheets[0]; 
                     int rowCount = worksheet.Dimension.Rows; 
                 for (int row = 2; row <= rowCount; row++) 
