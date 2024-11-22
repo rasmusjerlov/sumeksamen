@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <Folder Include="Views\Køkkenhold\" />
+      <Folder Include="Views\Linjehold\" />
       <Folder Include="Views\Spisesal\" />
       <Folder Include="Views\Venteliste\" />
     </ItemGroup>
@@ -23,5 +24,6 @@
       <None Include="wwwroot\kitchen.png" />
       <None Include="wwwroot\waiting-list (1).png" />
     </ItemGroup>
+    
 
 </Project>

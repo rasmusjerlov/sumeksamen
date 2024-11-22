@@ -28,4 +28,6 @@
     <input type="submit" value="Tilføj Elev" />
 </form>
 
-<h3><a href="@Url.Action("Ventelister", "Venteliste")">Tilbage til Ventelister</a></h3>
+<form method="get" action="@Url.Action("Ventelister", "Venteliste")">
+    <button type="submit" class="btn btn-secondary" style="margin-top: 10px;">Tilbage til Ventelister</button>
+</form>
