@@ -29,7 +29,7 @@
         event.preventDefault();
         var selectedAargang = document.getElementById('aargang').value;
 
-        fetch('/Venteliste/HentVentelister')
+        fetch('/api/API')
             .then(response => response.json())
             .then(data => {
                 var duplicate = data.some(venteliste => venteliste.aargang === selectedAargang);

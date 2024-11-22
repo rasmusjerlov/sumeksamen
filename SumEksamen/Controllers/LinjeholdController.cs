@@ -5,20 +5,12 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
+using SumEksamen.Services;
 
 namespace SumEksamen.Controllers
 {
     public class LinjeholdController : Controller
     {
-        private static List<Elev> elevListe = new List<Elev>();
-        private static List<Linjehold> linjeholdListe = new List<Linjehold>();
-        private readonly VentelisteController _ventelisteController;
-        
-        public LinjeholdController(VentelisteController ventelisteController)
-        {
-            _ventelisteController = ventelisteController;
-        }
-        
         // GET: LinjeholdController
         public ActionResult Index()
         {
@@ -47,7 +39,7 @@ namespace SumEksamen.Controllers
             
 
             
-            linjeholdListe.Add(linjehold);
+            Storage.TilføjLinjehold(linjehold);
             
             return RedirectToAction("LinjeholdOversigt");
         }
@@ -58,23 +50,22 @@ namespace SumEksamen.Controllers
         [Route("linjehold/oversigt")]
         public IActionResult LinjeholdOversigt()
         {
-            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            var aargangList = Storage.HentVentelister().Select(v => v.Aargang).ToList();
             ViewBag.AargangList = aargangList;
-            ViewData["Elever"] = elevListe;
-            return View(linjeholdListe);
+            ViewData["Elever"] = Storage.HentElevListe();
+            return View(Storage.HentLinjehold());
         }
 
         [HttpGet]
         [Route("linjehold/tilføj")]
         public IActionResult FordelElevPaaLinjehold(string elevNavn, Guid LinjeholdId)
         {
-            
-            var elev = elevListe.FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
+            var elev = Storage.HentElevListe().FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
             if (elev == null)
                 return NotFound("Elev ikke fundet.");
 
 
-            var linjehold = linjeholdListe.FirstOrDefault(lh => lh.Id == LinjeholdId);
+            var linjehold = Storage.FindLinjehold(LinjeholdId);
             if (linjehold == null)
                 return NotFound("Linjehold ikke fundet.");
 
@@ -98,28 +89,21 @@ namespace SumEksamen.Controllers
             return RedirectToAction("LinjeholdOversigt");
         }
         
-        public void ElevlisteFraVenteliste(string aargang)
-        {
-            
-            elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
-        }
+        
         
         [HttpGet]
         [Route("linjehold/elevliste")]
         public IActionResult OpretElevlisteFraVenteliste(string aargang)
         {
            
-            ElevlisteFraVenteliste(aargang);
+            Storage.VentelisteTilElevliste(aargang);
 
             
-            var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
+            var aargangList = Storage.HentVentelister().Select(v => v.Aargang).ToList();
             ViewBag.AargangList = aargangList;
 
             //return View("OpretElevlisteFraVenteliste");
             return RedirectToAction("LinjeholdOversigt");
         }
-
-        
-       
     }
 }

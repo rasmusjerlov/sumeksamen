@@ -9,6 +9,7 @@ public static class Storage
     private static List<Værelse> værelser = new List<Værelse>();
     private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
     private static List<Elev> elevListe = new List<Elev>();
+    private static List<Linjehold> linjeholdListe = new List<Linjehold>();
     
     public static void TilføjVenteliste(Venteliste venteliste)
     {
@@ -35,9 +36,19 @@ public static class Storage
         elevListe.Add(elev);
     }
     
+    public static void TilføjLinjehold(Linjehold linjehold)
+    {
+        linjeholdListe.Add(linjehold);
+    }
+    
     public static List<Venteliste> HentVentelister()
     {
         return ventelister;
+    }
+
+    public static List<Linjehold> HentLinjehold()
+    {
+        return linjeholdListe;
     }
     
     public static List<Bord> HentBorde()
@@ -65,6 +76,11 @@ public static class Storage
         ventelister.Remove(venteliste);
     }
     
+    public static void SletLinjehold(Linjehold linjehold)
+    {
+        linjeholdListe.Remove(linjehold);
+    }
+    
     public static void SletBord(Bord bord)
     {
         borde.Remove(bord);
@@ -87,6 +103,15 @@ public static class Storage
             throw new ArgumentException("Venteliste findes ikke.");
         }
         return ventelister.Find(v => v.Aargang == aargang);
+    }
+    
+    public static Linjehold FindLinjehold(Guid id)
+    {
+        if (linjeholdListe.Find(l => l.Id == id) == null)
+        {
+            throw new ArgumentException("Linjehold findes ikke.");
+        }
+        return linjeholdListe.Find(l => l.Id == id);
     }
     
     public static Bord FindBord(int bordNr)
