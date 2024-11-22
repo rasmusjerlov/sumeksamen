@@ -20,7 +20,7 @@ public class Linjehold
     
     public void tilfojElev(Elev elev)
     {
-        if (!elever.Contains(elev) && elev.Køn.Equals(køn) && elever.Count < kapacitet && elev.Status.Equals(Status.Aktiv))
+        if (!elever.Contains(elev) && equalsKøn(elev.Køn, køn) && elever.Count < kapacitet && elev.Status.Equals(Status.Aktiv))
         {
             elever.Add(elev);
         }
@@ -31,6 +31,19 @@ public class Linjehold
                 "Elevens køn passer ikke til linjeholdets køn.") : "Eleven er ikke en aktiv elev på skolen";
             throw new ArgumentException(errorMessage);
         }
+    }
+
+    private bool equalsKøn(Køn elevKøn, Køn linjeKøn)
+    {
+        if (linjeKøn == Køn.blandet)
+        {
+            return true;
+        }
+        else
+        {
+            return elevKøn == linjeKøn;
+        }
+        
     }
     
     public List<Elev> hentElever()
