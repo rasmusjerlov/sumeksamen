@@ -100,7 +100,7 @@ namespace SumEksamen.Controllers
         
         public void ElevlisteFraVenteliste(string aargang)
         {
-            // Brug VentelisteController til at hente ventelisten for den givne årgang
+            
             elevListe = _ventelisteController.VentelisteTilElevliste(aargang);
         }
         
@@ -108,10 +108,10 @@ namespace SumEksamen.Controllers
         [Route("linjehold/elevliste")]
         public IActionResult OpretElevlisteFraVenteliste(string aargang)
         {
-            // Opret elevliste fra venteliste
+           
             ElevlisteFraVenteliste(aargang);
 
-            // Hent årgangslister for dropdown
+            
             var aargangList = _ventelisteController.HentVentelister().Select(v => v.Aargang).ToList();
             ViewBag.AargangList = aargangList;
 
