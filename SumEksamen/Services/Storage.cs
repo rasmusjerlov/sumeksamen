@@ -82,6 +82,10 @@ public static class Storage
     
     public static Venteliste FindVenteliste(string aargang)
     {
+        if (ventelister.Find(v => v.Aargang == aargang) == null)
+        {
+            throw new ArgumentException("Venteliste findes ikke.");
+        }
         return ventelister.Find(v => v.Aargang == aargang);
     }
     

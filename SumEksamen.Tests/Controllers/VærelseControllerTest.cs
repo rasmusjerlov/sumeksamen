@@ -12,7 +12,7 @@ public class VærelseControllerTest
     
     public VærelseControllerTest()
     {
-        værelseController = new VærelseController(new VentelisteController());
+        værelseController = new VærelseController();
         Værelse værelse = new Værelse(4);
         værelseController.TilføjVærelse(værelse);
         Elev e1 = new Elev("mikkel", Køn.dreng);
