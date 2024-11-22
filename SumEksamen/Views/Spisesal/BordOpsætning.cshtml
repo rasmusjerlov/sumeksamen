@@ -194,6 +194,20 @@
         var targetElement = event.target;
 
         if (targetElement.classList.contains("plads")) {
+            var draggedTable = draggedElement.closest('.bord-container');
+            var targetTable = targetElement.closest('.bord-container');
+
+            var draggedGirls = draggedTable.querySelectorAll('.plads[style*="background-color: pink;"]').length;
+            var targetGirls = targetTable.querySelectorAll('.plads[style*="background-color: pink;"]').length;
+
+            var draggedIsGirl = draggedElement.style.backgroundColor === 'pink';
+            var targetIsGirl = targetElement.style.backgroundColor === 'pink';
+
+            if ((draggedIsGirl && draggedGirls <= 2) || (targetIsGirl && targetGirls <= 2)) {
+                alert("Hvert bord skal mindst have 2 piger");
+                return;
+            }
+
             var tempId = targetElement.id;
             targetElement.id = draggedElement.id;
             draggedElement.id = tempId;
@@ -205,7 +219,24 @@
             var tempStyle = targetElement.style.backgroundColor;
             targetElement.style.backgroundColor = draggedElement.style.backgroundColor;
             draggedElement.style.backgroundColor = tempStyle;
+
+            updateStudentList(draggedTable);
+            updateStudentList(targetTable);
         }
+    }
+
+    function updateStudentList(table) {
+        var studentList = table.querySelector('.elev-liste ul');
+        var students = table.querySelectorAll('.plads');
+        studentList.innerHTML = '';
+
+        students.forEach(function (student) {
+            var studentName = student.title;
+            var studentGender = student.style.backgroundColor === 'pink' ? 'pige' : 'dreng';
+            var listItem = document.createElement('li');
+            listItem.textContent = studentName + ' (' + studentGender + ')';
+            studentList.appendChild(listItem);
+        });
     }
 
     document.querySelectorAll('.plads').forEach(function (plads) {
