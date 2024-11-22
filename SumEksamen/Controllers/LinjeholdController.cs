@@ -66,15 +66,15 @@ namespace SumEksamen.Controllers
 
         [HttpGet]
         [Route("linjehold/tilføj")]
-        public IActionResult FordelElevPaaLinjehold(string elevNavn, string linjeholdType)
+        public IActionResult FordelElevPaaLinjehold(string elevNavn, Guid LinjeholdId)
         {
             
             var elev = elevListe.FirstOrDefault(e => e.Navn.Equals(elevNavn, StringComparison.OrdinalIgnoreCase));
             if (elev == null)
                 return NotFound("Elev ikke fundet.");
 
-            
-            var linjehold = linjeholdListe.FirstOrDefault(l => l.type == linjeholdType);
+
+            var linjehold = linjeholdListe.FirstOrDefault(lh => lh.Id == LinjeholdId);
             if (linjehold == null)
                 return NotFound("Linjehold ikke fundet.");
 

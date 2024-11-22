@@ -3,7 +3,7 @@
 public class Linjehold
 {
     public string type { get; set; }
-    
+    public Guid Id { get; set; }
     public int kapacitet { get; set; }
     
     public Køn køn { get; set; }
@@ -12,6 +12,7 @@ public class Linjehold
     
     public Linjehold(string type, int kapacitet, Køn køn)
     {
+        Id = Guid.NewGuid();
         this.type = type;
         this.kapacitet = kapacitet;
         this.køn = køn;
