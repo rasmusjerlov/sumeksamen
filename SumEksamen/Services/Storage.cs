@@ -10,7 +10,27 @@ public static class Storage
     private static List<Køkkenhold> køkkenholdListe = new List<Køkkenhold>();
     private static List<Elev> elevListe = new List<Elev>();
     private static List<Linjehold> linjeholdListe = new List<Linjehold>();
+    private static List<Klassehold> klasseholdListe = new List<Klassehold>();
     
+    public static void TilføjKlassehold(Klassehold klassehold)
+    {
+        klasseholdListe.Add(klassehold);
+    }
+    
+    public static List<Klassehold> HentKlassehold()
+    {
+        return klasseholdListe;
+    }
+    
+    public static void sletKlassehold(Klassehold klassehold)
+    {
+        klasseholdListe.Remove(klassehold);
+    }
+
+    public static Klassehold FindKlassehold(string s)
+    {
+        return klasseholdListe.Find(k => s.Equals(k.Fag));
+    }
     public static void TilføjVenteliste(Venteliste venteliste)
     {
         ventelister.Add(venteliste);
