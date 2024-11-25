@@ -9,7 +9,7 @@ public class ElevTest
 {
 
     [Fact]
-    public void OpretElev()
+    public void TC1_OpretElev_withValidData_shouldInitializeElevCorrectly()
     {
         //Arrange & Act
         Elev elev = new Elev("Mikkel", 16, Status.Aktiv, Køn.dreng);

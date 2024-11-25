@@ -23,7 +23,7 @@ public class BordTest
     }
 
     [Fact]
-    public void TC1_OpretBordTest()
+    public void TC1_OpretBord_withSpecificPladser_shouldInitializeBordCorrectly()
     {
         //Arrange & Act
         Bord bord = new Bord(12);
@@ -34,7 +34,7 @@ public class BordTest
     }
 
     [Fact]
-    public void TC2_AendreAntalPladserTest()
+    public void TC2_AendreAntalPladser_onExistingBord_shouldUpdatePladserCorrectly()
     {
         //Arrange & Act
         b1.antalPladser = 10;
@@ -44,7 +44,7 @@ public class BordTest
     }
 
     [Fact]
-    public void TC3_TilfojElevTilBordPlads()
+    public void TC3_TilfojElevTilBord_withElev_shouldAddElevToBord()
     {
         //Arrange
         Elev elev = new Elev("Mikkel", 16, Status.Aktiv, Køn.dreng);
