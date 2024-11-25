@@ -1,4 +1,5 @@
 using SumEksamen.Services;
+using Xunit.Sdk;
 
 namespace SumEksamen.Controllers;
 
@@ -118,6 +119,10 @@ public class BordController : Controller
 
         foreach (var bord in Storage.HentBorde())
         {
+            if (piger.Count < 2)
+            {
+                throw new InvalidOperationException("ikke nok piger til at fylde bordene");
+            }
             if (bord.elever == null)
             {
                 bord.elever = new List<Elev>();
