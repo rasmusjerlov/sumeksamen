@@ -6,21 +6,18 @@ namespace SumEksamen.Controllers;
 
 public class KlasseholdController : Controller
 {
-    public IActionResult Klassehold()
-    {
-        return View(Storage.HentKlassehold());
-    }
     
     [HttpGet]
-    [Route("klassehold/opret")]
-    public IActionResult OpretKlassehold()
+    [Route("klassehold")]
+    public ActionResult Index()
     {
         return View();
     }
-
-    [HttpPost]
+    
+    
+    [HttpGet]
     [Route("klassehold/opret")]
-    public IActionResult OpretKlasse(string fag, string lokale)
+    public IActionResult OpretKlassehold(string fag, string lokale)
     {
         if (string.IsNullOrWhiteSpace(fag))
         {
@@ -34,4 +31,36 @@ public class KlasseholdController : Controller
 
         return RedirectToAction("KlasseholdDetaljer", new { fag = fag });
     }
+    
+    [HttpGet]
+    [Route("klassehold/detaljer/{fag}")]
+    public IActionResult KlasseholdDetaljer(string fag)
+    {
+
+        
+        var klassehold = Storage.HentKlassehold().FirstOrDefault(k => k.Fag == fag);
+
+        if (klassehold == null)
+        {
+            return NotFound("Klasseholdet blev ikke fundet.");
+        }
+        
+        ViewData["Fag"] = klassehold.Fag;
+        ViewData["Lokale"] = klassehold.Lokale;
+
+        return View(klassehold); 
+    }
+    
+    [HttpGet]
+    [Route("klassehold/oversigt")]
+    public IActionResult KlasseholdOversigt()
+    {
+        
+        var klasseholdListe = Storage.HentKlassehold();
+
+        return View(klasseholdListe); 
+    }
+    
+
+
 }
