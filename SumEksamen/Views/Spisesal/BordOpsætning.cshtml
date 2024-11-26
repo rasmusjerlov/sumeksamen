@@ -90,6 +90,8 @@
     </form>
 </div>
 
+<button onclick="printBordOpsaetning()">Print Bordopsætning</button>
+
 <style>
     .layout {
         display: flex;
@@ -147,6 +149,7 @@
         gap: 10px;
         margin-right: 10px;
     }
+    
 </style>
 
 <script>
@@ -178,6 +181,15 @@
         })
         .catch(error => console.error('Error creating bord:', error));
     });
+    
+    function printBordOpsaetning() {
+        let printContents = document.querySelector('.layout').innerHTML;
+        let originalContents = document.body.innerHTML;
+        
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
 
     function drag(event) {
         event.dataTransfer.setData("text", event.target.id);
