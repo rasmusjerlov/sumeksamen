@@ -3,7 +3,7 @@ namespace SumEksamen.Models;
 public class Klassehold
 {
     private string fag;
-    private List<Elev> _elever { get; set; }
+    private List<Elev> _elever = new List<Elev>();
     private string lokale;
 
     public Klassehold(string fag, string lokale)
@@ -20,7 +20,7 @@ public class Klassehold
         }
         else
         {
-            Console.WriteLine("Eleven er allerede tildelt klasseholdet.");
+            throw new ArgumentException("Eleven er allerede på holdet.");
         }
     }
 
@@ -32,7 +32,7 @@ public class Klassehold
         }
         else
         {
-            throw new ArgumentException("Elev findes ikke.");
+            throw new ArgumentException("Elev findes ikke på klasseholdet.");
         };
     }
 
