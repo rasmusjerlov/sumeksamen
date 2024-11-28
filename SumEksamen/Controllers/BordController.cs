@@ -15,6 +15,7 @@ public class BordController : Controller
     private static List<Bord> borde = new List<Bord>();
     private readonly VentelisteController _ventelisteController;
     private static List<Elev> elevListe = new List<Elev>();
+    private static bool eleverFordelt = false; 
 
     public BordController(VentelisteController ventelisteController)
     {
@@ -111,6 +112,11 @@ public class BordController : Controller
     [HttpPost]
     public IActionResult TilfojElevTilBordFraVenteliste(string aargang)
     {
+        if (eleverFordelt)
+        {
+            return Json(new { success = false, message = "Students have already been distributed." });
+        }
+
         // Retrieve students from the waiting list for the specified year
         Storage.VentelisteTilElevliste(aargang);
 
@@ -121,8 +127,9 @@ public class BordController : Controller
         {
             if (piger.Count < 2)
             {
-                throw new InvalidOperationException("ikke nok piger til at fylde bordene");
+                throw new InvalidOperationException("Not enough girls to fill the tables.");
             }
+
             if (bord.elever == null)
             {
                 bord.elever = new List<Elev>();
@@ -144,6 +151,7 @@ public class BordController : Controller
             }
         }
 
-        return RedirectToAction("Bordopsætning");
+        eleverFordelt = true; // Set the flag to true after distribution
+        return Json(new { success = true });
     }
 }

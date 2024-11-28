@@ -152,6 +152,8 @@
     
 </style>
 
+
+
 <script>
     function editBord(bordNr, antalPladser) {
         document.getElementById('editForm').style.display = 'block';
@@ -257,4 +259,36 @@
         plads.addEventListener('dragover', allowDrop);
         plads.addEventListener('drop', drop);
     });
+    
+    document.getElementById('distributeStudentsForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const distributeButton = document.getElementById('distributeButton');
+
+    fetch('/Bord/TilfojElevTilBordFraVenteliste', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            distributeButton.disabled = true;
+            window.location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error adding students to table:', error));
+});
 </script>
+
+<form id="distributeStudentsForm" method="post" action="/Bord/TilfojElevTilBordFraVenteliste">
+    <label for="aargang">Vælg årgang:</label>
+    <select id="aargang" name="aargang" required>
+        @foreach (var aargang in ViewBag.AargangList)
+        {
+            <option value="@aargang">@aargang</option>
+        }
+    </select>
+    <button type="submit" id="distributeButton">Fordel Elever</button>
+</form>
