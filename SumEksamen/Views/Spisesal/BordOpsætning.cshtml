@@ -15,7 +15,7 @@
                 <option value="@aargang">@aargang</option>
             }
         </select>
-        <button type="submit">Fordel Elever</button>
+        <button type="submit" id="distributeButton">Fordel Elever</button>
     </form>
 </div>
 
@@ -282,13 +282,3 @@
 });
 </script>
 
-<form id="distributeStudentsForm" method="post" action="/Bord/TilfojElevTilBordFraVenteliste">
-    <label for="aargang">Vælg årgang:</label>
-    <select id="aargang" name="aargang" required>
-        @foreach (var aargang in ViewBag.AargangList)
-        {
-            <option value="@aargang">@aargang</option>
-        }
-    </select>
-    <button type="submit" id="distributeButton">Fordel Elever</button>
-</form>
