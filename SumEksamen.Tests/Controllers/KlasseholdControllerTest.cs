@@ -26,7 +26,7 @@ public class KlasseholdControllerTest
     }
 
     [Fact]
-    public void TC2_OpretKlassehold_withUnvalidFag_shouldFail()
+    public void TC2_OpretKlassehold_withInvalidFag_shouldFail()
     {
         khc.OpretKlassehold("", "Lokale 2");
         

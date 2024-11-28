@@ -9,11 +9,11 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=NUnit3x/@EntryIndexedValue">db4927dd-2e12-48a7-9a84-2b7e3e31b9c8</s:String>
 	<s:Boolean x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/ShowAdvancedOptions/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ed584f50_002D2290_002D4ff3_002D852c_002Dfdd02ba94b53/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from KlasseholdTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.KlasseholdControllerTest&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.KlasseholdTest&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ed584f50_002D2290_002D4ff3_002D852c_002Dfdd02ba94b53/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from KlasseholdTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Controllers.KlasseholdControllerTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BFF4CBF-4E57-435E-AB7A-B7C4E11DA3CD::net8.0::SumEksamen.Tests.Models.KlasseholdTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	
