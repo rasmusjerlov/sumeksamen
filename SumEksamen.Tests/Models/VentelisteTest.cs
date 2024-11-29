@@ -109,12 +109,13 @@ public class VentelisteTest
         vl.tilfojElev(e4);
         vl.tilfojElev(e5);
         vl.tilfojElev(e6);
+        Elev elev = new Elev("Anders", Køn.dreng);
 
         //Assert
         Assert.Equal(e4, vl.findElev(e4));
         Assert.Equal(e5, vl.findElev(e5));
         Assert.Equal(e6, vl.findElev(e6));
-        //Assert.Throws<ArgumentException>(() => el3.findElev(elev));
+        Assert.Throws<ArgumentException>(() => vl.findElev(elev));
         
     }
 
@@ -133,6 +134,19 @@ public class VentelisteTest
         //Assert
         Assert.Equal("Rasmus er en god elev", e4.Bemærkninger[0].Tekst);
         Assert.Equal("Rasmus er en dårlig elev", e4.Bemærkninger[1].Tekst);
+    }
+    
+    [Fact]
+    public void TC2_UpdateElev_withNonExistentElev_shouldThrowArgumentException()
+    {
+        //Act
+        vl.tilfojElev(e4);
+        vl.tilfojElev(e5);
+        vl.tilfojElev(e6);
+        Elev elev = new Elev("Anders", Køn.dreng);
+
+        //Assert
+        Assert.Throws<ArgumentException>(() => vl.updateElev(elev, "Anders er en god elev"));
     }
     
 }
