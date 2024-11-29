@@ -15,7 +15,7 @@ namespace SumEksamen.Tests
         private readonly KøkkenholdController _controller;
         
         [Fact]
-        public void TC1_OpretterKøkkenhold()
+        public void TC1_CreateKøkkenhold_withElevList_shouldReturnKøkkenholdWithExpectedElevCount()
         {
             // Arrange
             var ventelisteController = new VentelisteController();

@@ -25,7 +25,7 @@ public class KøkkenholdTest
     }
 
     [Fact]
-    public void TC1_KøkkenholdConstructorMedFireElever()
+    public void TC1_KøkkenholdConstructor_withFourElever_shouldInitializeKøkkenholdCorrectly()
     {
         //Arrange & Act
         Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
@@ -37,7 +37,7 @@ public class KøkkenholdTest
     }
 
     [Fact]
-    public void TC2_KøkkenholdConstructorMedOverFireElever()
+    public void TC2_KøkkenholdConstructor_withMoreThanFourElever_shouldThrowArgumentException()
     {
         //Act & Assert
         //Kaster fejl, hvis hold bliver lavet med mere end 4 elever
@@ -45,7 +45,7 @@ public class KøkkenholdTest
     }
 
     [Fact]
-    public void TC3_KøkkenholdConstructorMedFærreEndFireElever()
+    public void TC3_KøkkenholdConstructor_withLessThanFourElever_shouldThrowArgumentException()
     {
         //Act & Assert
         //Kaster fejl, hvis hold bliver lavet med mindre end 4 elever
@@ -53,7 +53,7 @@ public class KøkkenholdTest
     }
 
     [Fact]
-    public void TC1_TilføjElevTilFuldtKøkkenhold()
+    public void TC1_TilfojElev_withFullKøkkenhold_shouldThrowInvalidOperationException()
     {
         //Arrange
         Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);

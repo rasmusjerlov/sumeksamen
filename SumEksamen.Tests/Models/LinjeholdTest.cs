@@ -38,7 +38,7 @@ public class LinjeholdTest
 
     [Fact]
     
-    public void TC1_tilfojElev()
+    public void TC1_TilfojElev_withValidElever_shouldAddEleverToLinjehold()
     {
         //Act
         lh.tilfojElev(e1);
@@ -52,7 +52,7 @@ public class LinjeholdTest
     
     //Metoden tester for at den rigtige exception bliver kastet, når der tilføjes en pige til et drenge linjehold
     [Fact]
-    public void TC2_tilfojElevFejl()
+    public void TC2_TilfojElev_withIncorrectGender_shouldThrowArgumentException()
     {
         //Act
         lh.tilfojElev(e1);
@@ -66,7 +66,7 @@ public class LinjeholdTest
 
     //Metoden tester for at den rigtige exception bliver kastet, når der tilføjes en elev efter linjeholdets kapacitet er nået
     [Fact]
-    public void TC3_tilfojElevFejl()
+    public void TC3_TilfojElev_withExceedingCapacity_shouldThrowArgumentException()
     {
         //Act
         lh2.tilfojElev(e1);
@@ -80,7 +80,7 @@ public class LinjeholdTest
     
     //Metoden tester for om den rigtige exception bliver kastet, når der tilføjes en inaktiv elev til et linjehold
     [Fact]
-    public void TC4_tilfojElevFejl()
+    public void TC4_TilfojElev_withInactiveElev_shouldThrowArgumentException()
     {
         lh.tilfojElev(e5);
         

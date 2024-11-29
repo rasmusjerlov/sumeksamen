@@ -21,7 +21,7 @@ public class VentelisteControllerTest
     }
     
     [Fact]
-    public void TC1_opretVenteliste()
+    public void TC1_OpretVenteliste_withValidYear_shouldAddVentelisteToStorage()
     {
         //Act
         vlController.Opretventeliste("2025/2026");
@@ -32,7 +32,7 @@ public class VentelisteControllerTest
     }
 
     [Fact]
-    public void TC2_opretVentelisteFejl()
+    public void TC2_OpretVenteliste_withDuplicateYear_shouldAddModelStateError()
     {
         // Arrange
         var controller = new VentelisteController();
@@ -47,7 +47,7 @@ public class VentelisteControllerTest
     }
     
     [Fact]
-    public void TC1_HentVenteliste()
+    public void TC1_HentVenteliste_withExistingYear_shouldReturnCorrectVenteliste()
     {
         
         //Arrange
@@ -63,7 +63,7 @@ public class VentelisteControllerTest
     }
 
     [Fact]
-    public void TC2_HentVentelisteSomIkkeEksisterer()
+    public void TC2_HentVenteliste_withNonExistingYear_shouldThrowArgumentException()
     {
         //Tjekker om der kastes en ArgumentException, hvis der forsøges at hente en venteliste, som ikke eksisterer
         Assert.Throws<ArgumentException>(() => Storage.FindVenteliste("2027/2028"));

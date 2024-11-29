@@ -28,7 +28,7 @@ public class VentelisteTest
     }
 
     [Fact]
-    public void TC1_tilfojElev()
+    public void TC1_TilfojElever_withValidElever_shouldAddEleverToVenteliste()
     {
         //Act
         vl.tilfojElev(e1);
@@ -41,7 +41,7 @@ public class VentelisteTest
     }
 
     [Fact]
-    public void TC2_tilfojElevFejl()
+    public void TC2_TilfojElev_withDuplicateElev_shouldThrowArgumentException()
     {
         //Act
         vl.tilfojElev(e1);
@@ -52,7 +52,7 @@ public class VentelisteTest
     }
      
     [Fact]
-    public void TC1_sletElev()
+    public void TC1_SletElev_withExistingElev_shouldRemoveElevFromVenteliste()
     {
         
         //Act
@@ -70,7 +70,7 @@ public class VentelisteTest
     }
     
     [Fact]
-    public void TC2_sletElevFejl()
+    public void TC2_SletElev_withNonExistentElev_shouldThrowArgumentException()
     {
         //Act
         vl.tilfojElev(e4);
@@ -89,7 +89,7 @@ public class VentelisteTest
     }
 
     [Fact]
-    public void TC1_findElev()
+    public void TC1_FindElev_withExistingElev_shouldReturnCorrectElev()
     {
         //Act
         vl.tilfojElev(e4);
@@ -103,23 +103,24 @@ public class VentelisteTest
     }
     
     [Fact]
-    public void TC2_findElevFejl()
+    public void TC2_FindElev_withNonExistentElev_shouldThrowArgumentException()
     {
         //Act
         vl.tilfojElev(e4);
         vl.tilfojElev(e5);
         vl.tilfojElev(e6);
+        Elev elev = new Elev("Anders", Køn.dreng);
 
         //Assert
         Assert.Equal(e4, vl.findElev(e4));
         Assert.Equal(e5, vl.findElev(e5));
         Assert.Equal(e6, vl.findElev(e6));
-        //Assert.Throws<ArgumentException>(() => el3.findElev(elev));
+        Assert.Throws<ArgumentException>(() => vl.findElev(elev));
         
     }
 
     [Fact]
-    public void TC1_updateElev()
+    public void TC1_UpdateElev_withValidData_shouldUpdateElevNotesCorrectly()
     {
         //Act
         vl.tilfojElev(e4);
@@ -133,6 +134,19 @@ public class VentelisteTest
         //Assert
         Assert.Equal("Rasmus er en god elev", e4.Bemærkninger[0].Tekst);
         Assert.Equal("Rasmus er en dårlig elev", e4.Bemærkninger[1].Tekst);
+    }
+    
+    [Fact]
+    public void TC2_UpdateElev_withNonExistentElev_shouldThrowArgumentException()
+    {
+        //Act
+        vl.tilfojElev(e4);
+        vl.tilfojElev(e5);
+        vl.tilfojElev(e6);
+        Elev elev = new Elev("Anders", Køn.dreng);
+
+        //Assert
+        Assert.Throws<ArgumentException>(() => vl.updateElev(elev, "Anders er en god elev"));
     }
     
 }
