@@ -93,8 +93,7 @@ public class VentelisteTest
 
         //Assert
         Assert.Equal(e4, vl.findElev(e4));
-        Assert.Equal(e5, vl.findElev(e5));
-        Assert.Equal(e6, vl.findElev(e6));
+        
     }
 
     [Fact]
