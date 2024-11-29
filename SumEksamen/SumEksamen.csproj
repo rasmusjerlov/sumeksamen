@@ -7,24 +7,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="EPPlus" Version="7.4.2" />
-      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
-      <PackageReference Include="xunit" Version="2.9.2" />
+        <PackageReference Include="EPPlus" Version="7.4.2"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6"/>
+        <PackageReference Include="xunit" Version="2.9.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\Klassehold\" />
-      <Folder Include="Views\Køkkenhold\" />
-      <Folder Include="Views\Linjehold\" />
-      <Folder Include="Views\Spisesal\" />
-      <Folder Include="Views\Venteliste\" />
+        <Folder Include="Views\Klassehold\"/>
+        <Folder Include="Views\Køkkenhold\"/>
+        <Folder Include="Views\Linjehold\"/>
+        <Folder Include="Views\Spisesal\"/>
+        <Folder Include="Views\Venteliste\"/>
     </ItemGroup>
-    
+
 
     <ItemGroup>
-      <None Include="wwwroot\kitchen.png" />
-      <None Include="wwwroot\waiting-list (1).png" />
+        <None Include="wwwroot\kitchen.png"/>
+        <None Include="wwwroot\waiting-list (1).png"/>
     </ItemGroup>
-    
+
 
 </Project>

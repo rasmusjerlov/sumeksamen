@@ -1,7 +1,6 @@
-namespace SumEksamen.Models
+namespace SumEksamen.Models;
+
+public class FileUploadViewModel
 {
-    public class FileUploadViewModel
-    {
-        public IFormFile File { get; set; }
-    }
+    public IFormFile File { get; set; }
 }

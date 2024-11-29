@@ -5,5 +5,4 @@ public enum Køn
     pige,
     dreng,
     blandet
-    
 }

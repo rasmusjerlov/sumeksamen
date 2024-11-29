@@ -1,4 +1,4 @@
-@model SumEksamen.Models.Venteliste
+@model Venteliste
 
 <!DOCTYPE html>
 <html>
@@ -11,10 +11,10 @@
 
 <h3>Elever på ventelisten:</h3>
 <ul>
-    @foreach(var elev in Model.hentElever())
+    @foreach (var elev in Model.hentElever())
     {
         <li>
-            @elev.Navn - @elev.Køn - <strong>Bemærkninger:</strong><br />
+            @elev.Navn - @elev.Køn - <strong>Bemærkninger:</strong><br/>
             @if (elev.Bemærkninger.Any())
             {
                 @foreach (var bemærkning in elev.Bemærkninger)
@@ -33,12 +33,15 @@
 </ul>
 
 
-<form method="get" action="@Url.Action("TilfoejElev", "Venteliste", new { aargang = Model.Aargang })" style="display: inline;">
+<form method="get" action="@Url.Action("TilfoejElev", "Venteliste", new { aargang = Model.Aargang })"
+      style="display: inline;">
     <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Tilføj elev til denne venteliste</button>
 </form>
 
-<form method="get" action="@Url.Action("UploadElever", "Venteliste", new { aargang = Model.Aargang })" style="display: inline;">
-    <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Upload elever til denne venteliste</button>
+<form method="get" action="@Url.Action("UploadElever", "Venteliste", new { aargang = Model.Aargang })"
+      style="display: inline;">
+    <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Upload elever til denne venteliste
+    </button>
 </form>
 
 <form method="get" action="@Url.Action("Ventelister", "Venteliste")" style="display: inline;">

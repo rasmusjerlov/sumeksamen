@@ -8,11 +8,11 @@ namespace SumEksamen.Tests.Models;
 [TestSubject(typeof(Køkkenhold))]
 public class KøkkenholdTest
 {
-    private Elev e1;
-    private Elev e2;
-    private Elev e3;
-    private Elev e4;
-    private Elev e5;
+    private readonly Elev e1;
+    private readonly Elev e2;
+    private readonly Elev e3;
+    private readonly Elev e4;
+    private readonly Elev e5;
 
     // This method is called before each test method.
     public KøkkenholdTest()
@@ -28,8 +28,8 @@ public class KøkkenholdTest
     public void TC1_KøkkenholdConstructor_withFourElever_shouldInitializeKøkkenholdCorrectly()
     {
         //Arrange & Act
-        Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
-        
+        var køkkenhold = new Køkkenhold(e1, e2, e3, e4);
+
         //Assert
         Assert.NotNull(køkkenhold);
         Assert.Equal(33, køkkenhold.UgeNr);
@@ -56,7 +56,7 @@ public class KøkkenholdTest
     public void TC1_TilfojElev_withFullKøkkenhold_shouldThrowInvalidOperationException()
     {
         //Arrange
-        Køkkenhold køkkenhold = new Køkkenhold(e1, e2, e3, e4);
+        var køkkenhold = new Køkkenhold(e1, e2, e3, e4);
 
         //Act & Assert
         //Kaster fejl, hvis hold bliver over 4 elever

@@ -21,25 +21,26 @@
     <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Opret Venteliste</button>
 </form>
 
-<a href="@Url.Action("Ventelister", "Venteliste")" class="btn btn-secondary" style="margin-top: 10px;">Venteliste Oversigt</a>
+<a href="@Url.Action("Ventelister", "Venteliste")" class="btn btn-secondary" style="margin-top: 10px;">Venteliste
+    Oversigt</a>
 
 @section Scripts {
     <script>
-    document.getElementById('ventelisteForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        var selectedAargang = document.getElementById('aargang').value;
+        document.getElementById('ventelisteForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var selectedAargang = document.getElementById('aargang').value;
 
-        fetch('/api/API')
-            .then(response => response.json())
-            .then(data => {
-                var duplicate = data.some(venteliste => venteliste.aargang === selectedAargang);
-                if (duplicate) {
-                    alert('En venteliste med denne årgang eksisterer allerede.');
-                } else {
-                    event.target.submit();
-                }
-            })
-            .catch(error => console.error('Error fetching ventelister:', error));
-    });
-</script>
+            fetch('/api/API')
+                .then(response => response.json())
+                .then(data => {
+                    var duplicate = data.some(venteliste => venteliste.aargang === selectedAargang);
+                    if (duplicate) {
+                        alert('En venteliste med denne årgang eksisterer allerede.');
+                    } else {
+                        event.target.submit();
+                    }
+                })
+                .catch(error => console.error('Error fetching ventelister:', error));
+        });
+    </script>
 }

@@ -1,18 +1,17 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using SumEksamen.Controllers;
-using SumEksamen.Models;
 using SumEksamen.Services;
 using Xunit;
-using System.Linq;
-using System;
 
 namespace SumEksamen.Models;
 
 [TestSubject(typeof(Bord))]
 public class BordTest
 {
-    private Bord b1;
+    private readonly Bord b1;
     private Bord b2;
     private Bord b3;
     private Bord b4;
@@ -29,7 +28,7 @@ public class BordTest
     public void TC1_OpretBord_withSpecificPladser_shouldInitializeBordCorrectly()
     {
         //Arrange & Act
-        Bord bord = new Bord(12);
+        var bord = new Bord(12);
 
         //Assert
         Assert.Equal(12, bord.antalPladser);
@@ -56,14 +55,14 @@ public class BordTest
 
         var venteliste = new List<Elev>
         {
-            new Elev("Rasmus", Køn.dreng),
-            new Elev("Mikkel", Køn.dreng),
-            new Elev("Hanne", Køn.pige),
-            new Elev("Martina", Køn.pige),
-            new Elev("Abu", Køn.dreng),
-            new Elev("Jens", Køn.dreng),
-            new Elev("Ludvig", Køn.pige),
-            new Elev("Morten", Køn.dreng)
+            new("Rasmus", Køn.dreng),
+            new("Mikkel", Køn.dreng),
+            new("Hanne", Køn.pige),
+            new("Martina", Køn.pige),
+            new("Abu", Køn.dreng),
+            new("Jens", Køn.dreng),
+            new("Ludvig", Køn.pige),
+            new("Morten", Køn.dreng)
         };
 
         var aargang = "2023/2024";
@@ -71,10 +70,7 @@ public class BordTest
         // Add the Venteliste for the specified year
         var ventelisteController = new VentelisteController();
         var ventelisteForAargang = new Venteliste(aargang);
-        foreach (var elev in venteliste)
-        {
-            ventelisteForAargang.tilfojElev(elev);
-        }
+        foreach (var elev in venteliste) ventelisteForAargang.tilfojElev(elev);
         Storage.TilføjVenteliste(ventelisteForAargang);
 
         // Act
@@ -97,12 +93,12 @@ public class BordTest
 
         var venteliste = new List<Elev>
         {
-            new Elev("Hanne", Køn.pige),
-            new Elev("Martina", Køn.pige),
-            new Elev("Ludvig", Køn.pige),
-            new Elev("Rasmus", Køn.dreng),
-            new Elev("Mikkel", Køn.dreng),
-            new Elev("Abu", Køn.dreng)
+            new("Hanne", Køn.pige),
+            new("Martina", Køn.pige),
+            new("Ludvig", Køn.pige),
+            new("Rasmus", Køn.dreng),
+            new("Mikkel", Køn.dreng),
+            new("Abu", Køn.dreng)
         };
 
         var aargang = "2023/2024";
@@ -110,10 +106,7 @@ public class BordTest
         // Add the Venteliste for the specified year
         var ventelisteController = new VentelisteController();
         var ventelisteForAargang = new Venteliste(aargang);
-        foreach (var elev in venteliste)
-        {
-            ventelisteForAargang.tilfojElev(elev);
-        }
+        foreach (var elev in venteliste) ventelisteForAargang.tilfojElev(elev);
         Storage.TilføjVenteliste(ventelisteForAargang);
 
         // Act
@@ -136,7 +129,7 @@ public class BordTest
 
         var venteliste = new List<Elev>
         {
-            new Elev("Hanne", Køn.pige)
+            new("Hanne", Køn.pige)
         };
 
         var aargang = "2023/2024";
@@ -144,10 +137,7 @@ public class BordTest
         // Add the Venteliste for the specified year
         var ventelisteController = new VentelisteController();
         var ventelisteForAargang = new Venteliste(aargang);
-        foreach (var elev in venteliste)
-        {
-            ventelisteForAargang.tilfojElev(elev);
-        }
+        foreach (var elev in venteliste) ventelisteForAargang.tilfojElev(elev);
         Storage.TilføjVenteliste(ventelisteForAargang);
 
         // Act & Assert

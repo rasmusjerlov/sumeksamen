@@ -2,29 +2,18 @@ namespace SumEksamen.Models;
 
 public class Bemærkning
 {
-    private DateTime dato;
-    private string tekst;
-
     public Bemærkning(DateTime dato, string tekst)
     {
-        this.dato = dato;
-        this.tekst = tekst;
+        this.Dato = dato;
+        this.Tekst = tekst;
     }
 
-    public DateTime Dato
-    {
-        get => dato;
-        set => dato = value;
-    }
+    public DateTime Dato { get; set; }
 
-    public string Tekst
-    {
-        get => tekst;
-        set => tekst = value;
-    }
+    public string Tekst { get; set; }
 
     public override string ToString()
     {
-        return $"{dato}: {tekst}";
+        return $"{Dato}: {Tekst}";
     }
 }

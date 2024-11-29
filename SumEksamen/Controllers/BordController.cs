@@ -1,21 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
+using SumEksamen.Models;
 using SumEksamen.Services;
-using Xunit.Sdk;
 
 namespace SumEksamen.Controllers;
 
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using SumEksamen.Models;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 public class BordController : Controller
 {
-    private static List<Bord> borde = new List<Bord>();
+    private static List<Bord> borde = new();
+    private static List<Elev> elevListe = new();
+    private static bool eleverFordelt;
     private readonly VentelisteController _ventelisteController;
-    private static List<Elev> elevListe = new List<Elev>();
-    private static bool eleverFordelt = false; 
 
     public BordController(VentelisteController ventelisteController)
     {
@@ -27,15 +21,9 @@ public class BordController : Controller
         // Check if the list of tables is already populated
         if (Storage.HentBorde().Count == 0)
         {
-            for (int i = 0; i <= 5; i++)
-            {
-                Storage.TilføjBord(new Bord(12));
-            }
+            for (var i = 0; i <= 5; i++) Storage.TilføjBord(new Bord(12));
 
-            for (int i = 0; i <= 7; i++)
-            {
-                Storage.TilføjBord(new Bord(8));
-            }
+            for (var i = 0; i <= 7; i++) Storage.TilføjBord(new Bord(8));
         }
 
         // Fetch the list of years from VentelisteController
@@ -50,10 +38,7 @@ public class BordController : Controller
     public IActionResult UpdateBord(int bordNr, int antalPladser)
     {
         var bord = Storage.FindBord(bordNr);
-        if (bord != null)
-        {
-            bord.antalPladser = antalPladser;
-        }
+        if (bord != null) bord.antalPladser = antalPladser;
 
         return RedirectToAction("Bordopsætning");
     }
@@ -63,25 +48,15 @@ public class BordController : Controller
     {
         try
         {
-            if (antalPladser > 12)
-            {
-                throw new ArgumentException("Et bord kan maksimalt have 12 pladser.");
-            }
+            if (antalPladser > 12) throw new ArgumentException("Et bord kan maksimalt have 12 pladser.");
 
             foreach (var bord in Storage.HentBorde())
-            {
                 if (bord.bordNr == bordNr)
-                {
                     throw new ArgumentException("Et bord med dette ID eksisterer allerede.");
-                }
-            }
 
             // Find the smallest available bordNr if the provided one already exists
-            int newBordNr = bordNr;
-            while (Storage.HentBorde().Any(b => b.bordNr == newBordNr))
-            {
-                newBordNr++;
-            }
+            var newBordNr = bordNr;
+            while (Storage.HentBorde().Any(b => b.bordNr == newBordNr)) newBordNr++;
 
             Storage.TilføjBord(new Bord { bordNr = newBordNr, antalPladser = antalPladser });
 
@@ -98,13 +73,9 @@ public class BordController : Controller
     {
         var bord = Storage.FindBord(bordNr);
         if (bord != null)
-        {
             Storage.SletBord(bord);
-        }
         else
-        {
             throw new ArgumentException("Et bord med dette ID findes ikke.");
-        }
 
         return RedirectToAction("Bordopsætning");
     }
@@ -112,10 +83,7 @@ public class BordController : Controller
     [HttpPost]
     public IActionResult TilfojElevTilBordFraVenteliste(string aargang)
     {
-        if (eleverFordelt)
-        {
-            return Json(new { success = false, message = "Students have already been distributed." });
-        }
+        if (eleverFordelt) return Json(new { success = false, message = "Students have already been distributed." });
 
         // Retrieve students from the waiting list for the specified year
         Storage.VentelisteTilElevliste(aargang);
@@ -125,18 +93,12 @@ public class BordController : Controller
 
         foreach (var bord in Storage.HentBorde())
         {
-            if (piger.Count < 2)
-            {
-                throw new InvalidOperationException("Not enough girls to fill the tables.");
-            }
+            if (piger.Count < 2) throw new InvalidOperationException("Not enough girls to fill the tables.");
 
-            if (bord.elever == null)
-            {
-                bord.elever = new List<Elev>();
-            }
+            if (bord.elever == null) bord.elever = new List<Elev>();
 
             // Ensure at least 2 girls at each table
-            for (int i = 0; i < 2 && piger.Count > 0; i++)
+            for (var i = 0; i < 2 && piger.Count > 0; i++)
             {
                 bord.elever.Add(piger[0]);
                 piger.RemoveAt(0);

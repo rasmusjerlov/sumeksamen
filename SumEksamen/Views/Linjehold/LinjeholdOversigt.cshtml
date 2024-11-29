@@ -41,7 +41,7 @@
             </td>
             <td>
                 <form asp-action="FordelElevPaaLinjehold" method="get">
-                    <input type="hidden" name="LinjeholdId" value="@linjehold.Id" />
+                    <input type="hidden" name="LinjeholdId" value="@linjehold.Id"/>
                     <select name="elevNavn" required>
                         <option value="" disabled selected>Vælg elev</option>
                         @foreach (var elev in ViewData["Elever"] as List<Elev>)

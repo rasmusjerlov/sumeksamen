@@ -19,18 +19,14 @@ public class VærelseController : Controller
     public void TilføjElev(Værelse værelse, Elev elev)
     {
         if (Storage.FindVærelse(værelse.VærelelsesId).ElevListe.Contains(elev))
-        {
             throw new Exception("Elev er allerede tilføjet");
-        }
         værelse.AddElev(elev);
     }
 
     public void FjernElev(Værelse værelse, Elev elev)
     {
         if (!Storage.FindVærelse(værelse.VærelelsesId).HentVærelse().Contains(elev))
-        {
             throw new Exception("Elev er ikke på værelset");
-        }
         værelse.RemoveElev(elev);
     }
 
@@ -41,7 +37,7 @@ public class VærelseController : Controller
         var piger = Storage.HentElevListe().Where(e => e.Køn == Køn.pige).ToList();
 
         // Fordel drenge på værelser
-        FordelElever(drenge, new Dictionary<int , int>
+        FordelElever(drenge, new Dictionary<int, int>
         {
             { 2, 2 },
             { 3, 0 },
@@ -62,17 +58,17 @@ public class VærelseController : Controller
     {
         foreach (var værelseType in værelseTyper)
         {
-            int antalPladser = værelseType.Key;
-            int antalVærelser = værelseType.Value;
+            var antalPladser = værelseType.Key;
+            var antalVærelser = værelseType.Value;
 
-            for (int i = 0; i < antalVærelser; i++)
+            for (var i = 0; i < antalVærelser; i++)
             {
                 if (elever.Count == 0) return;
 
-                Værelse værelse = new Værelse(antalPladser);
+                var værelse = new Værelse(antalPladser);
                 Storage.TilføjVærelse(værelse);
-                
-                for (int j = 0; j < antalPladser && elever.Count > 0; j++)
+
+                for (var j = 0; j < antalPladser && elever.Count > 0; j++)
                 {
                     værelse.AddElev(elever[0]);
                     elever.RemoveAt(0);
@@ -80,7 +76,7 @@ public class VærelseController : Controller
             }
         }
     }
-    
+
     [HttpGet]
     public IActionResult FordelEleverDropDown()
     {
@@ -91,7 +87,7 @@ public class VærelseController : Controller
         ViewBag.AargangList = aargangList;
         return View();
     }
-    
+
     [HttpPost]
     public IActionResult FordelEleverFraVenteliste(string valgtAargang)
     {

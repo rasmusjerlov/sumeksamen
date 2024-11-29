@@ -8,7 +8,6 @@ builder.Services.AddScoped<VentelisteController>();
 
 
 var app = builder.Build();
-Console.WriteLine("Hej");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -22,17 +21,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 
 app.Run();

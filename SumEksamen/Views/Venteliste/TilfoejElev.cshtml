@@ -1,10 +1,10 @@
-@model SumEksamen.Models.Venteliste
+@model Venteliste
 
 <h2>Tilføj Elev</h2>
 
 <form method="post" action="/venteliste/tilfojElev">
     <label for="navn">Navn:</label>
-    <input type="text" id="navn" name="navn" required />
+    <input type="text" id="navn" name="navn" required/>
     <br>
 
     <label for="køn">Køn:</label>
@@ -25,7 +25,7 @@
     </select>
     <br>
 
-    <input type="submit" value="Tilføj Elev" />
+    <input type="submit" value="Tilføj Elev"/>
 </form>
 
 <form method="get" action="@Url.Action("Ventelister", "Venteliste")">

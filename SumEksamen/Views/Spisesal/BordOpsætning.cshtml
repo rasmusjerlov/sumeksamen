@@ -4,7 +4,7 @@
 
 <h1>Bordopsætning</h1>
 
-@model List<SumEksamen.Models.Bord>
+@model List<Bord>
 
 <div>
     <form id="distributeStudentsForm" method="post" action="/Bord/TilfojElevTilBordFraVenteliste">
@@ -31,7 +31,7 @@
 </div>
 
 <div class="layout" id="layout">
-    @for (int i = 0; i < Model.Count; i++)
+    @for (var i = 0; i < Model.Count; i++)
     {
         var bord = Model[i];
         <div class="bord-container">
@@ -39,26 +39,28 @@
                 <div class="bord-nummer">Bord @bord.bordNr</div>
 
                 @{
-                    int pladserPerSide = bord.antalPladser / 2;
-                    int extraSeat = bord.antalPladser % 2;
-                    int elevIndex = 0;
+                    var pladserPerSide = bord.antalPladser / 2;
+                    var extraSeat = bord.antalPladser % 2;
+                    var elevIndex = 0;
 
-                    for (int j = 0; j < pladserPerSide + extraSeat; j++)
+                    for (var j = 0; j < pladserPerSide + extraSeat; j++)
                     {
                         double venstre = (j + 1) * (100 / (pladserPerSide + extraSeat + 1));
                         var elev = bord.elever.ElementAtOrDefault(elevIndex++);
-                        string elevStyle = elev != null ? (elev.Køn == Køn.pige ? "background-color: pink;" : "background-color: darkblue;") : "";
-                        string elevName = elev != null ? elev.Navn : "";
-                        <div class="plads" style="top: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName" draggable="true" ondragstart="drag(event)" id="elev-@elev?.Navn"></div>
+                        var elevStyle = elev != null ? elev.Køn == Køn.pige ? "background-color: pink;" : "background-color: darkblue;" : "";
+                        var elevName = elev != null ? elev.Navn : "";
+                        <div class="plads" style="top: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName"
+                             draggable="true" ondragstart="drag(event)" id="elev-@elev?.Navn"></div>
                     }
 
-                    for (int j = 0; j < pladserPerSide; j++)
+                    for (var j = 0; j < pladserPerSide; j++)
                     {
                         double venstre = (j + 1) * (100 / (pladserPerSide + 1));
                         var elev = bord.elever.ElementAtOrDefault(elevIndex++);
-                        string elevStyle = elev != null ? (elev.Køn == Køn.pige ? "background-color: pink;" : "background-color: darkblue;") : "";
-                        string elevName = elev != null ? elev.Navn : "";
-                        <div class="plads" style="bottom: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName" draggable="true" ondragstart="drag(event)" id="elev-@elev?.Navn"></div>
+                        var elevStyle = elev != null ? elev.Køn == Køn.pige ? "background-color: pink;" : "background-color: darkblue;" : "";
+                        var elevName = elev != null ? elev.Navn : "";
+                        <div class="plads" style="bottom: -15px; left: @($"{venstre}%"); @elevStyle" title="@elevName"
+                             draggable="true" ondragstart="drag(event)" id="elev-@elev?.Navn"></div>
                     }
                 }
             </div>
@@ -149,7 +151,7 @@
         gap: 10px;
         margin-right: 10px;
     }
-    
+
 </style>
 
 
@@ -173,25 +175,25 @@
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.reload();
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => console.error('Error creating bord:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error('Error creating bord:', error));
     });
-    
+
     function printBordOpsaetning() {
         let printContents = document.querySelector('.layout').innerHTML;
         let originalContents = document.body.innerHTML;
-        
+
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;
-        
+
         window.location.reload();
     }
 
@@ -259,26 +261,26 @@
         plads.addEventListener('dragover', allowDrop);
         plads.addEventListener('drop', drop);
     });
-    
-    document.getElementById('distributeStudentsForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const distributeButton = document.getElementById('distributeButton');
 
-    fetch('/Bord/TilfojElevTilBordFraVenteliste', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            distributeButton.disabled = true;
-            window.location.reload();
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => console.error('Error adding students to table:', error));
-});
+    document.getElementById('distributeStudentsForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const distributeButton = document.getElementById('distributeButton');
+
+        fetch('/Bord/TilfojElevTilBordFraVenteliste', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    distributeButton.disabled = true;
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error('Error adding students to table:', error));
+    });
 </script>
 

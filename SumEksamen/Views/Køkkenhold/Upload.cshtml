@@ -1,4 +1,4 @@
-@model List<SumEksamen.Models.Elev>
+@model List<Elev>
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +8,7 @@
 <body>
 <h2>Upload Excel File</h2>
 <form asp-action="UploadExcel" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
+    <input type="file" name="file"/>
     <button type="submit">Upload</button>
 </form>
 
@@ -24,7 +24,7 @@
         </select>
     </div>
     <button type="submit">Opret Køkkenhold fra venteliste</button>
-    
+
 </form>
 
 @if (Model != null && Model.Count > 0)
@@ -36,10 +36,7 @@
             <li>@elev.Navn - @elev.Køn</li>
         }
     </ul>
-        
-    
-        
-        
+
 
     <h2>Create Køkkenhold</h2>
     <form asp-action="CreateKøkkenhold" method="post">

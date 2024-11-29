@@ -1,5 +1,4 @@
 using SumEksamen.Controllers;
-using SumEksamen.Models;
 using SumEksamen.Services;
 using Xunit;
 
@@ -7,7 +6,7 @@ namespace SumEksamen.Tests.Controllers;
 
 public class KlasseholdControllerTest
 {
-    private KlasseholdController khc;
+    private readonly KlasseholdController khc;
 
     public KlasseholdControllerTest()
     {
@@ -15,7 +14,6 @@ public class KlasseholdControllerTest
     }
 
     [Fact]
-
     public void TC1_OpretKlassehold_withValidFag_shouldAddKlasseholdToStorage()
     {
         //Act
@@ -29,7 +27,7 @@ public class KlasseholdControllerTest
     public void TC2_OpretKlassehold_withInvalidFag_shouldFail()
     {
         khc.OpretKlassehold("", "Lokale 2");
-        
+
         Assert.DoesNotContain(Storage.HentKlassehold(), k => k.Fag.Equals(""));
     }
 }

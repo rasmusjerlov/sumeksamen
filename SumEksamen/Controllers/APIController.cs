@@ -1,17 +1,15 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SumEksamen.Models;
 using SumEksamen.Services;
 
-namespace SumEksamen.Controllers
+namespace SumEksamen.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class APIController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class APIController : ControllerBase
+    public List<Venteliste> HentVentelister()
     {
-        public List<Venteliste> HentVentelister()
-        {
-            return Storage.HentVentelister();
-        }
+        return Storage.HentVentelister();
     }
 }

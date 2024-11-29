@@ -1,4 +1,4 @@
-@model SumEksamen.Models.Venteliste
+@model Venteliste
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,7 @@
 <h2>Upload Excel Fil</h2>
 <form asp-action="UploadExcel" method="post" enctype="multipart/form-data">
     <label for="file">Vælg Excel-fil:</label>
-    <input type="file" name="file" id="file" required />
+    <input type="file" name="file" id="file" required/>
     <br>
 
     <label for="aargang">Vælg venteliste (årgang):</label>
@@ -17,12 +17,12 @@
 
         @foreach (var venteliste in ViewBag.Ventelister)
         {
-        <option value="@venteliste.Aargang">@venteliste.Aargang</option>
+            <option value="@venteliste.Aargang">@venteliste.Aargang</option>
         }
     </select>
     <br>
 
-    <input type="submit" value="Upload" />
+    <input type="submit" value="Upload"/>
 </form>
 
 <form method="get" action="@Url.Action("Ventelister", "Venteliste")">

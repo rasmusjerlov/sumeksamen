@@ -6,10 +6,10 @@ namespace SumEksamen.Tests.Models;
 
 public class KlasseholdTest
 {
-    private Klassehold kh = new Klassehold("Dansk", "Lokale 1");
-    private Elev e1 = new Elev("Rasmus", Køn.dreng);
-    private Elev e2 = new Elev("Mikkel", Køn.dreng);
-    private Elev e3 = new Elev("Hanne", Køn.pige);
+    private readonly Elev e1 = new("Rasmus", Køn.dreng);
+    private readonly Klassehold kh = new("Dansk", "Lokale 1");
+    private Elev e2 = new("Mikkel", Køn.dreng);
+    private Elev e3 = new("Hanne", Køn.pige);
 
     [Fact]
     public void TC1_tilfojElev_shouldAddElevToKlassehold()
@@ -18,7 +18,7 @@ public class KlasseholdTest
 
         Assert.Contains(e1, kh.hentElever());
     }
-    
+
     [Fact]
     public void TC2_tilfojElev_withStudentAlreadyInKlassehold_shouldThrowArgumentException()
     {
@@ -26,7 +26,7 @@ public class KlasseholdTest
 
         Assert.Throws<ArgumentException>(() => kh.tilfojElev(e1));
     }
-    
+
     [Fact]
     public void TC1_fjernElev_shouldRemoveElevFromKlassehold()
     {
@@ -35,7 +35,7 @@ public class KlasseholdTest
 
         Assert.DoesNotContain(e1, kh.hentElever());
     }
-    
+
     [Fact]
     public void TC2_fjernElev_withStudentNotInKlassehold_shouldThrowArgumentException()
     {
